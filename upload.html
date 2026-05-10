@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title> הרב יוסף שובלי </title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:Arial;
+background:#f8fafc;
+padding:20px;
+
+}
+
+h2{
+
+margin-bottom:20px;
+font-size:28px;
+
+}
+
+form{
+
+display:flex;
+flex-direction:column;
+gap:16px;
+
+}
+
+input,
+textarea{
+
+width:100%;
+
+padding:15px;
+
+border-radius:14px;
+
+border:1px solid #d1d5db;
+
+font-size:16px;
+
+background:white;
+
+}
+
+textarea{
+
+min-height:160px;
+resize:none;
+
+}
+
+.upload-box{
+
+width:100%;
+
+min-height:180px;
+
+border:2px dashed #cbd5e1;
+
+border-radius:20px;
+
+background:white;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+position:relative;
+
+overflow:hidden;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.upload-box:hover{
+
+border-color:#111827;
+
+}
+
+.upload-box input{
+
+position:absolute;
+inset:0;
+
+opacity:0;
+
+cursor:pointer;
+
+}
+
+.upload-content{
+
+text-align:center;
+
+pointer-events:none;
+
+}
+
+.upload-icon{
+
+width:70px;
+height:70px;
+
+border-radius:50%;
+
+background:#111827;
+
+color:white;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+font-size:30px;
+
+margin:auto;
+margin-bottom:14px;
+
+}
+
+.upload-title{
+
+font-size:18px;
+font-weight:bold;
+
+margin-bottom:6px;
+
+}
+
+.upload-subtitle{
+
+color:#64748b;
+font-size:14px;
+
+}
+
+.preview-container{
+
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+
+}
+
+.preview-item{
+
+position:relative;
+
+width:120px;
+height:120px;
+
+border-radius:18px;
+
+overflow:hidden;
+
+background:#000;
+
+}
+
+.preview-item img,
+.preview-item video{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+}
+
+.remove-btn{
+
+position:absolute;
+
+top:8px;
+left:8px;
+
+width:34px;
+height:34px;
+
+border:none;
+
+border-radius:50%;
+
+background:rgba(0,0,0,.8);
+
+color:white;
+
+font-size:18px;
+
+cursor:pointer;
+
+z-index:10;
+
+}
+
+button.submit-btn{
+
+height:54px;
+
+border:none;
+
+background:#111827;
+
+color:white;
+
+border-radius:14px;
+
+font-size:17px;
+
+cursor:pointer;
+
+}
+
+button.submit-btn:disabled{
+
+opacity:.6;
+
+}
+
+.status{
+
+display:none;
+
+position:fixed;
+
+top:15px;
+right:50%;
+
+transform:translateX(50%);
+
+z-index:99999;
+
+padding:14px 20px;
+
+border-radius:14px;
+
+font-size:15px;
+
+font-weight:bold;
+
+min-width:220px;
+
+text-align:center;
+
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+animation:showStatus .25s ease;
+
+}
+
+@keyframes showStatus{
+
+from{
+
+opacity:0;
+transform:translateX(50%) translateY(-15px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateX(50%) translateY(0);
+
+}
+
+}
+
+.loading{
+
+background:#dbeafe;
+color:#1e40af;
+
+}
+
+.success{
+
+background:#dcfce7;
+color:#166534;
+
+}
+
+.error{
+
+background:#fee2e2;
+color:#991b1b;
+
+}
+
+#titleCounter{
+margin-top:6px;
+font-size:13px;
+color:#64748b;
+text-align:left;
+}
+
+
+.status{
+
+display:none;
+
+align-items:center;
+justify-content:center;
+gap:10px;
+
+}
+
+.loader{
+
+width:18px;
+height:18px;
+
+border:3px solid rgba(255,255,255,.35);
+
+border-top-color:currentColor;
+
+border-radius:50%;
+
+animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+to{
+transform:rotate(360deg);
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>
+העלאת פוסט
+</h2>
+
+<form id="postForm">
+
+<div>
+
+<input
+type="text"
+id="title"
+placeholder="שם משתמש"
+maxlength="15"
+required
+>
+
+<div id="titleCounter">
+0 / 15
+</div>
+
+</div>
+
+<textarea
+id="content"
+placeholder="תוכן"
+required
+></textarea>
+
+
+
+<label class="upload-box">
+
+<input
+type="file"
+id="media"
+accept="image/*,video/*"
+multiple
+>
+
+<div class="upload-content">
+
+<div class="upload-icon">
+⬆
+</div>
+
+<div class="upload-title">
+העלאת תמונות וסרטונים (אופציונאלי)
+</div>
+
+<div class="upload-subtitle">
+אפשר לבחור כמה קבצים
+</div>
+
+</div>
+
+</label>
+
+<div
+class="preview-container"
+id="previewContainer"
+></div>
+
+<button
+class="submit-btn"
+id="submitBtn"
+>
+פרסם פוסט
+</button>
+
+<div
+class="status"
+id="statusBox"
+></div>
+
+</form>
+
+<script type="module">
+
+import { createClient }
+from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const supabaseUrl =
+'https://pnnfstfabmhjzohkypak.supabase.co'
+
+const supabaseKey =
+'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
+
+const supabase =
+createClient(
+supabaseUrl,
+supabaseKey
+)
+
+const form =
+document.getElementById("postForm")
+
+const mediaInput =
+document.getElementById("media")
+
+const previewContainer =
+document.getElementById("previewContainer")
+
+const statusBox =
+document.getElementById("statusBox")
+
+const submitBtn =
+document.getElementById("submitBtn")
+
+const titleInput =
+document.getElementById("title")
+
+const titleCounter =
+document.getElementById("titleCounter")
+
+titleInput.addEventListener(
+"input",
+()=>{
+
+const max = 15
+
+const current =
+titleInput.value.length
+
+const left =
+max - current
+
+titleCounter.innerText =
+`${current} / ${max}`
+
+})
+
+let selectedFiles = []
+
+function showStatus(text,type){
+
+statusBox.style.display = "flex"
+
+statusBox.className =
+`status ${type}`
+
+if(type === "loading"){
+
+statusBox.innerHTML = `
+
+<div class="loader"></div>
+
+<span>${text}</span>
+
+`
+
+}else{
+
+statusBox.innerHTML = `
+
+<span>${text}</span>
+
+`
+
+}
+
+}
+
+/* ---------- תצוגה מקדימה ---------- */
+
+mediaInput.addEventListener(
+"change",
+()=>{
+
+const files =
+Array.from(mediaInput.files)
+
+files.forEach(file=>{
+
+    const alreadyExists =
+selectedFiles.some(
+f =>
+f.name === file.name &&
+f.size === file.size
+)
+
+if(alreadyExists){
+
+  return
+
+}
+
+const maxSize =
+50 * 1024 * 1024
+
+if(file.size > maxSize){
+
+showStatus(
+`הקובץ ${file.name} גדול מ־50MB`,
+"error"
+)
+
+return
+
+}
+
+selectedFiles.push(file)
+
+const fileUrl =
+URL.createObjectURL(file)
+
+const div =
+document.createElement("div")
+
+div.className =
+"preview-item"
+
+if(
+file.type.startsWith("video")
+){
+
+div.innerHTML = `
+
+<button
+type="button"
+class="remove-btn"
+>
+✕
+</button>
+
+<video
+src="${fileUrl}"
+controls
+></video>
+
+`
+
+}else{
+
+div.innerHTML = `
+
+<button
+type="button"
+class="remove-btn"
+>
+✕
+</button>
+
+<img
+src="${fileUrl}"
+>
+
+`
+
+}
+
+div
+.querySelector(".remove-btn")
+
+.addEventListener(
+"click",
+()=>{
+
+selectedFiles =
+selectedFiles.filter(
+f => f !== file
+)
+
+div.remove()
+
+})
+
+previewContainer.appendChild(div)
+
+setTimeout(()=>{
+
+div.scrollIntoView({
+behavior:"smooth",
+block:"end"
+})
+
+},100)
+})
+
+mediaInput.value = ""
+
+})
+
+/* ---------- שליחה ---------- */
+
+form.addEventListener(
+"submit",
+
+async(e)=>{
+
+e.preventDefault()
+
+submitBtn.disabled = true
+
+showStatus(
+"מעלה פוסט...",
+"loading"
+)
+
+const title =
+document.getElementById("title").value
+
+const content =
+document.getElementById("content").value
+
+
+let mediaUrls = []
+
+/* ---------- העלאת קבצים ---------- */
+
+for(const file of selectedFiles){
+
+const fileName =
+
+Date.now() +
+"-" +
+file.name
+
+const {
+error:uploadError
+}
+
+= await supabase.storage
+
+.from("posts")
+
+.upload(
+fileName,
+file
+)
+
+if(uploadError){
+
+console.log(uploadError)
+
+showStatus(
+"שגיאה בהעלאת קובץ",
+"error"
+)
+
+submitBtn.disabled = false
+
+return
+
+}
+
+const { data:urlData } =
+
+supabase.storage
+
+.from("posts")
+
+.getPublicUrl(fileName)
+
+mediaUrls.push(
+urlData.publicUrl
+)
+
+}
+
+/* ---------- שמירת פוסט ---------- */
+
+const { error } =
+
+await supabase
+
+.from("posts")
+
+.insert([{
+
+title,
+
+content,
+
+media_urls:mediaUrls,
+
+type:"post"
+
+}])
+
+if(error){
+
+console.log(error)
+
+showStatus(
+"שגיאה בשמירת הפוסט",
+"error"
+)
+
+submitBtn.disabled = false
+
+return
+
+}
+
+showStatus(
+"הפוסט פורסם בהצלחה, מעביר לדף הראשי",
+"success"
+)
+
+setTimeout(()=>{
+
+window.location.href =
+"index.html"
+
+},1500)
+
+})
+
+</script>
+
+</body>
+</html>

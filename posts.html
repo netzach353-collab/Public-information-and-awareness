@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>כל הפוסטים - יראת השם</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#f1f5f9;
+}
+
+/* TOPBAR */
+
+.topbar{
+position:sticky;
+top:0;
+z-index:1000;
+height:60px;
+background:#111827;
+color:white;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 15px;
+box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+}
+
+.menu-btn{
+background:#ffffff1a;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+/* OVERLAY */
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+opacity:0;
+visibility:hidden;
+transition:.25s;
+z-index:1100;
+}
+
+.overlay.show{
+opacity:1;
+visibility:visible;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:0;
+right:-290px;
+width:280px;
+height:100%;
+background:white;
+z-index:1200;
+transition:.25s;
+box-shadow:-10px 0 20px rgba(0,0,0,.15);
+padding:20px;
+overflow:auto;
+}
+
+.sidebar.show{
+right:0;
+}
+
+.side-link{
+display:block;
+padding:12px;
+background:#f1f5f9;
+border-radius:10px;
+margin-bottom:10px;
+text-decoration:none;
+color:#111;
+}
+
+.close-btn{
+background:#e5e7eb;
+border:none;
+padding:7px 12px;
+border-radius:8px;
+cursor:pointer;
+margin-bottom:15px;
+}
+
+/* ACTIONS */
+
+.actions1{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+}
+
+.actions1 span{
+padding:12px;
+border-left:solid 1px #d1d5db;
+background:white;
+font-size:14px;
+text-align:center;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* TITLE */
+
+.page-title{
+padding:20px;
+font-size:26px;
+font-weight:bold;
+color:#111827;
+}
+
+/* POSTS */
+
+.container{
+padding:0 12px 20px;
+}
+
+.posts-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+/* CARD */
+
+.card{
+background:white;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+cursor:pointer;
+transition:.2s;
+}
+
+.card:active{
+transform:scale(.98);
+}
+
+.card img{
+width:100%;
+height:130px;
+object-fit:cover;
+display:block;
+}
+
+.card-body{
+padding:10px;
+}
+
+.tag{
+font-size:14px;
+font-weight:bold;
+color:#111827;
+margin-bottom:6px;
+
+display:-webkit-box;
+-webkit-line-clamp:1;
+-webkit-box-orient:vertical;
+
+overflow:hidden;
+}
+
+.post-content{
+font-size:12px;
+line-height:1.6;
+color:#4b5563;
+text-align:right;
+
+display:-webkit-box;
+-webkit-line-clamp:3;
+-webkit-box-orient:vertical;
+
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+/* MODAL */
+
+.post-modal{
+position:fixed;
+inset:0;
+background:#f8fafc;
+z-index:3000;
+overflow:auto;
+transform:translateY(100%);
+transition:.3s;
+}
+
+.post-modal.show{
+transform:translateY(0);
+}
+
+.modal-image{
+width:100%;
+height:280px;
+object-fit:cover;
+}
+
+.modal-body{
+padding:20px;
+}
+
+.modal-title{
+font-size:28px;
+font-weight:bold;
+margin-bottom:20px;
+color:#111827;
+line-height:1.5;
+}
+
+.modal-content{
+font-size:17px;
+line-height:2;
+color:#374151;
+white-space:pre-wrap;
+}
+
+.modal-close{
+position:fixed;
+top:15px;
+left:15px;
+width:42px;
+height:42px;
+border:none;
+border-radius:50%;
+background:white;
+font-size:20px;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+z-index:5000;
+}
+
+/* DESKTOP */
+
+@media(min-width:800px){
+
+.posts-grid{
+grid-template-columns:repeat(4,1fr);
+}
+
+.card img{
+height:180px;
+}
+
+}
+
+.image-bar{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:2px;
+background:rgb(226, 224, 224);
+}
+
+
+.image-thumb{
+width: 40px;
+height: 40px;
+object-fit:cover;
+border-radius:10px;
+cursor:pointer;
+border:3px solid transparent;
+flex:none;
+}
+
+.image-thumb.active{
+border-color:#97989a;
+}
+
+.modal-content{
+font-size:17px;
+line-height:2;
+color:#374151;
+white-space:pre-wrap;
+
+/* חדש */
+
+word-break:break-word;
+overflow-wrap:break-word;
+
+max-width:100%;
+overflow-x:auto;
+
+}
+
+.modal-body{
+padding:20px;
+overflow-x:hidden;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<button class="menu-btn"
+onclick="openMenu()">
+☰ תפריט
+</button>
+
+<div class="logo">
+יראת השם
+</div>
+
+</div>
+
+<!-- OVERLAY -->
+
+<div class="overlay"
+id="overlay"
+onclick="closeMenu()"></div>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar"
+id="sidebar">
+
+<button class="close-btn"
+onclick="closeMenu()">
+סגירה
+</button>
+
+<a href="index.html"
+class="side-link">
+דף הבית
+</a>
+
+<a href="posts.html"
+class="side-link">
+כל הפוסטים
+</a>
+
+<a href="upload.html"
+class="side-link">
+העלת פוסט
+</a>
+
+</div>
+
+<!-- ACTIONS -->
+
+<div class="actions1">
+
+<span onclick="goHome()">
+דף ראשי
+</span>
+
+<span onclick="goPosts()">
+לכל הפוסטים
+</span>
+
+<span onclick="goUpload()">
+העלת פוסט
+</span>
+
+</div>
+
+<!-- TITLE -->
+
+<div class="page-title">
+כל הפוסטים
+</div>
+
+<!-- POSTS -->
+
+<div class="container">
+
+<div class="posts-grid"
+id="postsGrid"></div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="post-modal"
+id="postModal">
+
+<button class="modal-close"
+onclick="closePost()">
+✕
+</button>
+
+<img id="modalImage"
+class="modal-image">
+
+<div class="image-bar"
+id="imageBar"></div>
+
+<div class="modal-body">
+
+<div class="modal-title"
+id="modalTitle"></div>
+
+<div class="modal-content"
+id="modalContent"></div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { createClient }
+from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const supabaseUrl =
+'https://pnnfstfabmhjzohkypak.supabase.co'
+
+const supabaseKey =
+'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
+
+const supabase = createClient(
+supabaseUrl,
+supabaseKey
+)
+
+/* SIDEBAR */
+
+const sidebar =
+document.getElementById("sidebar")
+
+const overlay =
+document.getElementById("overlay")
+
+function openMenu(){
+
+sidebar.classList.add("show")
+overlay.classList.add("show")
+
+}
+
+function closeMenu(){
+
+sidebar.classList.remove("show")
+overlay.classList.remove("show")
+
+}
+
+window.openMenu = openMenu
+window.closeMenu = closeMenu
+
+/* POSTS */
+
+const postsGrid =
+document.getElementById("postsGrid")
+
+async function loadPosts(){
+
+const { data, error } =
+await supabase
+.from('posts')
+.select('*')
+.order('created_at',{ascending:false})
+
+if(error){
+console.log(error)
+return
+}
+
+const normalPosts =
+data.filter(post => post.type === "post")
+
+renderPosts(normalPosts)
+
+if(postId){
+
+const selectedPost =
+normalPosts.find(
+post => String(post.id) === String(postId)
+)
+
+if(selectedPost){
+
+openPost(selectedPost)
+
+}
+
+}
+}
+
+const params =
+new URLSearchParams(window.location.search)
+
+const postId =
+params.get("id")
+
+function renderPosts(posts){
+
+postsGrid.innerHTML = ""
+
+posts.forEach(post=>{
+
+postsGrid.innerHTML += `
+
+<div class="card"
+onclick='openPost(${JSON.stringify(post)})'>
+
+<img src="${post.media_urls?.[0] || ''}">
+
+<div class="card-body">
+
+<div class="tag">
+${post.title || ''}
+</div>
+
+<div class="post-content">
+${post.content || ''}
+</div>
+
+</div>
+
+</div>
+
+`
+
+})
+
+}
+
+/* OPEN POST */
+
+const postModal =
+document.getElementById("postModal")
+
+function openPost(post){
+
+const modalImage =
+document.getElementById("modalImage")
+
+const imageBar =
+document.getElementById("imageBar")
+
+modalImage.src =
+post.media_urls?.[0] || ''
+
+document.getElementById("modalTitle")
+.innerText = post.title || ''
+
+document.getElementById("modalContent")
+.innerText = post.content || ''
+
+imageBar.innerHTML = ""
+
+post.media_urls?.forEach((url,index)=>{
+
+const img =
+document.createElement("img")
+
+img.src = url
+
+img.className = "image-thumb"
+
+if(index === 0){
+img.classList.add("active")
+}
+
+img.onclick = ()=>{
+
+modalImage.src = url
+
+document
+.querySelectorAll(".image-thumb")
+.forEach(el=>{
+
+el.classList.remove("active")
+
+})
+
+img.classList.add("active")
+
+}
+
+imageBar.appendChild(img)
+
+})
+
+postModal.classList.add("show")
+
+window.scrollTo(0,0)
+
+}
+
+function closePost(){
+
+postModal.classList.remove("show")
+
+}
+
+window.openPost = openPost
+window.closePost = closePost
+
+/* NAVIGATION */
+
+function goHome(){
+window.location.href = "index.html"
+}
+
+function goPosts(){
+window.location.href = "posts.html"
+}
+
+function goUpload(){
+window.location.href = "upload.html"
+}
+
+window.goHome = goHome
+window.goPosts = goPosts
+window.goUpload = goUpload
+
+loadPosts()
+</script>
+
+</body>
+</html>

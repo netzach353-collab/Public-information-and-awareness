@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>אתר מתכונים</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial, sans-serif;
+background:#f1f5f9;
+}
+
+/* סרגל עליון */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  height:60px;
+  background:#111827;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 15px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
+
+.menu-btn{
+  background:#88a8ee3a;
+  color:rgb(255, 255, 255);
+  border:none;   
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* רקע כהה */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  opacity:0;
+  visibility:hidden;
+  transition:.25s;
+  z-index:1100;
+}
+
+.overlay.show{
+  opacity:1;
+  visibility:visible;
+}
+
+/* סרגל צד */
+.sidebar{
+  position:fixed;
+  top:0;
+  right:-290px;
+  width:280px;
+  height:100%;
+  background:white;
+  z-index:1200;
+  transition:.25s;
+  box-shadow:-10px 0 20px rgba(0,0,0,.15);
+  padding:20px;
+  overflow:auto;
+}
+
+.sidebar.show{
+  right:0;
+}
+
+.side-link{
+  display:block;
+  padding:12px;
+  background:#f1f5f9;
+  border-radius:10px;
+  margin-bottom:10px;
+  text-decoration:none;
+  color:#111;
+}
+
+/* תוכן */
+.container{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: auto;
+  position: relative;
+  
+}
+
+.title{
+  color: rgb(65, 93, 149);
+  font-size: 13px;
+  padding: 0 10px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* החלף את recipes שלך לזה */
+
+.recipes{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding-bottom:10px;
+  scroll-behavior:smooth;
+  padding: 20px;
+  border-bottom: solid 1px #ccc;
+}
+
+/* שלא יתכווצו */
+.recipes .gol{
+  flex:0 0 auto;
+}
+  .card {
+    background: none;
+    width: 100px;
+    height: auto;
+    text-align: center;
+    overflow:hidden;
+    position: relative;
+    padding-bottom: 5px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .card img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+   border-radius: 5px;
+  }
+  
+    .card h3{
+    font-size: 12px; 
+      color: rgb(0, 0, 0);
+      margin: 0 auto;
+      text-align: right;
+       word-break: break-word;
+       overflow-wrap: break-word;
+       font-weight: 100;
+  }
+  .tag{
+    display: flex;
+    font-size: 13px;
+    font-weight: bolder;
+    margin-bottom: 5px;
+  }
+
+  .external-line1{
+    border: solid 0.3px #a29e9edf;
+    background: white;
+    border-radius: 5px;
+  }
+  
+/* ACTIONS */
+
+.actions1{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+}
+
+.actions1 span{
+padding:12px;
+border-left:solid 1px #d1d5db;
+background:white;
+font-size:14px;
+text-align:center;
+cursor:pointer;
+font-weight:bold;
+}
+  
+
+.hero-wrap{
+position:relative;
+width:100%;
+height:260px;
+overflow:hidden;
+border-radius:0;
+margin:0px 0;
+touch-action:pan-y;
+}
+
+.hero-track{
+display:flex;
+height:100%;
+transition:transform .45s ease;
+}
+
+.hero-slide{
+flex:0 0 100%;
+height:100%;
+position:relative;
+}
+
+.hero-slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.hero-text{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.45);
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero-text span{
+background:#ef4444;
+padding:6px 12px;
+border-radius:999px;
+margin-bottom:10px;
+font-size:13px;
+}
+
+.hero-text h2{
+font-size:28px;
+margin-bottom:10px;
+}
+
+.hero-text p{
+font-size:15px;
+}
+
+
+.title{
+  cursor:pointer;
+}
+
+
+.post-content{
+
+display:-webkit-box;
+
+-webkit-line-clamp:3;
+-webkit-box-orient:vertical;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+line-height:1.5;
+
+font-size:12px;
+
+text-align:right;
+
+word-break:break-word;
+
+}
+
+.recipes{
+
+cursor:grab;
+
+}
+
+.recipes.dragging{
+
+cursor:grabbing;
+
+user-select:none;
+
+}
+
+img{
+
+-webkit-user-drag:none;
+
+user-select:none;
+
+pointer-events:none;
+
+}
+
+.card img,
+.hero-slide img{
+
+-webkit-user-drag:none;
+
+user-select:none;
+
+pointer-events:none;
+
+}
+
+.line-more1 {
+  width: 100%;
+}
+
+.line22{
+  display: flex;
+  align-items: center;
+}
+
+.close-btn{
+  background:#d8d5d592;
+  color:rgb(79, 78, 78);
+  border:none;
+  padding: 5px 8px;
+  border-radius:  3px;
+  font-size:16px;
+  cursor:pointer;
+  margin-bottom: 15px;
+
+}
+
+.btn3{
+  border-bottom: solid 0.3px;
+  margin-bottom: 15px;
+}
+
+.title{
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.rabbi-wrap{
+position:relative;
+overflow:hidden;
+}
+
+.rabbi48{
+width:100%;
+display: block;
+}
+
+.blur-half{
+position:absolute;
+top:0;
+right:0;
+
+width:85%;
+height:100%;
+
+backdrop-filter:blur(1.5px);
+-webkit-backdrop-filter:blur(1.5px);
+
+background:rgba(255, 255, 255, 0.109);
+}
+
+/* טלפון סופר קטן */
+
+@media(max-width:360px){
+
+.hero-wrap{
+height:190px;
+}
+
+}
+
+/* מחשב גדול */
+
+@media(min-width:900px){
+
+.hero-wrap{
+height:650px;
+max-width:1400px;
+margin:auto;
+
+}
+
+.hero-wrap p,
+.hero-wrap h2{
+
+font-size:40px;
+
+}
+
+.hero-wrap span{
+  font-size: 20px;
+}
+
+.blur-half{
+position:absolute;
+top:0;
+right:0;
+
+width:85%;
+height:100%;
+
+backdrop-filter:blur(4.5px);
+-webkit-backdrop-filter:blur(4.5px);
+
+background:rgba(255, 255, 255, 0.109);
+}
+
+}
+
+.no-image{
+
+width:80px;
+height:80px;
+
+border-radius:5px;
+
+background:#e2e8f0;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:40px;
+
+color:#64748b;
+
+margin:auto;
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- סרגל עליון -->
+<div class="topbar">
+  <button class="menu-btn" onclick="openMenu()">☰ </button>
+  <div class="logo">״בסייעתא דשמיא״</div>
+</div>
+
+<!-- רקע -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- סרגל צד -->
+<div class="sidebar" id="sidebar">
+  <div class="btn3">
+  <button class="close-btn" onclick="closeMenu()">סגירה</button>
+</div>
+  <a href="#" class="side-link">דף הבית</a>
+<a href="upload.html" class="side-link">
+העלת פוסט
+</a>
+<a href="#" class="side-link" onclick="showAboutPage()">
+אודות
+</a>
+</div>
+<!-- תוכן -->
+  <div class="actions1">
+
+  <span onclick="goHome()">
+    דף ראשי
+  </span>
+
+  <span onclick="goPosts()">
+    לכל הפוסטים
+  </span>
+
+  <span onclick="goUpload()">
+    העלת פוסט
+  </span>
+
+</div>
+  <hr>
+
+  <div class="hero-wrap">
+
+  <div class="hero-track" id="heroTrack">
+
+        <div class="hero-slide">
+      <img src="rabbi.jpg">
+      <div class="hero-text" >
+        <span>אהבת חינם</span>
+        <h2 style="background: rgba(149, 147, 147, 0.807);">בית תמחוי  חלוקת אוכל לנזקקים</h2>
+        <p style="background: rgba(160, 160, 160, 0.807);">כל רעב ממנו יכל וכל צמה ממנו ישתה</p>
+
+        <br>
+        <p style="background: rgba(158, 158, 158, 0.807);">יעמוד לזכות הרב יוסף שובלי<br>ותלמידו!</p>
+      </div>
+    </div>
+
+<div class="hero-slide">
+
+
+    <img
+    class="rabbi48"
+    src="rabbi48.jpg">
+
+    <div class="blur-half"></div>
+
+    <div class="hero-text">
+
+      <span>שיעורי תורה</span>
+
+      <h2 id="title1">
+      חיזוק לבבות והפצת שם השם ברבים
+      </h2>
+
+      <p id="type1">
+      אהבת השם הרב יוסף שובלי
+      </p>
+
+    </div>
+
+</div>
+
+
+    <div class="hero-slide">
+       <img
+    class="rabbi48"
+    src="The Tikun Hamidot Yeshiva.jpeg">
+      <div class="hero-text">
+        <span>ישיבה לחיזוק הרבים תיקון המידות</span>
+        <h2 id="title2">זיכוי הרבים</h2>
+        <p id="type2">שתעמוד לזכות הרב יוסף שובלי ותלמידו</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="container">
+  <div class="line22">
+<hr class="line-more1">
+<a href="posts.html" class="title">
+  ראה עוד
+</a>
+</div>
+  <div class="recipes">
+ 
+      </div>
+  </div>
+
+  <!-- דף אודות -->
+<div id="aboutPage" style="
+display:none;
+position:fixed;
+top:0;
+right:0;
+width:100%;
+height:100%;
+background:white;
+z-index:5000;
+overflow:auto;
+padding:25px;
+">
+
+<button onclick="closeAboutPage()" class="close-btn">
+סגירה
+</button>
+
+<h1 style="
+font-size:32px;
+margin-bottom:20px;
+color:#111827;
+text-align:center;
+">
+אודות האתר
+</h1>
+
+<h2 style="
+font-size:22px;
+margin-bottom:15px;
+color:#374151;
+">
+ברוכים הבאים
+</h2>
+
+<p style="
+line-height:2;
+font-size:17px;
+color:#4b5563;
+margin-bottom:20px;
+">
+
+שלום, דף זה נועד לתת הסבר אודות האתר,
+מטרתו להציג תכנים מחזקים, עדויות וסיפורים אמיתיים מהחיים,
+וכן לשתף את הציבור בפעילות הרבה הנעשית למען זיכוי הרבים.
+
+</p>
+
+<h2 style="
+font-size:22px;
+margin-bottom:15px;
+color:#374151;
+">
+הצצה לפעילות הרב
+</h2>
+
+<p style="
+line-height:2;
+font-size:17px;
+color:#4b5563;
+margin-bottom:20px;
+">
+
+בדף זה תוכלו לקבל הצצה לחייו של הרב,
+להכיר מקרוב את פועלו ותרומתו לקהילה הקרובה והרחוקה,
+לשמוע על מעשי חסד, חיזוק לבבות,
+ועזרה לאנשים במצבים שונים במהלך חייהם.
+
+</p>
+
+<h2 style="
+font-size:22px;
+margin-bottom:15px;
+color:#374151;
+">
+מטרת האתר
+</h2>
+
+<p style="
+line-height:2;
+font-size:17px;
+color:#4b5563;
+">
+
+האתר הוקם מתוך רצון להפיץ אור,
+לחזק אנשים באמונה,
+ולאפשר לכל אדם להתחבר לתכנים של תורה,
+חסד ואהבת ישראל.
+
+</p>
+</div>
+<script type="module">
+
+import { createClient }
+from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const supabaseUrl = 'https://pnnfstfabmhjzohkypak.supabase.co'
+const supabaseKey = 'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
+
+const supabase = createClient(
+  supabaseUrl,
+  supabaseKey
+)
+
+
+const sidebar =
+document.getElementById("sidebar")
+
+const overlay =
+document.getElementById("overlay")
+
+function openMenu(){
+
+  sidebar.classList.add("show")
+  overlay.classList.add("show")
+
+}
+
+function closeMenu(){
+
+  sidebar.classList.remove("show")
+  overlay.classList.remove("show")
+
+}
+window.openMenu = openMenu
+window.closeMenu = closeMenu
+
+async function loadPosts(){
+
+  const { data, error } = await supabase
+  .from('posts')
+  .select('*')
+  .order('created_at',{ascending:false})
+
+  if(error){
+    console.log(error)
+    return
+  }
+
+ const normalPosts =
+data.filter(post => post.type === "post")
+
+const heroPosts =
+data.filter(post => post.type === "hero")
+
+renderPosts(normalPosts)
+renderHero(heroPosts)
+
+
+}
+
+
+const recipes =
+document.querySelector(".recipes")
+
+let isDown = false
+
+let startX
+
+let scrollLeft
+
+recipes.addEventListener(
+"mousedown",
+(e)=>{
+
+isDown = true
+
+recipes.classList.add("dragging")
+
+startX =
+e.pageX - recipes.offsetLeft
+
+scrollLeft =
+recipes.scrollLeft
+
+}
+)
+
+recipes.addEventListener(
+"mouseleave",
+()=>{
+
+isDown = false
+
+recipes.classList.remove("dragging")
+
+}
+)
+
+recipes.addEventListener(
+"mouseup",
+()=>{
+
+isDown = false
+
+recipes.classList.remove("dragging")
+
+}
+)
+
+recipes.addEventListener(
+"mousemove",
+(e)=>{
+
+if(!isDown) return
+
+e.preventDefault()
+
+const x =
+e.pageX - recipes.offsetLeft
+
+const walk =
+(x - startX) * 2
+
+recipes.scrollLeft =
+scrollLeft - walk
+
+}
+)
+
+
+function renderPosts(posts){
+
+  const recipes = document.querySelector(".recipes")
+
+  recipes.innerHTML = ""
+
+  posts.forEach(post=>{
+
+    recipes.innerHTML += `
+    
+    <div class="external-line1">
+
+      <div class="card"
+      
+      onclick="openPost('${post.id}')">
+
+${
+post.media_urls?.[0]
+
+? `<img src="${post.media_urls[0]}" alt="">`
+
+: `<div class="no-image">
+👤
+</div>`
+}
+        <span class="tag">
+         ${post.title}
+        </span>
+
+        <div class="card-body">
+
+          <h3 class="post-content">
+            ${post.content}
+          </h3>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    `
+
+  })
+
+}
+
+function goHome(){
+
+  window.location.href = "index.html"
+
+}
+
+function goPosts(){
+
+  window.location.href = "posts.html"
+
+}
+
+function goUpload(){
+
+  window.location.href = "upload.html"
+
+}
+
+function goIndex2(){
+
+  window.location.href =
+  "index2.html"
+
+}
+
+  
+const heroWrap = document.querySelector(".hero-wrap");
+const heroTrack = document.querySelector(".hero-track");
+const slides = document.querySelectorAll(".hero-slide");
+
+let current = 0;
+let total = slides.length;
+
+
+let currentX = 0;
+let dragging = false;
+let auto;
+
+/* ---------- */
+
+function updateSlider(){
+heroTrack.style.transition=".4s ease";
+heroTrack.style.transform=`translateX(${current * 100}%)`;
+}
+
+/* לופ אינסופי */
+function nextSlide(){
+current--;
+if(current < 0){
+current = total - 1;
+}
+updateSlider();
+}
+
+function prevSlide(){
+current++;
+if(current >= total){
+current = 0;
+}
+updateSlider();
+}
+
+function startAuto(){
+auto = setInterval(nextSlide,5000);
+}
+
+function stopAuto(){
+clearInterval(auto);
+}
+
+startAuto();
+
+/* ---------- התחלת גרירה */
+
+heroWrap.addEventListener("touchstart",(e)=>{
+
+stopAuto();
+
+dragging = true;
+startX = e.touches[0].clientX;
+currentX = startX;
+
+heroTrack.style.transition="none";
+
+},{passive:true});
+
+/* ---------- תוך כדי גרירה */
+
+heroWrap.addEventListener("touchmove",(e)=>{
+
+if(!dragging) return;
+
+currentX = e.touches[0].clientX;
+
+let diff = currentX - startX;
+
+heroTrack.style.transform=
+`translateX(calc(${current * 100}% + ${diff}px))`;
+
+},{passive:true});
+
+/* ---------- שחרור */
+
+heroWrap.addEventListener("touchend",()=>{
+
+dragging = false;
+
+let diff = currentX - startX;
+
+/* שמאלה = קדימה */
+if(diff < -70){
+nextSlide();
+}
+
+/* ימינה = אחורה */
+else if(diff > 70){
+prevSlide();
+}
+
+/* קטן מדי = חוזר */
+else{
+updateSlider();
+}
+
+startAuto();
+
+});
+
+function openPost(id){
+
+window.location.href =
+`posts.html?id=${id}`
+
+}
+
+function showAboutPage(){
+
+document.getElementById("aboutPage").style.display = "block"
+
+document.querySelector(".container").style.display = "none"
+
+document.querySelector(".hero-wrap").style.display = "none"
+
+document.querySelector(".actions1").style.display = "none"
+
+closeMenu()
+
+}
+
+function closeAboutPage(){
+
+document.getElementById("aboutPage").style.display = "none"
+
+document.querySelector(".container").style.display = "block"
+
+document.querySelector(".hero-wrap").style.display = "block"
+
+document.querySelector(".actions1").style.display = "grid"
+
+}
+
+window.showAboutPage = showAboutPage
+window.closeAboutPage = closeAboutPage
+window.openPost = openPost
+
+window.goPosts = goPosts
+window.goIndex2 = goIndex2
+window.goHome = goHome
+window.goUpload = goUpload
+
+loadPosts()
+
+</script>
+
+</body>
+</html>
+
