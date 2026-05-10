@@ -416,8 +416,7 @@ onclick="closePost()">
 ✕
 </button>
 
-<img id="modalImage"
-class="modal-image">
+<div id="mediaContainer"></div>
 
 <div class="image-bar"
 id="imageBar"></div>
@@ -552,8 +551,45 @@ postsGrid.innerHTML += `
 <div class="card"
 onclick='openPost(${JSON.stringify(post)})'>
 
-<img src="${post.media_urls?.[0] || ''}">
+${
+post.media_urls?.[0]?.includes(".mp4")
 
+? `
+<div style="
+width:100%;
+height:130px;
+background:#111827;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:45px;
+color:white;
+">
+▶
+</div>
+`
+
+: post.media_urls?.[0]
+
+? `
+<img src="${post.media_urls[0]}">
+`
+
+: `
+<div style="
+width:100%;
+height:130px;
+background:#e5e7eb;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+color:#6b7280;
+">
+🖼
+</div>
+`
+}
 <div class="card-body">
 
 <div class="tag">
@@ -581,14 +617,42 @@ document.getElementById("postModal")
 
 function openPost(post){
 
-const modalImage =
-document.getElementById("modalImage")
+const mediaContainer =
+document.getElementById("mediaContainer")
 
+const mediaUrl =
+post.media_urls?.[0] || ""
+
+if(mediaUrl.includes(".mp4")){
+
+mediaContainer.innerHTML = `
+<video
+class="modal-image"
+src="${mediaUrl}"
+controls
+playsinline
+style="
+width:100%;
+height:280px;
+object-fit:cover;
+background:black;
+">
+</video>
+`
+
+}else{
+
+mediaContainer.innerHTML = `
+<img
+class="modal-image"
+src="${mediaUrl}">
+`
+
+}
 const imageBar =
 document.getElementById("imageBar")
 
-modalImage.src =
-post.media_urls?.[0] || ''
+
 
 document.getElementById("modalTitle")
 .innerText = post.title || ''
@@ -612,7 +676,32 @@ img.classList.add("active")
 
 img.onclick = ()=>{
 
-modalImage.src = url
+if(url.includes(".mp4")){
+
+mediaContainer.innerHTML = `
+<video
+class="modal-image"
+src="${url}"
+controls
+playsinline
+style="
+width:100%;
+height:280px;
+object-fit:cover;
+background:black;
+">
+</video>
+`
+
+}else{
+
+mediaContainer.innerHTML = `
+<img
+class="modal-image"
+src="${url}">
+`
+
+}
 
 document
 .querySelectorAll(".image-thumb")
