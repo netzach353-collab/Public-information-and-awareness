@@ -309,6 +309,17 @@ overflow-x:auto;
 padding:20px;
 overflow-x:hidden;
 }
+  
+  .live-link{
+color:#2563eb;
+font-weight:bold;
+text-decoration:underline;
+word-break:break-word;
+}
+
+.live-link:hover{
+color:#1d4ed8;
+}
 </style>
 </head>
 
@@ -464,6 +475,27 @@ overlay.classList.remove("show")
 window.openMenu = openMenu
 window.closeMenu = closeMenu
 
+  
+  function makeLinksClickable(text){
+
+  if(!text) return ""
+
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  return text.replace(urlRegex, function(url){
+
+    return `
+    <a href="${url}"
+       target="_blank"
+       class="live-link">
+       ${url}
+    </a>
+    `
+
+  })
+
+}
+  
 /* POSTS */
 
 const postsGrid =
@@ -529,7 +561,7 @@ ${post.title || ''}
 </div>
 
 <div class="post-content">
-${post.content || ''}
+${makeLinksClickable(post.content)}
 </div>
 
 </div>
@@ -562,8 +594,7 @@ document.getElementById("modalTitle")
 .innerText = post.title || ''
 
 document.getElementById("modalContent")
-.innerText = post.content || ''
-
+.innerHTML = makeLinksClickable(post.content || '')
 imageBar.innerHTML = ""
 
 post.media_urls?.forEach((url,index)=>{
