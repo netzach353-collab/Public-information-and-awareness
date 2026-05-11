@@ -394,6 +394,30 @@ border-radius:10px;
 cursor:pointer;
 font-size:14px;
 }
+
+.upload-warning{
+
+background:#fff7ed;
+
+border:1px solid #fdba74;
+
+color:#9a3412;
+
+padding:18px;
+
+border-radius:18px;
+
+text-align:center;
+
+font-size:15px;
+
+line-height:1.8;
+
+margin-bottom:20px;
+
+box-shadow:0 4px 12px rgba(0,0,0,.05);
+
+}
 </style>
 
 </head>
@@ -468,6 +492,8 @@ multiple
 
 <div class="upload-subtitle">
 אפשר לבחור כמה קבצים
+<br>
+עד 4 סרטונים
 </div>
 
 </div>
@@ -492,6 +518,17 @@ id="statusBox"
 ></div>
 
 </form>
+
+<div class="upload-warning">
+
+העלאת מספר סרטונים כבדה ויכולה לקחת
+מספר שניות / דקות.
+<br><br>
+נא להתאזר בסבלנות 🙏
+<br>
+אנחנו מודים לכם מאוד.
+
+</div>
 
 <script type="module">
 
@@ -587,6 +624,29 @@ mediaInput.addEventListener(
 
 const files =
 Array.from(mediaInput.files)
+
+const currentVideos =
+selectedFiles.filter(
+f => f.type.startsWith("video")
+).length
+
+const newVideos =
+files.filter(
+f => f.type.startsWith("video")
+).length
+
+if(currentVideos + newVideos > 4){
+
+showStatus(
+"אפשר להעלות עד 4 סרטונים בלבד",
+"error"
+)
+
+mediaInput.value = ""
+
+return
+
+}
 
 files.forEach(file=>{
 
