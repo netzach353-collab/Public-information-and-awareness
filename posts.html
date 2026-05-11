@@ -688,6 +688,7 @@ background:black;
 
 <video
 src="${post.media_urls[0]}"
+poster="${post.media_urls[1] || ''}"
 muted
 playsinline
 webkit-playsinline
@@ -875,6 +876,7 @@ mediaThumb.setAttribute(
 'webkit-playsinline',
 true
 )
+
 mediaThumb.preload = "auto"
 
 mediaThumb.style.objectFit = "cover"
