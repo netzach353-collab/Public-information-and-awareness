@@ -556,16 +556,44 @@ post.media_urls?.[0]?.includes(".mp4")
 
 ? `
 <div style="
+position:relative;
 width:100%;
 height:130px;
-background:#111827;
+overflow:hidden;
+background:black;
+">
+
+<video
+src="${post.media_urls[0]}"
+muted
+playsinline
+preload="metadata"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+pointer-events:none;
+"
+></video>
+
+<div style="
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:42px;
+height:42px;
+border-radius:50%;
+background:rgba(0,0,0,.55);
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:45px;
 color:white;
+font-size:20px;
 ">
 ▶
+</div>
+
 </div>
 `
 
@@ -610,11 +638,6 @@ ${makeLinksClickable(post.content)}
 
 }
 
-/* OPEN POST */
-
-const postModal =
-document.getElementById("postModal")
-
 function openPost(post){
 
 const mediaContainer =
@@ -627,9 +650,12 @@ if(mediaUrl.includes(".mp4")){
 
 mediaContainer.innerHTML = `
 <video
+id="activeVideo"
 class="modal-image"
 src="${mediaUrl}"
 controls
+autoplay
+muted
 playsinline
 style="
 width:100%;
@@ -649,40 +675,63 @@ src="${mediaUrl}">
 `
 
 }
+
 const imageBar =
 document.getElementById("imageBar")
-
-
 
 document.getElementById("modalTitle")
 .innerText = post.title || ''
 
 document.getElementById("modalContent")
-.innerHTML = makeLinksClickable(post.content || '')
+.innerHTML =
+makeLinksClickable(post.content || '')
+
 imageBar.innerHTML = ""
 
 post.media_urls?.forEach((url,index)=>{
 
-const img =
+let mediaThumb
+
+if(url.includes(".mp4")){
+
+mediaThumb =
+document.createElement("video")
+
+mediaThumb.src = url
+
+mediaThumb.muted = true
+mediaThumb.playsInline = true
+mediaThumb.preload = "metadata"
+
+}else{
+
+mediaThumb =
 document.createElement("img")
 
-img.src = url
+mediaThumb.src = url
 
-img.className = "image-thumb"
-
-if(index === 0){
-img.classList.add("active")
 }
 
-img.onclick = ()=>{
+mediaThumb.className = "image-thumb"
+
+if(index === 0){
+
+mediaThumb.classList.add("active")
+
+}
+
+mediaThumb.onclick = ()=>{
 
 if(url.includes(".mp4")){
 
 mediaContainer.innerHTML = `
 <video
+id="activeVideo"
 class="modal-image"
 src="${url}"
 controls
+autoplay
+muted
 playsinline
 style="
 width:100%;
@@ -711,11 +760,11 @@ el.classList.remove("active")
 
 })
 
-img.classList.add("active")
+mediaThumb.classList.add("active")
 
 }
 
-imageBar.appendChild(img)
+imageBar.appendChild(mediaThumb)
 
 })
 
@@ -726,6 +775,17 @@ window.scrollTo(0,0)
 }
 
 function closePost(){
+
+const activeVideo =
+document.getElementById("activeVideo")
+
+if(activeVideo){
+
+activeVideo.pause()
+
+activeVideo.currentTime = 0
+
+}
 
 postModal.classList.remove("show")
 
