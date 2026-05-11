@@ -687,8 +687,7 @@ data.filter(post => post.type === "post")
 const heroPosts =
 data.filter(post => post.type === "hero")
 
-renderPosts(normalPosts)
-renderHero(heroPosts)
+renderPosts(normalPosts.slice(0,10))
 
 
 }
@@ -1030,6 +1029,57 @@ window.goUpload = goUpload
 
 loadPosts()
 
+
+/* ---------- AUTO REFRESH + CLEAR CACHE ---------- */
+
+let inactivityTimer
+
+function resetInactivityTimer(){
+
+clearTimeout(inactivityTimer)
+
+inactivityTimer = setTimeout(()=>{
+
+/* ניקוי cache */
+if('caches' in window){
+
+caches.keys().then(names=>{
+
+names.forEach(name=>{
+
+caches.delete(name)
+
+})
+
+})
+
+}
+
+/* ריענון */
+window.location.reload(true)
+
+},5 * 60 * 1000)
+
+}
+
+/* פעולות משתמש */
+[
+"click",
+"touchstart",
+"scroll",
+"mousemove",
+"keydown"
+].forEach(event=>{
+
+document.addEventListener(
+event,
+resetInactivityTimer,
+true
+)
+
+})
+
+resetInactivityTimer()
 </script>
 
 </body>
