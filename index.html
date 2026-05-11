@@ -780,8 +780,7 @@ function renderPosts(posts){
       onclick="openPost('${post.id}')">
 
 ${
-post.media_urls?.[0]?.includes(".mp4")
-
+post.thumbnail_urls?.[0]
 ? `
 <div style="
 position:relative;
@@ -794,6 +793,7 @@ background:black;
 
 <video
 src="${post.media_urls[0]}"
+poster="${post.media_urls?.[1] || ''}"
 muted
 playsinline
 webkit-playsinline
@@ -829,7 +829,7 @@ font-size:14px;
 
 : post.media_urls?.[0]
 
-? `<img src="${post.media_urls[0]}" alt="">`
+? `<img src="${post.thumbnail_urls[0]}">`
 
 : `<div class="no-image">
 👤
