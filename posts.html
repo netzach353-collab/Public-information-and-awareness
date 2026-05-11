@@ -216,11 +216,11 @@ transform:translateY(0);
 width:100%;
 height:280px;
 object-fit:cover;
+
+/* חדש */
+margin-top:80px;
 }
 
-.modal-body{
-padding:20px;
-}
 
 .modal-title{
 font-size:28px;
@@ -231,16 +231,11 @@ line-height:1.5;
 
 }
 
-.modal-content{
-font-size:17px;
-line-height:2;
-color:#374151;
-white-space:pre-wrap;
-}
+
 
 .modal-close{
 position:fixed;
-top:15px;
+top: 10px;
 left:15px;
 width:42px;
 height:42px;
@@ -271,14 +266,16 @@ height:180px;
 display:flex;
 gap:10px;
 overflow-x:auto;
-padding:2px;
-background:rgb(226, 224, 224);
+
+padding:14px 12px;
+
+background:rgb(255, 255, 255);
+border-bottom: solid 1px rgb(226, 225, 225);
 }
 
-
 .image-thumb{
-width: 40px;
-height: 40px;
+width: 60px;
+height: 60px;
 object-fit:cover;
 border-radius:10px;
 cursor:pointer;
@@ -403,6 +400,38 @@ letter-spacing:.2px;
 
 backdrop-filter:blur(8px);
 }
+
+.modal-topbar{
+position:fixed;
+top:0;
+right:0;
+left:0;
+height:60px;
+
+display:flex;
+align-items:center;
+gap:12px;
+
+padding:0 16px;
+
+background:rgba(255,255,255,.9);
+backdrop-filter:blur(10px);
+
+z-index:5000;
+
+border-bottom:1px solid #e5e7eb;
+}
+
+.modal-post-title{
+font-size:16px;
+font-weight:bold;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+
+flex:1;
+}
 </style>
 </head>
 
@@ -494,10 +523,18 @@ id="postsGrid"></div>
 <div class="post-modal"
 id="postModal">
 
+<div class="modal-topbar">
+
 <button class="modal-close"
 onclick="closePost()">
 ✕
 </button>
+
+<div class="modal-post-title"
+id="modalTopTitle">
+</div>
+
+</div>
 
 <div id="mediaContainer"></div>
 
@@ -768,6 +805,8 @@ document.getElementById("imageBar")
 document.getElementById("modalTitle")
 .innerText = post.title || ''
 
+document.getElementById("modalTopTitle")
+.innerText = post.title || ''
 document.getElementById("modalContent")
 .innerHTML =
 makeLinksClickable(post.content || '')
@@ -828,14 +867,21 @@ document.createElement("video")
 mediaThumb.src = url
 
 mediaThumb.muted = true
-mediaThumb.autoplay = true
-mediaThumb.loop = true
 mediaThumb.playsInline = true
 mediaThumb.preload = "metadata"
 
 mediaThumb.style.objectFit = "cover"
 mediaThumb.style.background = "black"
 
+mediaThumb.controls = false
+
+mediaThumb.currentTime = 0
+
+mediaThumb.addEventListener("loadeddata",()=>{
+
+mediaThumb.pause()
+
+})
 }else{
 
 mediaThumb =
