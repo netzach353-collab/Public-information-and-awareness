@@ -30,7 +30,8 @@ h2{
 
 margin-bottom:20px;
 font-size:28px;
-
+display: flex;
+justify-content: center;
 }
 
 form{
@@ -420,7 +421,7 @@ font-size:16px;
 line-height:2;
 
 box-shadow:0 20px 60px rgba(0,0,0,.25);
-
+animation:popup .25s ease;
 }
 
 .warning-overlay{
@@ -439,12 +440,36 @@ z-index:999998;
 
 }
 .back-btn{
-position: relative;
-display: flex;
-justify-content:left;
-left: 0;
-top: 0;
-margin-bottom: 20px;
+
+display:flex;
+
+justify-content: left;
+margin-bottom:60px;
+
+}
+
+@keyframes popup{
+
+from{
+
+opacity:0;
+
+transform:
+translate(-50%,-50%)
+scale(.9);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translate(-50%,-50%)
+scale(1);
+
+}
+
 }
 </style>
 
@@ -466,14 +491,14 @@ cursor:pointer;
 font-size:14px;
 border-bottom:  solid 1px;
 ">
-חזרה לדף הראשי
+יציאה לדף הראשי
 </button>
 </div>
 
   <h2>
 העלאת פוסט
 </h2>
-<form id="postForm">
+
   <div
 class="warning-overlay"
 id="warningOverlay"
@@ -495,6 +520,8 @@ style="display:none"
 אנחנו מודים לכם מאוד.
 
 </div>
+<form id="postForm">
+
 <div>
 
 <input
@@ -1029,6 +1056,10 @@ document
 .getElementById("uploadWarning")
 .style.display = "none"
 
+document
+.getElementById("warningOverlay")
+.style.display = "none"
+
 submitBtn.disabled = false
 
 return
@@ -1072,6 +1103,10 @@ document
 .getElementById("uploadWarning")
 .style.display = "none"
 
+document
+.getElementById("warningOverlay")
+.style.display = "none"
+
 submitBtn.disabled = false
 
 return
@@ -1088,6 +1123,11 @@ clearTimeout(uploadWarningTimeout)
 document
 .getElementById("uploadWarning")
 .style.display = "none"
+
+document
+.getElementById("warningOverlay")
+.style.display = "none"
+
 setTimeout(()=>{
 
 window.location.href =
