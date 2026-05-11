@@ -706,7 +706,7 @@ playsinline
 style="
 width:100%;
 height:280px;
-object-fit:cover;
+object-fit:contain;
 background:black;
 ">
 </video>
@@ -788,8 +788,13 @@ document.createElement("video")
 mediaThumb.src = url
 
 mediaThumb.muted = true
+mediaThumb.autoplay = true
+mediaThumb.loop = true
 mediaThumb.playsInline = true
 mediaThumb.preload = "metadata"
+
+mediaThumb.style.objectFit = "cover"
+mediaThumb.style.background = "black"
 
 }else{
 
@@ -824,7 +829,7 @@ playsinline
 style="
 width:100%;
 height:280px;
-object-fit:cover;
+object-fit:contain;
 background:black;
 ">
 </video>
