@@ -349,6 +349,51 @@ transform:rotate(360deg);
 }
 
 }
+
+.links-box{
+background:white;
+padding:16px;
+border-radius:18px;
+border:1px solid #e5e7eb;
+}
+
+.links-title{
+font-size:18px;
+font-weight:bold;
+margin-bottom:14px;
+}
+
+.link-item{
+display:flex;
+flex-direction:column;
+gap:10px;
+padding:12px;
+background:#f8fafc;
+border-radius:14px;
+margin-bottom:12px;
+border:1px solid #e2e8f0;
+}
+
+.add-link-btn{
+height:46px;
+border:none;
+background:#111827;
+color:white;
+padding:0 18px;
+border-radius:12px;
+cursor:pointer;
+font-size:15px;
+}
+
+.remove-link{
+height:42px;
+border:none;
+background:#ef4444;
+color:white;
+border-radius:10px;
+cursor:pointer;
+font-size:14px;
+}
 </style>
 
 </head>
@@ -383,6 +428,23 @@ placeholder="תוכן"
 required
 ></textarea>
 
+<div class="links-box">
+
+<div class="links-title">
+לינקים לפוסט
+</div>
+
+<div id="linksContainer"></div>
+
+<button
+type="button"
+class="add-link-btn"
+onclick="addLinkField()"
+>
++ הוסף לינק
+</button>
+
+</div>
 
 
 <label class="upload-box">
@@ -637,6 +699,107 @@ mediaInput.value = ""
 
 })
 
+
+let links = []
+
+function addLinkField(){
+
+const id = Date.now()
+
+links.push({
+id,
+title:"",
+url:""
+})
+
+renderLinks()
+
+}
+
+function renderLinks(){
+
+const container =
+document.getElementById("linksContainer")
+
+container.innerHTML = ""
+
+links.forEach(link=>{
+
+container.innerHTML += `
+
+<div class="link-item">
+
+<input
+placeholder="שם הלינק"
+value="${link.title}"
+oninput="updateLinkTitle(${link.id},this.value)"
+>
+
+<input
+placeholder="https://example.com"
+value="${link.url}"
+oninput="updateLinkUrl(${link.id},this.value)"
+>
+
+<button
+type="button"
+class="remove-link"
+onclick="removeLink(${link.id})"
+>
+מחק לינק
+</button>
+
+</div>
+
+`
+
+})
+
+}
+
+window.updateLinkTitle =
+(id,value)=>{
+
+links = links.map(link=>
+
+link.id === id
+
+? {...link,title:value}
+
+: link
+
+)
+
+}
+
+window.updateLinkUrl =
+(id,value)=>{
+
+links = links.map(link=>
+
+link.id === id
+
+? {...link,url:value}
+
+: link
+
+)
+
+}
+
+window.removeLink =
+(id)=>{
+
+links =
+links.filter(link=>link.id !== id)
+
+renderLinks()
+
+}
+
+window.addLinkField =
+addLinkField
+
 /* ---------- שליחה ---------- */
 
 form.addEventListener(
@@ -727,6 +890,8 @@ await supabase
 title,
 
 content,
+
+links,
 
 media_urls:mediaUrls,
 
