@@ -320,6 +320,49 @@ word-break:break-word;
 .live-link:hover{
 color:#1d4ed8;
 }
+
+.post-links{
+display:flex;
+flex-direction:column;
+gap:12px;
+margin-top:20px;
+}
+
+.post-link-card{
+display:flex;
+align-items:center;
+gap:12px;
+padding:14px;
+border-radius:16px;
+background:white;
+border:1px solid #e5e7eb;
+text-decoration:none;
+}
+
+.post-link-icon{
+width:46px;
+height:46px;
+border-radius:12px;
+background:#111827;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+flex:none;
+}
+
+.post-link-title{
+font-weight:bold;
+color:#111827;
+margin-bottom:4px;
+}
+
+.post-link-url{
+font-size:13px;
+color:#6b7280;
+word-break:break-all;
+}
 </style>
 </head>
 
@@ -685,6 +728,47 @@ document.getElementById("modalTitle")
 document.getElementById("modalContent")
 .innerHTML =
 makeLinksClickable(post.content || '')
+
+if(post.links?.length){
+
+document.getElementById("modalContent")
+.innerHTML += `
+
+<div class="post-links">
+
+${post.links.map(link=>`
+
+<a
+href="${link.url}"
+target="_blank"
+class="post-link-card"
+>
+
+<div class="post-link-icon">
+🔗
+</div>
+
+<div>
+
+<div class="post-link-title">
+${link.title}
+</div>
+
+<div class="post-link-url">
+${link.url}
+</div>
+
+</div>
+
+</a>
+
+`).join("")}
+
+</div>
+
+`
+
+}
 
 imageBar.innerHTML = ""
 
