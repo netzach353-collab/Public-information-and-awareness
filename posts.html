@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
-<title>העלת פוסטים ״בסייעתא דשמיא״</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>כל הפוסטים - יראת השם</title>
 
 <style>
 
@@ -19,513 +14,544 @@ box-sizing:border-box;
 }
 
 body{
-
-font-family:Arial;
-background:#f8fafc;
-padding:20px;
-
+font-family:Arial,sans-serif;
+background:#f1f5f9;
 }
 
-h2{
+/* TOPBAR */
 
-margin-bottom:20px;
-font-size:28px;
-
-}
-
-form{
-
-display:flex;
-flex-direction:column;
-gap:16px;
-
-}
-
-input,
-textarea{
-
-width:100%;
-
-padding:15px;
-
-border-radius:14px;
-
-border:1px solid #d1d5db;
-
-font-size:16px;
-
-background:white;
-
-}
-
-textarea{
-
-min-height:160px;
-resize:none;
-
-}
-
-.upload-box{
-
-width:100%;
-
-min-height:180px;
-
-border:2px dashed #cbd5e1;
-
-border-radius:20px;
-
-background:white;
-
-display:flex;
-
-align-items:center;
-justify-content:center;
-
-position:relative;
-
-overflow:hidden;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.upload-box:hover{
-
-border-color:#111827;
-
-}
-
-.upload-box input{
-
-position:absolute;
-inset:0;
-
-opacity:0;
-
-cursor:pointer;
-
-}
-
-.upload-content{
-
-text-align:center;
-
-pointer-events:none;
-
-}
-
-.upload-icon{
-
-width:70px;
-height:70px;
-
-border-radius:50%;
-
+.topbar{
+position:sticky;
+top:0;
+z-index:1000;
+height:60px;
 background:#111827;
-
 color:white;
-
 display:flex;
-
 align-items:center;
-justify-content:center;
-
-font-size:30px;
-
-margin:auto;
-margin-bottom:14px;
-
+justify-content:space-between;
+padding:0 15px;
+box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
-.upload-title{
-
-font-size:18px;
+.logo{
+font-size:22px;
 font-weight:bold;
+}
 
+.menu-btn{
+background:#ffffff1a;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+/* OVERLAY */
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+opacity:0;
+visibility:hidden;
+transition:.25s;
+z-index:1100;
+}
+
+.overlay.show{
+opacity:1;
+visibility:visible;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:0;
+right:-290px;
+width:280px;
+height:100%;
+background:white;
+z-index:1200;
+transition:.25s;
+box-shadow:-10px 0 20px rgba(0,0,0,.15);
+padding:20px;
+overflow:auto;
+}
+
+.sidebar.show{
+right:0;
+}
+
+.side-link{
+display:block;
+padding:12px;
+background:#f1f5f9;
+border-radius:10px;
+margin-bottom:10px;
+text-decoration:none;
+color:#111;
+}
+
+.close-btn{
+background:#e5e7eb;
+border:none;
+padding:7px 12px;
+border-radius:8px;
+cursor:pointer;
+margin-bottom:15px;
+}
+
+/* ACTIONS */
+
+.actions1{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+}
+
+.actions1 span{
+padding:12px;
+border-left:solid 1px #d1d5db;
+background:white;
+font-size:14px;
+text-align:center;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* TITLE */
+
+.page-title{
+padding:20px;
+font-size:26px;
+font-weight:bold;
+color:#111827;
+}
+
+/* POSTS */
+
+.container{
+padding:0 12px 20px;
+}
+
+.posts-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+/* CARD */
+
+.card{
+background:white;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+cursor:pointer;
+transition:.2s;
+}
+
+.card:active{
+transform:scale(.98);
+}
+
+.card img{
+width:100%;
+height:130px;
+object-fit:cover;
+display:block;
+}
+
+.card-body{
+padding:10px;
+}
+
+.tag{
+font-size:14px;
+font-weight:bold;
+color:#111827;
 margin-bottom:6px;
 
-}
-
-.upload-subtitle{
-
-color:#64748b;
-font-size:14px;
-
-}
-
-.preview-container{
-
-display:flex;
-flex-wrap:wrap;
-gap:12px;
-
-}
-
-.preview-item{
-
-position:relative;
-
-width:120px;
-height:120px;
-
-border-radius:18px;
+display:-webkit-box;
+-webkit-line-clamp:1;
+-webkit-box-orient:vertical;
 
 overflow:hidden;
-
-background:#000;
-
 }
 
-.preview-item img,
-.preview-item video{
+.post-content{
+font-size:12px;
+line-height:1.6;
+color:#4b5563;
+text-align:right;
 
+display:-webkit-box;
+-webkit-line-clamp:3;
+-webkit-box-orient:vertical;
+
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+/* MODAL */
+
+.post-modal{
+position:fixed;
+inset:0;
+background:#f8fafc;
+z-index:3000;
+overflow:auto;
+transform:translateY(100%);
+transition:.3s;
+}
+
+.post-modal.show{
+transform:translateY(0);
+}
+
+.modal-image{
 width:100%;
-height:100%;
-
+height:280px;
 object-fit:cover;
 
+/* חדש */
+margin-top:80px;
 }
 
-.remove-btn{
 
-position:absolute;
-
-top:8px;
-left:8px;
-
-width:34px;
-height:34px;
-
-border:none;
-
-border-radius:50%;
-
-background:rgba(0,0,0,.8);
-
-color:white;
-
-font-size:18px;
-
-cursor:pointer;
-
-z-index:10;
+.modal-title{
+font-size:28px;
+font-weight:bold;
+margin-bottom:20px;
+color:#111827;
+line-height:1.5;
 
 }
 
-button.submit-btn{
 
-height:54px;
 
-border:none;
-
-background:#111827;
-
-color:white;
-
-border-radius:14px;
-
-font-size:17px;
-
-cursor:pointer;
-
-}
-
-button.submit-btn:disabled{
-
-opacity:.6;
-
-}
-
-.status{
-
-display:none;
-
+.modal-close{
 position:fixed;
-
-top:15px;
-right:50%;
-
-transform:translateX(50%);
-
-z-index:99999;
-
-padding:14px 20px;
-
-border-radius:14px;
-
-font-size:15px;
-
-font-weight:bold;
-
-min-width:220px;
-
-text-align:center;
-
-box-shadow:0 10px 25px rgba(0,0,0,.15);
-
-animation:showStatus .25s ease;
-
-}
-
-@keyframes showStatus{
-
-from{
-
-opacity:0;
-transform:translateX(50%) translateY(-15px);
-
-}
-
-to{
-
-opacity:1;
-transform:translateX(50%) translateY(0);
-
-}
-
-}
-
-.loading{
-
-background:#dbeafe;
-color:#1e40af;
-
-}
-
-.success{
-
-background:#dcfce7;
-color:#166534;
-
-}
-
-.error{
-
-background:#fee2e2;
-color:#991b1b;
-
-}
-
-#titleCounter{
-margin-top:6px;
-font-size:13px;
-color:#64748b;
-text-align:left;
-}
-
-
-
-
-.loader{
-
-width:18px;
-height:18px;
-
-border:3px solid rgba(255,255,255,.35);
-
-border-top-color:currentColor;
-
-border-radius:50%;
-
-animation:spin .8s linear infinite;
-
-}
-
-@keyframes spin{
-
-to{
-transform:rotate(360deg);
-}
-
-}
-
-.links-box{
-background:white;
-padding:16px;
-border-radius:18px;
-border:1px solid #e5e7eb;
-}
-
-.links-title{
-font-size:18px;
-font-weight:bold;
-margin-bottom:14px;
-}
-
-.link-item{
-display:flex;
-flex-direction:column;
-gap:10px;
-padding:12px;
-background:#f8fafc;
-border-radius:14px;
-margin-bottom:12px;
-border:1px solid #e2e8f0;
-}
-
-.add-link-btn{
-height:46px;
-border:none;
-background:#111827;
-color:white;
-padding:0 18px;
-border-radius:12px;
-cursor:pointer;
-font-size:15px;
-}
-
-.remove-link{
+top: 10px;
+left:15px;
+width:42px;
 height:42px;
 border:none;
-background:#ef4444;
-color:white;
+border-radius:50%;
+background:white;
+font-size:20px;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,.15);
+z-index:5000;
+}
+
+/* DESKTOP */
+
+@media(min-width:800px){
+
+.posts-grid{
+grid-template-columns:repeat(4,1fr);
+}
+
+.card img{
+height:180px;
+}
+
+}
+
+.image-bar{
+display:flex;
+gap:10px;
+overflow-x:auto;
+
+padding:14px 12px;
+
+background:rgb(255, 255, 255);
+border-bottom: solid 1px rgb(226, 225, 225);
+}
+
+.image-thumb{
+width: 60px;
+height: 60px;
+object-fit:cover;
 border-radius:10px;
 cursor:pointer;
-font-size:14px;
+border:3px solid transparent;
+flex:none;
 }
 
-.upload-warning{
+.image-thumb.active{
+border-color:#97989a;
+}
 
-background:#fff7ed;
+.modal-content{
+font-size:17px;
+line-height:2;
+color:#374151;
+white-space:pre-wrap;
 
-border:1px solid #fdba74;
+/* חדש */
 
-color:#9a3412;
+word-break:break-word;
+overflow-wrap:break-word;
 
-padding:18px;
+max-width:100%;
+overflow-x:auto;
 
-border-radius:18px;
+}
 
-text-align:center;
+.modal-body{
+padding:20px;
+overflow-x:hidden;
+}
+  
+  .live-link{
+color:#2563eb;
+font-weight:bold;
+text-decoration:underline;
+word-break:break-word;
+}
 
-font-size:15px;
+.live-link:hover{
+color:#1d4ed8;
+}
 
-line-height:1.8;
+.post-links{
+display:flex;
+flex-direction:column;
+gap:12px;
+margin-top:20px;
+}
 
-margin-bottom:20px;
+.post-link-card{
+display:flex;
+align-items:center;
+gap:12px;
+padding:14px;
+border-radius:16px;
+background:white;
+border:1px solid #e5e7eb;
+text-decoration:none;
+}
 
-box-shadow:0 4px 12px rgba(0,0,0,.05);
+.post-link-icon{
+width:46px;
+height:46px;
+border-radius:12px;
+background:#111827;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+flex:none;
+}
 
+.post-link-title{
+font-weight:bold;
+color:#111827;
+margin-bottom:4px;
+}
+
+.post-link-url{
+font-size:13px;
+color:#6b7280;
+word-break:break-all;
+}
+
+/* CONTENT */
+
+.modal-content{
+font-size:18px;
+line-height:2.3;
+color:#334155;
+
+white-space:pre-wrap;
+
+word-break:break-word;
+overflow-wrap:break-word;
+
+max-width:100%;
+overflow-x:auto;
+
+/* חדש */
+
+background:
+linear-gradient(
+180deg,
+#ffffff,
+#f8fafc
+);
+
+padding:24px;
+
+border-radius:24px;
+
+border:
+1px solid #e2e8f0;
+
+box-shadow:
+0 8px 24px rgba(15,23,42,.06);
+
+letter-spacing:.2px;
+
+backdrop-filter:blur(8px);
+}
+
+.modal-topbar{
+position:fixed;
+top:0;
+right:0;
+left:0;
+height:60px;
+
+display:flex;
+align-items:center;
+gap:12px;
+
+padding:0 16px;
+
+background:rgba(255,255,255,.9);
+backdrop-filter:blur(10px);
+
+z-index:5000;
+
+border-bottom:1px solid #e5e7eb;
+}
+
+.modal-post-title{
+font-size:16px;
+font-weight:bold;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+
+flex:1;
 }
 </style>
-
 </head>
 
 <body>
 
-<h2>
-העלאת פוסט
-</h2>
+<!-- TOPBAR -->
 
-<form id="postForm">
-<div
-class="upload-warning"
-id="uploadWarning"
-style="display:none"
->
+<div class="topbar">
 
-העלאת מספר סרטונים כבדה ויכולה לקחת
-מספר שניות / דקות.
-<br><br>
-
-נא להתאזר בסבלנות 🙏
-<br>
-
-אנחנו מודים לכם מאוד.
-
-</div>
-<div>
-
-<input
-type="text"
-id="title"
-placeholder="שם משתמש"
-maxlength="15"
-required
->
-
-<div id="titleCounter">
-0 / 15
-</div>
-
-</div>
-
-<textarea
-id="content"
-placeholder="תוכן"
-required
-></textarea>
-
-<div class="links-box">
-
-<div class="links-title">
-לינקים לפוסט
-</div>
-
-<div id="linksContainer"></div>
-
-<button
-type="button"
-class="add-link-btn"
-onclick="addLinkField()"
->
-+ הוסף לינק
+<button class="menu-btn"
+onclick="openMenu()">
+☰ תפריט
 </button>
 
-</div>
-
-
-<label class="upload-box">
-
-<input
-type="file"
-id="media"
-accept="image/*,video/*"
-multiple
->
-
-<div class="upload-content">
-
-<div class="upload-icon">
-⬆
-</div>
-
-<div class="upload-title">
-העלאת תמונות וסרטונים (אופציונאלי)
-</div>
-
-<div class="upload-subtitle">
-אפשר לבחור כמה קבצים
-<br>
-עד 4 סרטונים
+<div class="logo">
+״בסייעתא דשמיא״
 </div>
 
 </div>
 
-</label>
+<!-- OVERLAY -->
 
-<div
-class="preview-container"
-id="previewContainer"
-></div>
+<div class="overlay"
+id="overlay"
+onclick="closeMenu()"></div>
 
-<button
-class="submit-btn"
-id="submitBtn"
->
-פרסם פוסט
+<!-- SIDEBAR -->
+
+<div class="sidebar"
+id="sidebar">
+
+<button class="close-btn"
+onclick="closeMenu()">
+סגירה
 </button>
 
-<div
-class="status"
-id="statusBox"
-></div>
+<a href="index.html"
+class="side-link">
+דף הבית
+</a>
 
-</form>
+<a href="posts.html"
+class="side-link">
+כל הפוסטים
+</a>
 
+<a href="upload.html"
+class="side-link">
+העלת פוסט
+</a>
+
+</div>
+
+<!-- ACTIONS -->
+
+<div class="actions1">
+
+<span onclick="goHome()">
+דף ראשי
+</span>
+
+<span onclick="goPosts()">
+לכל הפוסטים
+</span>
+
+<span onclick="goUpload()">
+העלת פוסט
+</span>
+
+</div>
+
+<!-- TITLE -->
+
+<div class="page-title">
+כל הפוסטים
+</div>
+
+<!-- POSTS -->
+
+<div class="container">
+
+<div class="posts-grid"
+id="postsGrid"></div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="post-modal"
+id="postModal">
+
+<div class="modal-topbar">
+
+<button class="modal-close"
+onclick="closePost()">
+✕
+</button>
+
+<div class="modal-post-title"
+id="modalTopTitle">
+</div>
+
+</div>
+
+<div id="mediaContainer"></div>
+
+<div class="image-bar"
+id="imageBar"></div>
+
+<div class="modal-body">
+
+<div class="modal-title"
+id="modalTitle"></div>
+
+<div class="modal-content"
+id="modalContent"></div>
+
+</div>
+
+</div>
 
 <script type="module">
 
@@ -538,277 +564,195 @@ const supabaseUrl =
 const supabaseKey =
 'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
 
-const supabase =
-createClient(
+const supabase = createClient(
 supabaseUrl,
 supabaseKey
 )
 
-const form =
-document.getElementById("postForm")
+/* SIDEBAR */
 
-const mediaInput =
-document.getElementById("media")
+const sidebar =
+document.getElementById("sidebar")
 
-const previewContainer =
-document.getElementById("previewContainer")
+const overlay =
+document.getElementById("overlay")
 
-const statusBox =
-document.getElementById("statusBox")
+function openMenu(){
 
-const submitBtn =
-document.getElementById("submitBtn")
+sidebar.classList.add("show")
+overlay.classList.add("show")
 
-const titleInput =
-document.getElementById("title")
+}
 
-const titleCounter =
-document.getElementById("titleCounter")
+function closeMenu(){
 
-titleInput.addEventListener(
-"input",
-()=>{
+sidebar.classList.remove("show")
+overlay.classList.remove("show")
 
-const max = 15
+}
 
-const current =
-titleInput.value.length
+window.openMenu = openMenu
+window.closeMenu = closeMenu
 
-const left =
-max - current
+  
+  function makeLinksClickable(text){
 
-titleCounter.innerText =
-`${current} / ${max}`
+  if(!text) return ""
 
-})
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
 
-let selectedFiles = []
+  return text.replace(urlRegex, function(url){
 
-function showStatus(text,type){
-
-statusBox.style.display = "flex"
-
-statusBox.className =
-`status ${type}`
-
-if(type === "loading"){
-
-statusBox.innerHTML = `
-
-<div class="loader"></div>
-
-<span>${text}</span>
-
+ return `
+<a href="${url}"
+target="_blank"
+rel="noopener noreferrer"
+class="live-link">
+${url}
+</a>
 `
 
-}else{
-
-statusBox.innerHTML = `
-
-<span>${text}</span>
-
-`
+  })
 
 }
+  
+/* POSTS */
 
-}
+const postsGrid =
+document.getElementById("postsGrid")
 
-/* ---------- תצוגה מקדימה ---------- */
+async function loadPosts(){
 
-mediaInput.addEventListener(
-"change",
-()=>{
+const { data, error } =
+await supabase
+.from('posts')
+.select('*')
+.order('created_at',{ascending:false})
 
-const files =
-Array.from(mediaInput.files)
-
-const currentVideos =
-selectedFiles.filter(
-f => f.type.startsWith("video")
-).length
-
-const newVideos =
-files.filter(
-f => f.type.startsWith("video")
-).length
-
-if(currentVideos + newVideos > 4){
-
-showStatus(
-"אפשר להעלות עד 4 סרטונים בלבד",
-"error"
-)
-
-mediaInput.value = ""
-
+if(error){
+console.log(error)
 return
-
 }
 
-files.forEach(file=>{
+const normalPosts =
+data.filter(post => post.type === "post")
 
-    const alreadyExists =
-selectedFiles.some(
-f =>
-f.name === file.name &&
-f.size === file.size
+renderPosts(normalPosts)
+
+if(postId){
+
+const selectedPost =
+normalPosts.find(
+post => String(post.id) === String(postId)
 )
 
-if(alreadyExists){
+if(selectedPost){
 
-  return
-
-}
-
-const maxSize =
-50 * 1024 * 1024
-
-if(file.size > maxSize){
-
-showStatus(
-`הקובץ ${file.name} גדול מ־50MB`,
-"error"
-)
-
-return
+openPost(selectedPost)
 
 }
 
-selectedFiles.push(file)
+}
+}
 
-const fileUrl =
-URL.createObjectURL(file)
+const params =
+new URLSearchParams(window.location.search)
 
-const div =
-document.createElement("div")
+const postId =
+params.get("id")
 
-div.className =
-"preview-item"
+function renderPosts(posts){
 
-if(
-file.type.startsWith("video")
-){
+postsGrid.innerHTML = ""
 
-div.innerHTML = `
+window.postsData = posts
 
-<button
-type="button"
-class="remove-btn"
->
-✕
-</button>
+posts.forEach(post=>{
+
+postsGrid.innerHTML += `
+
+<div class="card"
+onclick="openPostById('${post.id}')">
+
+${
+post.media_urls?.[0]?.includes(".mp4")
+
+? `
+<div style="
+position:relative;
+width:100%;
+height:130px;
+overflow:hidden;
+background:black;
+">
 
 <video
-src="${fileUrl}"
-controls
+src="${post.media_urls[0]}"
+muted
 playsinline
 webkit-playsinline
-muted
-preload="metadata"
+preload="auto"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+pointer-events:none;
+"
 ></video>
 
+<div style="
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:42px;
+height:42px;
+border-radius:50%;
+background:rgba(0,0,0,.55);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:20px;
+">
+▶
+</div>
+
+</div>
 `
 
-}else{
+: post.media_urls?.[0]
 
-div.innerHTML = `
-
-<button
-type="button"
-class="remove-btn"
->
-✕
-</button>
-
-<img
-src="${fileUrl}"
->
-
+? `
+<img src="${post.media_urls[0]}">
 `
 
+: `
+<div style="
+width:100%;
+height:130px;
+background:#e5e7eb;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+color:#6b7280;
+">
+👤
+</div>
+`
 }
+<div class="card-body">
 
-div
-.querySelector(".remove-btn")
+<div class="tag">
+${post.title || ''}
+</div>
 
-.addEventListener(
-"click",
-()=>{
+<div class="post-content">
+${makeLinksClickable(post.content)}
+</div>
 
-selectedFiles =
-selectedFiles.filter(
-f => f !== file
-)
-
-div.remove()
-
-})
-
-previewContainer.appendChild(div)
-
-setTimeout(()=>{
-
-div.scrollIntoView({
-behavior:"smooth",
-block:"end"
-})
-
-},100)
-})
-
-mediaInput.value = ""
-
-})
-
-
-let links = []
-
-function addLinkField(){
-
-const id = Date.now()
-
-links.push({
-id,
-title:"",
-url:""
-})
-
-renderLinks()
-
-}
-
-function renderLinks(){
-
-const container =
-document.getElementById("linksContainer")
-
-container.innerHTML = ""
-
-links.forEach(link=>{
-
-container.innerHTML += `
-
-<div class="link-item">
-
-<input
-placeholder="שם הלינק"
-value="${link.title}"
-oninput="updateLinkTitle(${link.id},this.value)"
->
-
-<input
-placeholder="https://example.com"
-value="${link.url}"
-oninput="updateLinkUrl(${link.id},this.value)"
->
-
-<button
-type="button"
-class="remove-link"
-onclick="removeLink(${link.id})"
->
-מחק לינק
-</button>
+</div>
 
 </div>
 
@@ -818,215 +762,259 @@ onclick="removeLink(${link.id})"
 
 }
 
-window.updateLinkTitle =
-(id,value)=>{
+function openPost(post){
 
-links = links.map(link=>
+const mediaContainer =
+document.getElementById("mediaContainer")
 
-link.id === id
+const mediaUrl =
+post.media_urls?.[0] || ""
 
-? {...link,title:value}
+if(mediaUrl.includes(".mp4")){
 
-: link
+mediaContainer.innerHTML = `
+<video
+id="activeVideo"
+class="modal-image"
+src="${mediaUrl}"
+controls
+autoplay
+muted
+playsinline
+webkit-playsinline
+style="
+width:100%;
+height:280px;
+object-fit:contain;
+background:black;
+">
+</video>
+`
 
-)
+}else{
+
+mediaContainer.innerHTML = `
+<img
+class="modal-image"
+src="${mediaUrl}">
+`
 
 }
 
-window.updateLinkUrl =
-(id,value)=>{
+const imageBar =
+document.getElementById("imageBar")
 
-links = links.map(link=>
+document.getElementById("modalTitle")
+.innerText = post.title || ''
 
-link.id === id
+document.getElementById("modalTopTitle")
+.innerText = post.title || ''
+document.getElementById("modalContent")
+.innerHTML =
+makeLinksClickable(post.content || '')
 
-? {...link,url:value}
+if(post.links?.length){
 
-: link
+document.getElementById("modalContent")
+.innerHTML += `
 
-)
+<div class="post-links">
+
+${post.links.map(link=>`
+
+<a
+href="${link.url}"
+target="_blank"
+rel="noopener noreferrer"
+class="post-link-card"
+>
+
+<div class="post-link-icon">
+🔗
+</div>
+
+<div>
+
+<div class="post-link-title">
+${link.title}
+</div>
+
+<div class="post-link-url">
+${link.url}
+</div>
+
+</div>
+
+</a>
+
+`).join("")}
+
+</div>
+
+`
 
 }
 
-window.removeLink =
-(id)=>{
+imageBar.innerHTML = ""
 
-links =
-links.filter(link=>link.id !== id)
+post.media_urls?.forEach((url,index)=>{
 
-renderLinks()
+let mediaThumb
+
+if(url.includes(".mp4")){
+
+mediaThumb =
+document.createElement("video")
+
+mediaThumb.src = url
+
+mediaThumb.muted = true
+mediaThumb.playsInline = true
+
+mediaThumb.setAttribute(
+'webkit-playsinline',
+true
+)
+mediaThumb.preload = "auto"
+
+mediaThumb.style.objectFit = "cover"
+mediaThumb.style.background = "black"
+
+mediaThumb.controls = false
+
+mediaThumb.currentTime = 0
+
+mediaThumb.addEventListener("loadeddata",()=>{
+
+mediaThumb.pause()
+
+})
+}else{
+
+mediaThumb =
+document.createElement("img")
+
+mediaThumb.src = url
 
 }
 
-window.addLinkField =
-addLinkField
+mediaThumb.className = "image-thumb"
 
-/* ---------- שליחה ---------- */
+if(index === 0){
 
-form.addEventListener(
-"submit",
+mediaThumb.classList.add("active")
 
-async(e)=>{
+}
 
-e.preventDefault()
+mediaThumb.onclick = ()=>{
 
-submitBtn.disabled = true
+if(url.includes(".mp4")){
 
-showStatus(
-"מעלה פוסט...",
-"loading"
-)
+mediaContainer.innerHTML = `
+<video
+id="activeVideo"
+class="modal-image"
+src="${url}"
+controls
+autoplay
+muted
+playsinline
+webkit-playsinline
+style="
+width:100%;
+height:280px;
+object-fit:contain;
+background:black;
+">
+</video>
+`
 
-const uploadWarningTimeout =
-setTimeout(()=>{
+}else{
+
+mediaContainer.innerHTML = `
+<img
+class="modal-image"
+src="${url}">
+`
+
+}
 
 document
-.getElementById("uploadWarning")
-.style.display = "block"
+.querySelectorAll(".image-thumb")
+.forEach(el=>{
 
-},10000)
-const title =
-document.getElementById("title").value
-
-const content =
-document.getElementById("content").value
-
-
-let mediaUrls = []
-
-
-/* ---------- העלאת קבצים ---------- */
-
-try{
-
-const uploadPromises = selectedFiles.map(async(file)=>{
-
-const fileName =
-
-Date.now() +
-"-" +
-Math.random()
-.toString(36)
-.slice(2)
-+
-"-" +
-file.name
-
-const { error:uploadError } =
-
-await supabase.storage
-
-.from("posts")
-
-.upload(
-fileName,
-file
-)
-
-if(uploadError){
-
-throw uploadError
-
-}
-
-const { data:urlData } =
-
-supabase.storage
-
-.from("posts")
-
-.getPublicUrl(fileName)
-
-return urlData.publicUrl
+el.classList.remove("active")
 
 })
 
-mediaUrls =
-await Promise.all(uploadPromises)
-
-}catch(err){
-
-console.log(err)
-
-showStatus(
-"שגיאה בהעלאת קבצים",
-"error"
-)
-
-clearTimeout(uploadWarningTimeout)
-
-document
-.getElementById("uploadWarning")
-.style.display = "none"
-
-submitBtn.disabled = false
-
-return
+mediaThumb.classList.add("active")
 
 }
 
-/* ---------- שמירת פוסט ---------- */
-
-const { error } =
-
-await supabase
-
-.from("posts")
-
-.insert([{
-
-title,
-
-content,
-
-links,
-
-media_urls:mediaUrls,
-
-type:"post"
-
-}])
-
-if(error){
-
-console.log(error)
-
-showStatus(
-"שגיאה בשמירת הפוסט",
-"error"
-)
-
-clearTimeout(uploadWarningTimeout)
-
-document
-.getElementById("uploadWarning")
-.style.display = "none"
-
-submitBtn.disabled = false
-
-return
-
-}
-
-showStatus(
-"הפוסט פורסם בהצלחה, מעביר לדף הראשי",
-"success"
-)
-
-clearTimeout(uploadWarningTimeout)
-
-document
-.getElementById("uploadWarning")
-.style.display = "none"
-setTimeout(()=>{
-
-window.location.href =
-"index.html"
-
-},1500)
+imageBar.appendChild(mediaThumb)
 
 })
 
+postModal.classList.add("show")
+
+window.scrollTo(0,0)
+
+}
+
+function closePost(){
+
+const activeVideo =
+document.getElementById("activeVideo")
+
+if(activeVideo){
+
+activeVideo.pause()
+
+activeVideo.currentTime = 0
+
+}
+
+postModal.classList.remove("show")
+
+}
+
+window.openPost = openPost
+window.closePost = closePost
+
+/* NAVIGATION */
+
+function goHome(){
+window.location.href = "index.html"
+}
+
+function goPosts(){
+window.location.href = "posts.html"
+}
+
+function goUpload(){
+window.location.href = "upload.html"
+}
+
+
+function openPostById(id){
+
+const post =
+window.postsData.find(
+p => String(p.id) === String(id)
+)
+
+if(post){
+openPost(post)
+}
+
+}
+
+window.openPostById = openPostById
+window.goHome = goHome
+window.goPosts = goPosts
+window.goUpload = goUpload
+
+loadPosts()
 </script>
 
 </body>
