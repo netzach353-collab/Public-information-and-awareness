@@ -688,10 +688,11 @@ background:black;
 
 <video
 src="${post.media_urls[0]}"
-muted
+poster="${post.media_urls[1] || ''}"
+
 playsinline
 webkit-playsinline
-preload="metadata"
+preload="auto"
 style="
 width:100%;
 height:100%;
@@ -778,7 +779,7 @@ class="modal-image"
 src="${mediaUrl}"
 controls
 autoplay
-muted
+
 playsinline
 webkit-playsinline
 style="
