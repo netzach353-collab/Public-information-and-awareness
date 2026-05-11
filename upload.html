@@ -317,15 +317,7 @@ text-align:left;
 }
 
 
-.status{
 
-display:none;
-
-align-items:center;
-justify-content:center;
-gap:10px;
-
-}
 
 .loader{
 
@@ -429,7 +421,22 @@ box-shadow:0 4px 12px rgba(0,0,0,.05);
 </h2>
 
 <form id="postForm">
+<div
+class="upload-warning"
+id="uploadWarning"
+style="display:none"
+>
 
+העלאת מספר סרטונים כבדה ויכולה לקחת
+מספר שניות / דקות.
+<br><br>
+
+נא להתאזר בסבלנות 🙏
+<br>
+
+אנחנו מודים לכם מאוד.
+
+</div>
 <div>
 
 <input
@@ -519,16 +526,6 @@ id="statusBox"
 
 </form>
 
-<div class="upload-warning">
-
-העלאת מספר סרטונים כבדה ויכולה לקחת
-מספר שניות / דקות.
-<br><br>
-נא להתאזר בסבלנות 🙏
-<br>
-אנחנו מודים לכם מאוד.
-
-</div>
 
 <script type="module">
 
@@ -704,6 +701,10 @@ class="remove-btn"
 <video
 src="${fileUrl}"
 controls
+playsinline
+webkit-playsinline
+muted
+preload="metadata"
 ></video>
 
 `
@@ -876,6 +877,14 @@ showStatus(
 "loading"
 )
 
+const uploadWarningTimeout =
+setTimeout(()=>{
+
+document
+.getElementById("uploadWarning")
+.style.display = "block"
+
+},10000)
 const title =
 document.getElementById("title").value
 
@@ -885,7 +894,6 @@ document.getElementById("content").value
 
 let mediaUrls = []
 
-/* ---------- העלאת קבצים ---------- */
 
 /* ---------- העלאת קבצים ---------- */
 
@@ -945,6 +953,12 @@ showStatus(
 "error"
 )
 
+clearTimeout(uploadWarningTimeout)
+
+document
+.getElementById("uploadWarning")
+.style.display = "none"
+
 submitBtn.disabled = false
 
 return
@@ -982,6 +996,12 @@ showStatus(
 "error"
 )
 
+clearTimeout(uploadWarningTimeout)
+
+document
+.getElementById("uploadWarning")
+.style.display = "none"
+
 submitBtn.disabled = false
 
 return
@@ -993,6 +1013,11 @@ showStatus(
 "success"
 )
 
+clearTimeout(uploadWarningTimeout)
+
+document
+.getElementById("uploadWarning")
+.style.display = "none"
 setTimeout(()=>{
 
 window.location.href =
