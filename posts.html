@@ -526,13 +526,14 @@ window.closeMenu = closeMenu
 
   return text.replace(urlRegex, function(url){
 
-    return `
-    <a href="${url}"
-       target="_blank"
-       class="live-link">
-       ${url}
-    </a>
-    `
+ return `
+<a href="${url}"
+target="_blank"
+rel="noopener noreferrer"
+class="live-link">
+${url}
+</a>
+`
 
   })
 
@@ -587,12 +588,14 @@ function renderPosts(posts){
 
 postsGrid.innerHTML = ""
 
+window.postsData = posts
+
 posts.forEach(post=>{
 
 postsGrid.innerHTML += `
 
 <div class="card"
-onclick='openPost(${JSON.stringify(post)})'>
+onclick="openPostById('${post.id}')">
 
 ${
 post.media_urls?.[0]?.includes(".mp4")
@@ -741,6 +744,7 @@ ${post.links.map(link=>`
 <a
 href="${link.url}"
 target="_blank"
+rel="noopener noreferrer"
 class="post-link-card"
 >
 
@@ -892,6 +896,21 @@ function goUpload(){
 window.location.href = "upload.html"
 }
 
+
+function openPostById(id){
+
+const post =
+window.postsData.find(
+p => String(p.id) === String(id)
+)
+
+if(post){
+openPost(post)
+}
+
+}
+
+window.openPostById = openPostById
 window.goHome = goHome
 window.goPosts = goPosts
 window.goUpload = goUpload
