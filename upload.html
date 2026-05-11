@@ -21,7 +21,7 @@ box-sizing:border-box;
 body{
 
 font-family:Arial;
-background:#f8fafc;
+background:#f2f4f5;
 padding:20px;
 
 }
@@ -389,26 +389,62 @@ font-size:14px;
 
 .upload-warning{
 
-background:#fff7ed;
+display:none;
+
+position:fixed;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+z-index:999999;
+
+width:90%;
+max-width:420px;
+
+background:white;
 
 border:1px solid #fdba74;
 
 color:#9a3412;
 
-padding:18px;
+padding:24px;
 
-border-radius:18px;
+border-radius:24px;
 
 text-align:center;
 
-font-size:15px;
+font-size:16px;
 
-line-height:1.8;
+line-height:2;
 
-margin-bottom:20px;
+box-shadow:0 20px 60px rgba(0,0,0,.25);
 
-box-shadow:0 4px 12px rgba(0,0,0,.05);
+}
 
+.warning-overlay{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+backdrop-filter:blur(4px);
+
+z-index:999998;
+
+}
+.back-btn{
+position: relative;
+display: flex;
+justify-content:left;
+left: 0;
+top: 0;
+margin-bottom: 20px;
 }
 </style>
 
@@ -416,11 +452,33 @@ box-shadow:0 4px 12px rgba(0,0,0,.05);
 
 <body>
 
-<h2>
+<div class="back-btn">
+
+<button
+onclick="goHome()"
+style="
+height:40px;
+padding:0 14px;
+border:none;
+background:#ffffff;
+color:rgb(50, 75, 186);
+cursor:pointer;
+font-size:14px;
+border-bottom:  solid 1px;
+">
+חזרה לדף הראשי
+</button>
+</div>
+
+  <h2>
 העלאת פוסט
 </h2>
-
 <form id="postForm">
+  <div
+class="warning-overlay"
+id="warningOverlay"
+></div>
+
 <div
 class="upload-warning"
 id="uploadWarning"
@@ -861,6 +919,14 @@ renderLinks()
 window.addLinkField =
 addLinkField
 
+function goHome(){
+
+window.location.href = "index.html"
+
+}
+
+window.goHome = goHome
+
 /* ---------- שליחה ---------- */
 
 form.addEventListener(
@@ -882,6 +948,10 @@ setTimeout(()=>{
 
 document
 .getElementById("uploadWarning")
+.style.display = "block"
+
+document
+.getElementById("warningOverlay")
 .style.display = "block"
 
 },10000)
