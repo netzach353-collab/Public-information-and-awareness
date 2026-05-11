@@ -827,19 +827,26 @@ let mediaUrls = []
 
 /* ---------- העלאת קבצים ---------- */
 
-for(const file of selectedFiles){
+/* ---------- העלאת קבצים ---------- */
+
+try{
+
+const uploadPromises = selectedFiles.map(async(file)=>{
 
 const fileName =
 
 Date.now() +
 "-" +
+Math.random()
+.toString(36)
+.slice(2)
++
+"-" +
 file.name
 
-const {
-error:uploadError
-}
+const { error:uploadError } =
 
-= await supabase.storage
+await supabase.storage
 
 .from("posts")
 
@@ -850,16 +857,7 @@ file
 
 if(uploadError){
 
-console.log(uploadError)
-
-showStatus(
-"שגיאה בהעלאת קובץ",
-"error"
-)
-
-submitBtn.disabled = false
-
-return
+throw uploadError
 
 }
 
@@ -871,9 +869,25 @@ supabase.storage
 
 .getPublicUrl(fileName)
 
-mediaUrls.push(
-urlData.publicUrl
+return urlData.publicUrl
+
+})
+
+mediaUrls =
+await Promise.all(uploadPromises)
+
+}catch(err){
+
+console.log(err)
+
+showStatus(
+"שגיאה בהעלאת קבצים",
+"error"
 )
+
+submitBtn.disabled = false
+
+return
 
 }
 
