@@ -366,7 +366,9 @@ border-radius:14px;
 margin-bottom:12px;
 border:1px solid #e2e8f0;
 }
-
+.external-line1{
+  flex:0 0 auto;
+}
 .add-link-btn{
 height:46px;
 border:none;
@@ -733,7 +735,7 @@ id="statusBox"
 <script type="module">
 
 import { createClient }
-from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+from 'https://esm.sh/@supabase/supabase-js'
 
 const supabaseUrl =
 'https://pnnfstfabmhjzohkypak.supabase.co'
@@ -939,7 +941,7 @@ class="remove-btn"
 ✕
 </button>
 
-<img
+<img loading="lazy" decoding="async"
 src="${fileUrl}"
 >
 
@@ -1003,11 +1005,11 @@ function renderLinks(){
 const container =
 document.getElementById("linksContainer")
 
-container.innerHTML = ""
+let html = ""
 
 links.forEach(link=>{
 
-container.innerHTML += `
+html += `
 
 <div class="link-item">
 
@@ -1036,6 +1038,8 @@ onclick="removeLink(${link.id})"
 `
 
 })
+
+container.innerHTML = html
 
 }
 
@@ -1086,6 +1090,139 @@ addLinkField
 
 window.goHome = goHome
 
+
+async function compressImage(file){
+
+return new Promise((resolve,reject)=>{
+
+const img = new Image()
+
+const reader = new FileReader()
+
+reader.onload = e => {
+
+img.src = e.target.result
+
+}
+
+img.onload = ()=>{
+
+const canvas =
+document.createElement("canvas")
+
+const ctx =
+canvas.getContext("2d")
+
+/* גודל מקסימלי */
+
+const MAX_WIDTH = 1200
+const MAX_HEIGHT = 1200
+
+let width = img.width
+let height = img.height
+
+/* הגנה מתמונות ענק */
+
+if(
+width > 4000 ||
+height > 4000
+){
+
+const ratio =
+Math.min(
+4000 / width,
+4000 / height
+)
+
+width *= ratio
+height *= ratio
+
+}
+/* הקטנה פרופורציונלית */
+
+if(width > height){
+
+if(width > MAX_WIDTH){
+
+height *= MAX_WIDTH / width
+width = MAX_WIDTH
+
+}
+
+}else{
+
+if(height > MAX_HEIGHT){
+
+width *= MAX_HEIGHT / height
+height = MAX_HEIGHT
+
+}
+
+}
+
+canvas.width = width
+canvas.height = height
+
+ctx.drawImage(
+img,
+0,
+0,
+width,
+height
+)
+
+/* איכות JPG */
+
+canvas.toBlob(
+
+(blob)=>{
+
+if(!blob){
+
+reject(
+new Error("Compression failed")
+)
+
+return
+
+}
+
+const compressedFile =
+new File(
+
+[blob],
+
+file.name.replace(
+/\.\w+$/,
+".jpg"
+),
+
+{
+type:"image/jpeg"
+}
+
+)
+
+resolve(compressedFile)
+
+},
+
+"image/jpeg",
+
+0.7 /* איכות */
+
+)
+
+}
+
+reader.onerror = reject
+
+reader.readAsDataURL(file)
+
+})
+
+}
+
 /* ---------- שליחה ---------- */
 
 form.addEventListener(
@@ -1128,7 +1265,19 @@ let mediaUrls = []
 
 try{
 
-const uploadPromises = selectedFiles.map(async(file)=>{
+const uploadPromises =
+selectedFiles.map(async(file)=>{
+
+let uploadFile = file
+
+/* רק לתמונות */
+
+if(file.type.startsWith("image")){
+
+uploadFile =
+await compressImage(file)
+
+}
 
 const fileName =
 
@@ -1139,7 +1288,7 @@ Math.random()
 .slice(2)
 +
 "-" +
-file.name
+uploadFile.name
 
 const { error:uploadError } =
 
@@ -1149,7 +1298,7 @@ await supabase.storage
 
 .upload(
 fileName,
-file
+uploadFile
 )
 
 if(uploadError){
