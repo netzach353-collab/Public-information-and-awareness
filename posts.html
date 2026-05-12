@@ -179,6 +179,8 @@ height:130px;
 object-fit:contain;
 display:block;
 background:black;
+    content-visibility:auto;
+contain-intrinsic-size:300px;
 }
 
 .card-body{
@@ -651,7 +653,7 @@ await supabase
 .from('posts')
 .select('*')
 .order('created_at',{ascending:false})
-
+.limit(20)
 if(error){
 console.log(error)
 return
@@ -690,17 +692,21 @@ postsGrid.innerHTML = ""
 
 window.postsData = posts
 
+let html = ""
+
 posts.forEach(post=>{
 
-postsGrid.innerHTML += `
+html += `
 
 <div class="card"
 onclick="openPostById('${post.id}')">
 
 ${
-post.media_urls?.[0]
-?.toLowerCase()
-?.includes(".mp4")
+typeof post.media_urls?.[0] === "string" &&
+post.media_urls[0]
+.toLowerCase()
+.includes(".mp4")
+
 ? `
 <div style="
 position:relative;
@@ -713,7 +719,6 @@ background:black;
 <video
 src="${post.media_urls[0]}"
 poster="${post.media_urls[1] || ''}"
-
 playsinline
 webkit-playsinline
 preload="metadata"
@@ -749,7 +754,10 @@ font-size:20px;
 : post.media_urls?.[0]
 
 ? `
-<img src="${post.media_urls[0]}">
+<img
+loading="lazy"
+decoding="async"
+src="${post.media_urls[0]}">
 `
 
 : `
@@ -767,6 +775,7 @@ color:#6b7280;
 </div>
 `
 }
+
 <div class="card-body">
 
 <div class="tag">
@@ -787,7 +796,10 @@ escapeHtml(post.content || '')
 
 })
 
+postsGrid.innerHTML = html
+
 }
+
 
 function openPost(post){
 
@@ -804,7 +816,6 @@ mediaContainer.innerHTML = `
 class="modal-image"
 src="${mediaUrl}"
 controls
-autoplay
 
 playsinline
 webkit-playsinline
@@ -946,8 +957,8 @@ id="activeVideo"
 class="modal-image"
 src="${url}"
 controls
-autoplay
-muted
+
+
 playsinline
 webkit-playsinline
 style="
@@ -1001,7 +1012,10 @@ document.getElementById("activeVideo")
 
 if(activeVideo){
 
-activeVideo.pause()
+
+activeVideo.pause();
+activeVideo.src = "";
+activeVideo.load();
 
 activeVideo.currentTime = 0
 
