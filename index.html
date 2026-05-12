@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <title>הרב יוסף שובלי</title>
 
 <style>
@@ -15,6 +18,23 @@
 body{
   font-family:Arial, sans-serif;
 background:#f1f5f9;
+}
+
+/* ---------- HIDE PAGE SCROLLBAR ---------- */
+
+html,
+body{
+
+-ms-overflow-style:none;
+scrollbar-width:none;
+
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+
+display:none;
+
 }
 
 /* סרגל עליון */
@@ -144,6 +164,9 @@ background:#f1f5f9;
     object-fit: cover;
    border-radius: 5px;
   }
+  .card > div:first-child{
+  margin-bottom:5px;
+}
   
     .card h3{
     font-size: 12px; 
@@ -156,7 +179,7 @@ background:#f1f5f9;
   }
   .tag{
     display: flex;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bolder;
     margin-bottom: 5px;
   }
@@ -260,6 +283,7 @@ overflow:hidden;
 
 text-overflow:ellipsis;
 
+  color: #374151 !important;
 line-height:1.5;
 
 font-size:12px;
@@ -268,6 +292,7 @@ text-align:right;
 
 word-break:break-word;
 
+font-size:14px !important;
 }
 
 .recipes{
@@ -293,6 +318,7 @@ user-select:none;
 pointer-events:none;
 
 }
+
 
 .card img,
 .hero-slide img{
@@ -354,8 +380,8 @@ right:0;
 width:85%;
 height:100%;
 
-backdrop-filter:blur(1.5px);
--webkit-backdrop-filter:blur(1.5px);
+backdrop-filter:blur(3.5px);
+-webkit-backdrop-filter:blur(3.5px);
 
 background:rgba(255, 255, 255, 0.109);
 }
@@ -428,6 +454,288 @@ color:#64748b;
 margin:auto;
 
 }
+
+.bottom-bar{
+
+position:relative;
+
+width:100%;
+
+padding:18px 10px;
+
+background:linear-gradient(
+180deg,
+#161d28,
+#1b263e
+) !important;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-wrap:wrap;
+
+gap:18px;
+
+border-top:1px solid #e5e7eb;
+
+margin-top:30px;
+}
+
+.bottom-bar{
+
+position:relative;
+
+width:100%;
+
+padding:18px 10px;
+
+background:rgb(0, 0, 0);
+
+display:flex;
+justify-content:center;
+align-items:center;
+flex-wrap:wrap;
+
+gap:20px;
+
+border-top:1px solid #e5e7eb;
+
+margin-top:30px;
+}
+
+.bottom-item{
+
+  margin-bottom: 50px ;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+text-decoration:none;
+
+gap:7px;
+
+font-size:12px;
+font-weight:bold;
+
+min-width:70px;
+
+transition:.2s;
+}
+
+.bottom-item i{
+font-size:26px;
+}
+
+.bottom-item:active{
+transform:scale(.92);
+}
+
+.whatsapp{
+color:#25D366;
+}
+
+.facebook{
+color:#1877F2;
+}
+
+.email{
+color:#ea4335;
+}
+
+.telegram{
+color:#229ED9;
+}
+
+.share{
+color:#111827;
+}
+
+.iconser1{
+
+display:flex;
+align-items:center;
+justify-content:center;
+display: flex;
+  flex-direction: column;
+}
+
+.iconser1 .bottom-item{
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+text-decoration:none;
+
+color:rgb(202, 200, 200);
+
+width:42px;
+height:25px;
+
+border-radius:12px;
+
+background: none;
+transition:.2s;
+}
+.iconser1 span {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.share-btn{
+
+border:none;
+background:none;
+
+cursor:pointer;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:#d1d5db;
+
+width:42px;
+height:25px;
+}
+.iconser1 .bottom-item i{
+
+font-size:23px;
+
+}
+
+.iconser1 .bottom-item span{
+
+display:none;
+
+}
+
+.iconser1 .bottom-item:active{
+
+transform:scale(.92);
+
+}
+
+.fa-youtube{
+  color: #ff0000;
+}
+
+.website{
+color:#ffffff;
+}
+
+.instagram{
+color:#7300ff;
+}
+
+.tiktok{
+color:#ffffff;
+}
+
+.holy-text{
+
+display:block;
+
+width:100%;
+
+text-align:center;
+
+margin-top:18px;
+
+padding:0 15px;
+
+font-size:14px;
+
+line-height:1.9;
+
+font-weight:bold;
+
+color:#000000;
+
+opacity:.92;
+
+margin-bottom: 50px;
+
+background: rgb(255, 255, 255);
+border-radius: 18px;
+}
+
+.share-btn{
+border:none;
+background:none;
+cursor:pointer;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:#d1d5db;
+
+width:42px;
+height:25px;
+
+margin-bottom:0; 
+}
+
+.links1{
+
+display:grid;
+grid-template-columns:repeat(3,1fr);
+
+border-top:solid 1px #d1d5db;
+border-bottom:solid 1px #d1d5db;
+
+margin-top: 40px;
+padding:10px 0;
+position: relative;
+gap:8px;
+
+}
+
+.links1 .bottom-item{
+
+margin-bottom:0;
+
+min-width:auto;
+
+padding:5px 4px;
+
+font-size:11px;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+}
+
+.links1 .bottom-item i{
+
+font-size:20px;
+
+margin-bottom:5px;
+margin-top: 40px;
+}
+
+.links1 .bottom-item span{
+font-size:10px;
+line-height:1.2;
+}
+
+ 
+ .color1, .color12{
+color: #6c03ff;
+ }
+.color2, .color13{
+color: #3954ab;
+ }
 </style>
 </head>
 
@@ -436,7 +744,18 @@ margin:auto;
 <!-- סרגל עליון -->
 <div class="topbar">
   <button class="menu-btn" onclick="openMenu()">☰ </button>
+  <div class="iconser1">
+   <button
+onclick="shareSite()"
+class="bottom-item share-btn">
+
+<i class="fas fa-share-alt"></i>
+
+</button>
+ <span>שיתוף</span>
+</div>
   <div class="logo">״בסייעתא דשמיא״</div>
+
 </div>
 
 <!-- רקע -->
@@ -454,7 +773,59 @@ margin:auto;
 <a href="#" class="side-link" onclick="showAboutPage()">
 אודות
 </a>
+<div class="links1">
+  <span style="position: absolute; color: rgb(116, 114, 114); margin-bottom: 10px; margin-top: 10px;">קישורים של ערוץ התורה</span>
+<a
+href="https://www.tiktok.com/@rabenu156"
+target="_blank"
+class="bottom-item tiktok">
+<i class="fab fa-tiktok color12"></i>
+<span class="color1">TikTok</span>
+</a>
+<a
+href="https://daily-torah.tv"
+target="_blank"
+class="bottom-item website">
+<i class="fas fa-globe color13"></i>
+<span class="color2">אתר ערוץ התורה</span>
+</a>
+
+<a
+href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbDY0R2dtUGo5eFE2Tk9NOVNvdmFHZGRlQmdpZ3xBQ3Jtc0tuTUFmUFNBd1hpaUY4UC0zcGkxbmVocEhDWGNiMzR0MF9XQUNiRWRUMlp6S0RGY2V5Wl9yektUSEk4M0tUczExdDRYQl9TU3RJLXNZaXJuSXFyQ3BtZkRKQVVYbU44TnAwakhfV1NGNUNzbjJvWWFaVQ&q=https%3A%2F%2Fwhatsapp.com%2Fchannel%2F0029VaHBaz0Bfxo6YuOUKk1D"
+target="_blank"
+class="bottom-item whatsapp">
+<i class="fab fa-whatsapp"></i>
+<span>וואטסאפ</span>
+</a>
+
+<a
+href="https://www.facebook.com/harutzhatorah/"
+target="_blank"
+class="bottom-item facebook">
+<i class="fab fa-facebook-f"></i>
+<span>פייסבוק</span>
+</a>
+
+
+<a
+href="https://t.me/Rabenu156"
+target="_blank"
+class="bottom-item instagram">
+<i class="fab fa-instagram"></i>
+<span>ערוץ התורה בטלגרם</span>
+</a>
+
+<a
+href="https://www.youtube.com/@harutzhatorah"
+target="_blank"
+class="bottom-item youtube">
+<i class="fab fa-youtube"></i>
+<span>ערוץ התורה</span>
+</a>
+
 </div>
+</div>
+
 <!-- תוכן -->
   <div class="actions1">
 
@@ -633,6 +1004,62 @@ color:#4b5563;
 
 </p>
 </div>
+
+<div class="bottom-bar">
+
+  <span class="holy-text">
+ הכל על ערוץ התורה והעבודת הקודש של
+הרב יוסף שובלי שליט״ה וכל תלמידיו העוסקים במלכת הקודש  
+</span>
+<a
+href="https://www.tiktok.com/@rabenu156"
+target="_blank"
+class="bottom-item tiktok">
+<i class="fab fa-tiktok"></i>
+<span>TikTok</span>
+</a>
+<a
+href="https://daily-torah.tv"
+target="_blank"
+class="bottom-item website">
+<i class="fas fa-globe"></i>
+<span>אתר ערוץ התורה</span>
+</a>
+
+<a
+href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbDY0R2dtUGo5eFE2Tk9NOVNvdmFHZGRlQmdpZ3xBQ3Jtc0tuTUFmUFNBd1hpaUY4UC0zcGkxbmVocEhDWGNiMzR0MF9XQUNiRWRUMlp6S0RGY2V5Wl9yektUSEk4M0tUczExdDRYQl9TU3RJLXNZaXJuSXFyQ3BtZkRKQVVYbU44TnAwakhfV1NGNUNzbjJvWWFaVQ&q=https%3A%2F%2Fwhatsapp.com%2Fchannel%2F0029VaHBaz0Bfxo6YuOUKk1D"
+target="_blank"
+class="bottom-item whatsapp">
+<i class="fab fa-whatsapp"></i>
+<span>וואטסאפ</span>
+</a>
+
+<a
+href="https://www.facebook.com/harutzhatorah/"
+target="_blank"
+class="bottom-item facebook">
+<i class="fab fa-facebook-f"></i>
+<span>פייסבוק</span>
+</a>
+
+
+<a
+href="https://t.me/Rabenu156"
+target="_blank"
+class="bottom-item instagram">
+<i class="fab fa-instagram"></i>
+<span>ערוץ התורה בטלגרם</span>
+</a>
+
+<a
+href="https://www.youtube.com/@harutzhatorah"
+target="_blank"
+class="bottom-item youtube">
+<i class="fab fa-youtube"></i>
+<span>ערוץ התורה</span>
+</a>
+
+</div>
 <script type="module">
 
 import { createClient }
@@ -779,8 +1206,9 @@ function renderPosts(posts){
       onclick="openPost('${post.id}')">
 
 ${
-post.media_urls?.[0]?.includes(".mp4")
-
+post.media_urls?.[0]
+?.toLowerCase()
+?.includes(".mp4")
 ? `
 <div style="
 position:relative;
@@ -797,7 +1225,7 @@ poster="${post.media_urls?.[1] || ''}"
 muted
 playsinline
 webkit-playsinline
-preload="auto"
+preload="metadata"
 style="
 width:100%;
 height:100%;
@@ -885,105 +1313,202 @@ function goIndex2(){
   
 const heroWrap = document.querySelector(".hero-wrap");
 const heroTrack = document.querySelector(".hero-track");
-const slides = document.querySelectorAll(".hero-slide");
 
-let current = 0;
+let slides = document.querySelectorAll(".hero-slide");
+
+/* ---------- CLONE ---------- */
+
+const firstClone = slides[0].cloneNode(true);
+const lastClone = slides[slides.length - 1].cloneNode(true);
+
+heroTrack.appendChild(firstClone);
+heroTrack.insertBefore(lastClone, slides[0]);
+
+slides = document.querySelectorAll(".hero-slide");
+
+let current = 1;
 let total = slides.length;
 
+let heroStartX = 0;
 
 let currentX = 0;
 let dragging = false;
 let auto;
 
-/* ---------- */
+/* ---------- התחלה ---------- */
 
-function updateSlider(){
-heroTrack.style.transition=".4s ease";
-heroTrack.style.transform=`translateX(${current * 100}%)`;
+heroTrack.style.transform = `translateX(${current * 100}%)`;
+
+/* ---------- UPDATE ---------- */
+
+function updateSlider(withAnimation = true){
+
+heroTrack.style.transition =
+withAnimation ? "transform .45s ease" : "none";
+
+heroTrack.style.transform =
+`translateX(${current * 100}%)`;
+
 }
 
-/* לופ אינסופי */
+/* ---------- NEXT ---------- */
+
 function nextSlide(){
-current--;
-if(current < 0){
-current = total - 1;
-}
+
+current++;
+
 updateSlider();
+
 }
+
+/* ---------- PREV ---------- */
 
 function prevSlide(){
-current++;
-if(current >= total){
-current = 0;
-}
+
+current--;
+
 updateSlider();
+
 }
 
+/* ---------- LOOP FIX ---------- */
+
+heroTrack.addEventListener(
+"transitionend",
+()=>{
+
+/* הגיע לקלון האחרון */
+if(current === total - 1){
+
+heroTrack.style.transition = "none";
+
+current = 1;
+
+heroTrack.style.transform =
+`translateX(${current * 100}%)`;
+
+}
+
+/* הגיע לקלון הראשון */
+if(current === 0){
+
+heroTrack.style.transition = "none";
+
+current = total - 2;
+
+heroTrack.style.transform =
+`translateX(${current * 100}%)`;
+
+}
+
+}
+);
+
+/* ---------- AUTO ---------- */
+
 function startAuto(){
-auto = setInterval(nextSlide,5000);
+
+clearInterval(auto);
+
+auto = setInterval(
+nextSlide,
+5000
+);
+
 }
 
 function stopAuto(){
+
 clearInterval(auto);
+
 }
 
 startAuto();
 
-/* ---------- התחלת גרירה */
+/* ---------- TOUCH START ---------- */
 
-heroWrap.addEventListener("touchstart",(e)=>{
+heroWrap.addEventListener(
+"touchstart",
+(e)=>{
 
 stopAuto();
 
 dragging = true;
-startX = e.touches[0].clientX;
-currentX = startX;
 
-heroTrack.style.transition="none";
+heroStartX = e.touches[0].clientX;
 
-},{passive:true});
+currentX = heroStartX;
 
-/* ---------- תוך כדי גרירה */
+heroTrack.style.transition = "none";
 
-heroWrap.addEventListener("touchmove",(e)=>{
+},
+{ passive:true }
+);
+
+/* ---------- TOUCH MOVE ---------- */
+
+heroWrap.addEventListener(
+"touchmove",
+(e)=>{
 
 if(!dragging) return;
 
 currentX = e.touches[0].clientX;
 
-let diff = currentX - startX;
+let diff = currentX - heroStartX;
 
-heroTrack.style.transform=
-`translateX(calc(${current * 100}% + ${diff}px))`;
+heroTrack.style.transform =
+`translateX(calc(-${current * 100}% + ${diff}px))`;
 
-},{passive:true});
+},
+{ passive:true }
+);
 
-/* ---------- שחרור */
+/* ---------- TOUCH END ---------- */
 
-heroWrap.addEventListener("touchend",()=>{
+heroWrap.addEventListener(
+"touchend",
+()=>{
 
 dragging = false;
 
 let diff = currentX - startX;
 
-/* שמאלה = קדימה */
 if(diff < -70){
+
 nextSlide();
+
 }
 
-/* ימינה = אחורה */
 else if(diff > 70){
+
 prevSlide();
+
 }
 
-/* קטן מדי = חוזר */
 else{
+
 updateSlider();
+
 }
 
 startAuto();
 
-});
+}
+);
+
+/* ---------- CANCEL ---------- */
+
+heroWrap.addEventListener(
+"touchcancel",
+()=>{
+
+dragging = false;
+
+startAuto();
+
+}
+);
 
 function openPost(id){
 
@@ -1018,6 +1543,40 @@ document.querySelector(".actions1").style.display = "grid"
 
 }
 
+async function shareSite(){
+
+const shareData = {
+
+title:"בסייעתא דשמיא",
+
+text:"כנסו לאתר הרב יוסף שובלי",
+
+url:window.location.href
+
+}
+
+if(navigator.share){
+
+try{
+
+await navigator.share(shareData)
+
+}catch(err){
+
+console.log(err)
+
+}
+
+}else{
+
+navigator.clipboard.writeText(
+window.location.href
+)
+
+alert("הלינק הועתק")
+}
+
+}
 window.showAboutPage = showAboutPage
 window.closeAboutPage = closeAboutPage
 window.openPost = openPost
@@ -1028,58 +1587,6 @@ window.goHome = goHome
 window.goUpload = goUpload
 
 loadPosts()
-
-
-/* ---------- AUTO REFRESH + CLEAR CACHE ---------- */
-
-let inactivityTimer
-
-function resetInactivityTimer(){
-
-clearTimeout(inactivityTimer)
-
-inactivityTimer = setTimeout(()=>{
-
-/* ניקוי cache */
-if('caches' in window){
-
-caches.keys().then(names=>{
-
-names.forEach(name=>{
-
-caches.delete(name)
-
-})
-
-})
-
-}
-
-/* ריענון */
-window.location.reload(true)
-
-},5 * 60 * 1000)
-
-}
-
-/* פעולות משתמש */
-[
-"click",
-"touchstart",
-"scroll",
-"mousemove",
-"keydown"
-].forEach(event=>{
-
-document.addEventListener(
-event,
-resetInactivityTimer,
-true
-)
-
-})
-
-resetInactivityTimer()
 </script>
 
 </body>
