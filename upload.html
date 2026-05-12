@@ -443,7 +443,7 @@ z-index:999998;
 
 display:flex;
 
-justify-content: left;
+justify-content: right;
 margin-bottom:60px;
 
 }
@@ -471,6 +471,132 @@ scale(1);
 }
 
 }
+
+/* ---------- PAGE TRANSITION ---------- */
+
+html,
+body{
+
+overflow-x:hidden;
+
+}
+
+/* כניסה */
+
+body{
+
+opacity:0;
+
+transform:
+translateX(220px)
+scale(.98);
+
+filter:blur(8px);
+
+animation:
+pageEnter 1.1s cubic-bezier(.22,1,.36,1)
+forwards;
+
+}
+
+/* יציאה */
+
+body.page-exit{
+
+opacity:0;
+
+transform:
+translateX(-220px)
+scale(.98);
+
+filter:blur(8px);
+
+transition:
+transform .9s cubic-bezier(.22,1,.36,1),
+opacity .9s ease,
+filter .9s ease;
+
+}
+
+/* אנימציית כניסה */
+
+@keyframes pageEnter{
+
+from{
+
+opacity:0;
+
+transform:
+translateX(220px)
+scale(.98);
+
+filter:blur(8px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateX(0)
+scale(1);
+
+filter:blur(0);
+
+}
+
+}
+
+.back-link{
+
+height:40px;
+
+padding:0 14px;
+
+border:none;
+
+background:none;
+
+color:rgb(50,75,186);
+
+cursor:pointer;
+
+font-size:14px;
+
+position:relative;
+
+}
+
+/* הקו */
+
+.back-link::after{
+
+content:"";
+
+position:absolute;
+
+right:14px;
+
+bottom:4px;
+
+width:0;
+
+height:1px;
+
+background:currentColor;
+
+transition:width .35s ease;
+
+}
+
+/* hover */
+
+.back-link:hover::after{
+
+width:calc(100% - 28px);
+
+}
 </style>
 
 </head>
@@ -481,17 +607,9 @@ scale(1);
 
 <button
 onclick="goHome()"
-style="
-height:40px;
-padding:0 14px;
-border:none;
-background:#ffffff;
-color:rgb(50, 75, 186);
-cursor:pointer;
-font-size:14px;
-border-bottom:  solid 1px;
-">
-יציאה לדף הראשי
+class="back-link"
+>
+❮ חזרה
 </button>
 </div>
 
@@ -667,7 +785,23 @@ titleCounter.innerText =
 
 })
 
+function goHome(){
+
+document.body.classList.add(
+"page-exit"
+)
+
+setTimeout(()=>{
+
+window.location.href =
+"index.html"
+
+},900)
+
+}
+
 let selectedFiles = []
+
 
 function showStatus(text,type){
 
@@ -820,6 +954,8 @@ div
 "click",
 ()=>{
 
+URL.revokeObjectURL(fileUrl)
+
 selectedFiles =
 selectedFiles.filter(
 f => f !== file
@@ -946,11 +1082,7 @@ renderLinks()
 window.addLinkField =
 addLinkField
 
-function goHome(){
 
-window.location.href = "index.html"
-
-}
 
 window.goHome = goHome
 
@@ -1039,7 +1171,20 @@ return urlData.publicUrl
 })
 
 mediaUrls =
-await Promise.all(uploadPromises)
+await Promise.race([
+
+Promise.all(uploadPromises),
+
+new Promise((_, reject)=>
+
+setTimeout(
+()=>reject(new Error("timeout")),
+30000
+)
+
+)
+
+])
 
 }catch(err){
 
@@ -1117,6 +1262,13 @@ showStatus(
 "הפוסט פורסם בהצלחה, מעביר לדף הראשי",
 "success"
 )
+
+selectedFiles = []
+links = []
+form.reset()
+previewContainer.innerHTML = ""
+
+renderLinks()
 
 clearTimeout(uploadWarningTimeout)
 
