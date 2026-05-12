@@ -156,12 +156,8 @@ display:none;
     padding-bottom: 5px;
     padding: 10px;
     border-radius: 10px;
-
   }
-  .card{
-will-change:transform;
-transform:translateZ(0);
-}
+  
   .card img{
     width: 80px;
     height: 80px;
@@ -225,9 +221,7 @@ touch-action:pan-y;
 .hero-track{
 display:flex;
 height:100%;
-will-change:transform;
-transform:translate3d(0,0,0);
-backface-visibility:hidden;
+transition:transform .45s ease;
 }
 
 .hero-slide{
@@ -386,8 +380,8 @@ right:0;
 width:85%;
 height:100%;
 
-backdrop-filter:blur(3.5px);
--webkit-backdrop-filter:blur(3.5px);
+backdrop-filter:blur(1.5px);
+-webkit-backdrop-filter:blur(1.5px);
 
 background:rgba(255, 255, 255, 0.109);
 }
@@ -731,8 +725,11 @@ margin-top: 40px;
 }
 
 .links1 .bottom-item span{
+
 font-size:10px;
+
 line-height:1.2;
+
 }
 
  
@@ -855,7 +852,7 @@ class="bottom-item youtube">
   <div class="hero-track" id="heroTrack">
 
         <div class="hero-slide">
-      <img loading="lazy" decoding="async" src="rabbi.jpg">
+      <img src="rabbi.jpg">
       <div class="hero-text" >
         <span>אהבת חינם</span>
         <h2 >בית תמחוי  חלוקת אוכל לנזקקים</h2>
@@ -869,7 +866,7 @@ class="bottom-item youtube">
 <div class="hero-slide">
 
 
-<img loading="lazy" decoding="async"
+    <img
     class="rabbi48"
     src="rabbi48.jpg">
 
@@ -893,7 +890,8 @@ class="bottom-item youtube">
 
 
     <div class="hero-slide">
-   <img loading="lazy" decoding="async"class="rabbi48"
+       <img
+    class="rabbi48"
     src="The Tikun Hamidot Yeshiva.jpeg">
       <div class="hero-text">
         <span>ישיבה לחיזוק הרבים תיקון המידות</span>
@@ -1262,7 +1260,7 @@ font-size:14px;
 
 : post.media_urls?.[0]
 
-? `<img loading="lazy" decoding="async" src="${post.media_urls[0]}" alt="">`
+? `<img src="${post.media_urls[0]}" alt="">`
 
 : `<div class="no-image">
 👤
@@ -1318,221 +1316,124 @@ function goIndex2(){
   
 const heroWrap = document.querySelector(".hero-wrap");
 const heroTrack = document.querySelector(".hero-track");
+const slides = document.querySelectorAll(".hero-slide");
 
-let slides = document.querySelectorAll(".hero-slide");
+let current = 0;
+let total = slides.length;
 
-/* ---------- CLONES ---------- */
 
-const firstClone = slides[0].cloneNode(true);
-const lastClone = slides[slides.length - 1].cloneNode(true);
+let currentX = 0;
+let dragging = false;
+let auto;
 
-heroTrack.appendChild(firstClone);
-heroTrack.insertBefore(lastClone, slides[0]);
+/* ---------- */
 
-slides = document.querySelectorAll(".hero-slide");
-
-let current = 1;
-const total = slides.length;
-
-let heroStartX = 0;
-let currentTranslate = 0;
-let prevTranslate = 0;
-let isDragging = false;
-
-let autoSlide;
-
-/* ---------- INIT ---------- */
-
-function setPosition(animated = true){
-
-const slideWidth =
-heroWrap.clientWidth;
-
-heroTrack.style.transition =
-animated
-? "transform .55s cubic-bezier(.22,1,.36,1)"
-: "none";
-
-heroTrack.style.transform =
-`translate3d(-${current * slideWidth}px,0,0)`;
-
+function updateSlider(){
+heroTrack.style.transition=".4s ease";
+heroTrack.style.transform=`translateX(${current * 100}%)`;
 }
 
-/* ---------- NEXT ---------- */
-
+/* לופ אינסופי */
 function nextSlide(){
-
-current++;
-
-setPosition(true);
-
+current--;
+if(current < 0){
+current = total - 1;
 }
-
-/* ---------- PREV ---------- */
+updateSlider();
+}
 
 function prevSlide(){
-
-current--;
-
-setPosition(true);
-
+current++;
+if(current >= total){
+current = 0;
 }
-
-/* ---------- LOOP FIX ---------- */
-
-heroTrack.addEventListener(
-"transitionend",
-()=>{
-
-if(current === total - 1){
-
-heroTrack.style.transition = "none";
-
-current = 1;
-
-heroTrack.style.transform =
-`translate3d(-${current * heroWrap.clientWidth}px,0,0)`;
-
+updateSlider();
 }
-
-if(current === 0){
-
-heroTrack.style.transition = "none";
-
-current = total - 2;
-
-heroTrack.style.transform =
-`translate3d(-${current * 100}%,0,0)`;
-
-}
-
-}
-);
-
-/* ---------- AUTO ---------- */
 
 function startAuto(){
 
-clearInterval(autoSlide);
+clearInterval(auto)
 
-autoSlide = setInterval(()=>{
-nextSlide();
-},5000);
+auto = setInterval(
+nextSlide,
+5000
+)
 
 }
 
 function stopAuto(){
-
-clearInterval(autoSlide);
-
+clearInterval(auto);
 }
 
 startAuto();
 
-/* ---------- TOUCH START ---------- */
+/* ---------- התחלת גרירה */
 
-heroWrap.addEventListener(
-"touchstart",
-(e)=>{
+heroWrap.addEventListener("touchstart",(e)=>{
 
 stopAuto();
 
-isDragging = true;
+dragging = true;
+startX = e.touches[0].clientX;
+currentX = startX;
 
-heroStartX = e.touches[0].clientX;
+heroTrack.style.transition="none";
 
-heroTrack.style.transition = "none";
+},{passive:true});
 
-},
-{ passive:true }
-);
+/* ---------- תוך כדי גרירה */
 
-/* ---------- TOUCH MOVE ---------- */
+heroWrap.addEventListener("touchmove",(e)=>{
 
-heroWrap.addEventListener(
-"touchmove",
-(e)=>{
+if(!dragging) return;
 
-if(!isDragging) return;
+currentX = e.touches[0].clientX;
 
-const currentX =
-e.touches[0].clientX;
+let diff = currentX - startX;
 
-const diff =
-currentX - heroStartX;
+heroTrack.style.transform=
+`translateX(calc(${current * 100}% + ${diff}px))`;
 
-heroTrack.style.transform =
-`translate3d(calc(-${current * 100}% + ${diff}px),0,0)`;
+},{passive:true});
 
-},
-{ passive:true }
-);
+/* ---------- שחרור */
 
-/* ---------- TOUCH END ---------- */
+heroWrap.addEventListener("touchend",()=>{
 
-heroWrap.addEventListener(
-"touchend",
-(e)=>{
+dragging = false;
 
-if(!isDragging) return;
+let diff = currentX - startX;
 
-isDragging = false;
-
-const endX =
-e.changedTouches[0].clientX;
-
-const diff =
-endX - heroStartX;
-
+/* שמאלה = קדימה */
 if(diff < -70){
-
 nextSlide();
-
 }
 
+/* ימינה = אחורה */
 else if(diff > 70){
-
 prevSlide();
-
 }
 
+/* קטן מדי = חוזר */
 else{
-
-setPosition(true);
-
+updateSlider();
 }
 
 startAuto();
 
-}
-);
+});
 
-/* ---------- CANCEL ---------- */
 
 heroWrap.addEventListener(
-"touchmove",
-(e)=>{
+"touchcancel",
+()=>{
 
-if(!isDragging) return;
+dragging = false
 
-const currentX =
-e.touches[0].clientX;
+startAuto()
 
-const diff =
-currentX - heroStartX;
-
-const slideWidth =
-heroWrap.clientWidth;
-
-const moveX =
-(-current * slideWidth) + diff;
-
-heroTrack.style.transform =
-`translate3d(${moveX}px,0,0)`;
-
-},
-{ passive:true }
-);
+}
+)
 
 function openPost(id){
 
