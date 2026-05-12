@@ -156,8 +156,12 @@ display:none;
     padding-bottom: 5px;
     padding: 10px;
     border-radius: 10px;
+
   }
-  
+  .card{
+will-change:transform;
+transform:translateZ(0);
+}
   .card img{
     width: 80px;
     height: 80px;
@@ -849,7 +853,7 @@ class="bottom-item youtube">
   <div class="hero-track" id="heroTrack">
 
         <div class="hero-slide">
-      <img src="rabbi.jpg">
+      <img loading="lazy" decoding="async" src="rabbi.jpg">
       <div class="hero-text" >
         <span>אהבת חינם</span>
         <h2 >בית תמחוי  חלוקת אוכל לנזקקים</h2>
@@ -863,7 +867,7 @@ class="bottom-item youtube">
 <div class="hero-slide">
 
 
-    <img
+<img loading="lazy" decoding="async"
     class="rabbi48"
     src="rabbi48.jpg">
 
@@ -887,8 +891,7 @@ class="bottom-item youtube">
 
 
     <div class="hero-slide">
-       <img
-    class="rabbi48"
+   <img loading="lazy" decoding="async"class="rabbi48"
     src="The Tikun Hamidot Yeshiva.jpeg">
       <div class="hero-text">
         <span>ישיבה לחיזוק הרבים תיקון המידות</span>
@@ -1257,7 +1260,7 @@ font-size:14px;
 
 : post.media_urls?.[0]
 
-? `<img src="${post.media_urls[0]}" alt="">`
+? `<img loading="lazy" decoding="async" src="${post.media_urls[0]}" alt="">`
 
 : `<div class="no-image">
 👤
@@ -1472,7 +1475,7 @@ heroWrap.addEventListener(
 
 dragging = false;
 
-let diff = currentX - startX;
+let diff = currentX - heroStartX;
 
 if(diff < -70){
 
