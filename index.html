@@ -225,7 +225,9 @@ touch-action:pan-y;
 .hero-track{
 display:flex;
 height:100%;
-transition:transform .45s ease;
+will-change:transform;
+transform:translate3d(0,0,0);
+backface-visibility:hidden;
 }
 
 .hero-slide{
@@ -1319,7 +1321,7 @@ const heroTrack = document.querySelector(".hero-track");
 
 let slides = document.querySelectorAll(".hero-slide");
 
-/* ---------- CLONE ---------- */
+/* ---------- CLONES ---------- */
 
 const firstClone = slides[0].cloneNode(true);
 const lastClone = slides[slides.length - 1].cloneNode(true);
@@ -1330,27 +1332,29 @@ heroTrack.insertBefore(lastClone, slides[0]);
 slides = document.querySelectorAll(".hero-slide");
 
 let current = 1;
-let total = slides.length;
+const total = slides.length;
 
 let heroStartX = 0;
+let currentTranslate = 0;
+let prevTranslate = 0;
+let isDragging = false;
 
-let currentX = 0;
-let dragging = false;
-let auto;
+let autoSlide;
 
-/* ---------- התחלה ---------- */
+/* ---------- INIT ---------- */
 
-heroTrack.style.transform = `translateX(${current * 100}%)`;
+function setPosition(animated = true){
 
-/* ---------- UPDATE ---------- */
-
-function updateSlider(withAnimation = true){
+const slideWidth =
+heroWrap.clientWidth;
 
 heroTrack.style.transition =
-withAnimation ? "transform .45s ease" : "none";
+animated
+? "transform .55s cubic-bezier(.22,1,.36,1)"
+: "none";
 
 heroTrack.style.transform =
-`translateX(${current * 100}%)`;
+`translate3d(-${current * slideWidth}px,0,0)`;
 
 }
 
@@ -1360,7 +1364,7 @@ function nextSlide(){
 
 current++;
 
-updateSlider();
+setPosition(true);
 
 }
 
@@ -1370,7 +1374,7 @@ function prevSlide(){
 
 current--;
 
-updateSlider();
+setPosition(true);
 
 }
 
@@ -1380,7 +1384,6 @@ heroTrack.addEventListener(
 "transitionend",
 ()=>{
 
-/* הגיע לקלון האחרון */
 if(current === total - 1){
 
 heroTrack.style.transition = "none";
@@ -1388,11 +1391,10 @@ heroTrack.style.transition = "none";
 current = 1;
 
 heroTrack.style.transform =
-`translateX(${current * 100}%)`;
+`translate3d(-${current * heroWrap.clientWidth}px,0,0)`;
 
 }
 
-/* הגיע לקלון הראשון */
 if(current === 0){
 
 heroTrack.style.transition = "none";
@@ -1400,7 +1402,7 @@ heroTrack.style.transition = "none";
 current = total - 2;
 
 heroTrack.style.transform =
-`translateX(${current * 100}%)`;
+`translate3d(-${current * 100}%,0,0)`;
 
 }
 
@@ -1411,18 +1413,17 @@ heroTrack.style.transform =
 
 function startAuto(){
 
-clearInterval(auto);
+clearInterval(autoSlide);
 
-auto = setInterval(
-nextSlide,
-5000
-);
+autoSlide = setInterval(()=>{
+nextSlide();
+},5000);
 
 }
 
 function stopAuto(){
 
-clearInterval(auto);
+clearInterval(autoSlide);
 
 }
 
@@ -1436,11 +1437,9 @@ heroWrap.addEventListener(
 
 stopAuto();
 
-dragging = true;
+isDragging = true;
 
 heroStartX = e.touches[0].clientX;
-
-currentX = heroStartX;
 
 heroTrack.style.transition = "none";
 
@@ -1454,14 +1453,16 @@ heroWrap.addEventListener(
 "touchmove",
 (e)=>{
 
-if(!dragging) return;
+if(!isDragging) return;
 
-currentX = e.touches[0].clientX;
+const currentX =
+e.touches[0].clientX;
 
-let diff = currentX - heroStartX;
+const diff =
+currentX - heroStartX;
 
 heroTrack.style.transform =
-`translateX(calc(-${current * 100}% + ${diff}px))`;
+`translate3d(calc(-${current * 100}% + ${diff}px),0,0)`;
 
 },
 { passive:true }
@@ -1471,11 +1472,17 @@ heroTrack.style.transform =
 
 heroWrap.addEventListener(
 "touchend",
-()=>{
+(e)=>{
 
-dragging = false;
+if(!isDragging) return;
 
-let diff = currentX - heroStartX;
+isDragging = false;
+
+const endX =
+e.changedTouches[0].clientX;
+
+const diff =
+endX - heroStartX;
 
 if(diff < -70){
 
@@ -1491,7 +1498,7 @@ prevSlide();
 
 else{
 
-updateSlider();
+setPosition(true);
 
 }
 
@@ -1503,14 +1510,28 @@ startAuto();
 /* ---------- CANCEL ---------- */
 
 heroWrap.addEventListener(
-"touchcancel",
-()=>{
+"touchmove",
+(e)=>{
 
-dragging = false;
+if(!isDragging) return;
 
-startAuto();
+const currentX =
+e.touches[0].clientX;
 
-}
+const diff =
+currentX - heroStartX;
+
+const slideWidth =
+heroWrap.clientWidth;
+
+const moveX =
+(-current * slideWidth) + diff;
+
+heroTrack.style.transform =
+`translate3d(${moveX}px,0,0)`;
+
+},
+{ passive:true }
 );
 
 function openPost(id){
