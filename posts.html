@@ -720,8 +720,8 @@ src="${post.media_urls[0]}"
 poster="${post.media_urls[1] || ''}"
 playsinline
 webkit-playsinline
-preload="auto"
-
+preload="metadata"
+muted
 style="
 width:100%;
 height:100%;
@@ -757,6 +757,7 @@ font-size:20px;
 <img
 loading="lazy"
 decoding="async"
+muted
 src="${post.media_urls[0]}">
 `
 
@@ -834,6 +835,7 @@ background:black;
 mediaContainer.innerHTML = `
 <img
 loading="lazy"
+decoding="async"
 class="modal-image"
 src="${mediaUrl}">
 `
@@ -975,6 +977,7 @@ background:black;
 mediaContainer.innerHTML = `
 <img
 loading="lazy"
+decoding="async"
 class="modal-image"
 src="${url}">
 `
