@@ -18,6 +18,21 @@ font-family:Arial,sans-serif;
 background:#f1f5f9;
 }
 
+html,
+body{
+
+-ms-overflow-style:none;
+scrollbar-width:none;
+
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+
+display:none;
+
+}
+
 /* TOPBAR */
 
 .topbar{
@@ -161,8 +176,9 @@ transform:scale(.98);
 .card img{
 width:100%;
 height:130px;
-object-fit:cover;
+object-fit:contain;
 display:block;
+background:black;
 }
 
 .card-body{
@@ -170,7 +186,7 @@ padding:10px;
 }
 
 .tag{
-font-size:14px;
+font-size:16px;
 font-weight:bold;
 color:#111827;
 margin-bottom:6px;
@@ -183,7 +199,7 @@ overflow:hidden;
 }
 
 .post-content{
-font-size:12px;
+font-size:14px;
 line-height:1.6;
 color:#4b5563;
 text-align:right;
@@ -609,7 +625,7 @@ window.closeMenu = closeMenu
   return text.replace(urlRegex, function(url){
 
  return `
-<a href="${url}"
+<a href="${safeUrl(url)}"
 target="_blank"
 rel="noopener noreferrer"
 class="live-link">
@@ -625,6 +641,8 @@ ${url}
 
 const postsGrid =
 document.getElementById("postsGrid")
+const postModal =
+document.getElementById("postModal")
 
 async function loadPosts(){
 
@@ -680,8 +698,9 @@ postsGrid.innerHTML += `
 onclick="openPostById('${post.id}')">
 
 ${
-post.media_urls?.[0]?.includes(".mp4")
-
+post.media_urls?.[0]
+?.toLowerCase()
+?.includes(".mp4")
 ? `
 <div style="
 position:relative;
@@ -697,7 +716,7 @@ poster="${post.media_urls[1] || ''}"
 
 playsinline
 webkit-playsinline
-preload="auto"
+preload="metadata"
 style="
 width:100%;
 height:100%;
@@ -751,11 +770,13 @@ color:#6b7280;
 <div class="card-body">
 
 <div class="tag">
-${post.title || ''}
+${escapeHtml(post.title || '')}
 </div>
 
 <div class="post-content">
-${makeLinksClickable(post.content)}
+${makeLinksClickable(
+escapeHtml(post.content || '')
+)}
 </div>
 
 </div>
@@ -776,7 +797,7 @@ document.getElementById("mediaContainer")
 const mediaUrl =
 post.media_urls?.[0] || ""
 
-if(mediaUrl.includes(".mp4")){
+if(mediaUrl.toLowerCase().includes(".mp4")){
 
 mediaContainer.innerHTML = `
 <video
@@ -800,6 +821,7 @@ background:black;
 
 mediaContainer.innerHTML = `
 <img
+loading="lazy"
 class="modal-image"
 src="${mediaUrl}">
 `
@@ -816,7 +838,9 @@ document.getElementById("modalTopTitle")
 .innerText = post.title || ''
 document.getElementById("modalContent")
 .innerHTML =
-makeLinksClickable(post.content || '')
+makeLinksClickable(
+escapeHtml(post.content || '')
+)
 
 if(post.links?.length){
 
@@ -828,7 +852,7 @@ document.getElementById("modalContent")
 ${post.links.map(link=>`
 
 <a
-href="${link.url}"
+href="${safeUrl(link.url)}"
 target="_blank"
 rel="noopener noreferrer"
 class="post-link-card"
@@ -841,11 +865,11 @@ class="post-link-card"
 <div>
 
 <div class="post-link-title">
-${link.title}
+${escapeHtml(link.title || '')}
 </div>
 
 <div class="post-link-url">
-${link.url}
+${escapeHtml(link.url || '')}
 </div>
 
 </div>
@@ -866,7 +890,7 @@ post.media_urls?.forEach((url,index)=>{
 
 let mediaThumb
 
-if(url.includes(".mp4")){
+if(url.toLowerCase().includes(".mp4")){
 
 mediaThumb =
 document.createElement("video")
@@ -881,7 +905,7 @@ mediaThumb.setAttribute(
 true
 )
 
-mediaThumb.preload = "auto"
+mediaThumb.preload = "metadata"
 
 mediaThumb.style.objectFit = "cover"
 mediaThumb.style.background = "black"
@@ -914,7 +938,7 @@ mediaThumb.classList.add("active")
 
 mediaThumb.onclick = ()=>{
 
-if(url.includes(".mp4")){
+if(url.toLowerCase().includes(".mp4")){
 
 mediaContainer.innerHTML = `
 <video
@@ -939,6 +963,7 @@ background:black;
 
 mediaContainer.innerHTML = `
 <img
+loading="lazy"
 class="modal-image"
 src="${url}">
 `
@@ -963,6 +988,8 @@ imageBar.appendChild(mediaThumb)
 
 postModal.classList.add("show")
 
+document.body.style.overflow = "hidden"
+
 window.scrollTo(0,0)
 
 }
@@ -982,6 +1009,7 @@ activeVideo.currentTime = 0
 
 postModal.classList.remove("show")
 
+document.body.style.overflow = ""
 }
 
 window.openPost = openPost
@@ -1012,6 +1040,42 @@ p => String(p.id) === String(id)
 if(post){
 openPost(post)
 }
+
+}
+
+
+function escapeHtml(text){
+
+return text
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;")
+
+}
+
+function safeUrl(url){
+
+if(!url) return "#"
+
+try{
+
+const parsed =
+new URL(url)
+
+if(
+parsed.protocol === "http:" ||
+parsed.protocol === "https:"
+){
+
+return parsed.href
+
+}
+
+}catch(e){}
+
+return "#"
 
 }
 
