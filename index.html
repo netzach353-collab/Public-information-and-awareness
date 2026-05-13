@@ -732,13 +732,25 @@ line-height:1.2;
 
 }
 
- 
  .color1, .color12{
 color: #6c03ff;
  }
 .color2, .color13{
 color: #3954ab;
  }
+
+.side-link{
+  display:block;
+  padding:12px;
+  background:#f1f5f9;
+  border-radius:10px;
+  margin-bottom:10px;
+  text-decoration:none;
+  color:#111;
+
+  line-height:1.6;
+  white-space:normal;
+}
 </style>
 </head>
 
@@ -771,7 +783,7 @@ class="bottom-item share-btn">
 </div>
   <a href="#" class="side-link">דף הבית</a>
 <a href="upload.html" class="side-link">
-העלת פוסט
+העלת פוסט לאתר<br>ותוכן
 </a>
 <a href="posts.html"
 class="side-link">
@@ -1232,7 +1244,11 @@ src="${post.media_urls[0]}"
 poster="${post.media_urls?.[1] || ''}"
 playsinline
 webkit-playsinline
-preload="auto"
+preload="metadata"
+onloadedmetadata="
+this.pause();
+this.currentTime = 0.1;
+"
 style="
 width:100%;
 height:100%;
