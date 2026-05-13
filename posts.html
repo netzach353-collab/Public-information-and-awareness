@@ -209,6 +209,7 @@ display:-webkit-box;
 -webkit-box-orient:vertical;
 
 overflow:hidden;
+
 }
 
 .post-content{
@@ -260,9 +261,9 @@ margin-top:80px;
 font-size:28px;
 font-weight:bold;
 margin-bottom:20px;
-color:#111827;
+color:#7a7a7c;
 line-height:1.5;
-
+text-align: center;
 }
 
 
@@ -313,7 +314,7 @@ height: 60px;
 object-fit:cover;
 border-radius:10px;
 cursor:pointer;
-border:3px solid transparent;
+border: 2px solid  rgba(34, 205, 128, 0.503) !important;
 flex:none;
 }
 
@@ -672,6 +673,17 @@ min-width:45px;
 background:#2563eb;
 
 }
+
+.bar-text{
+padding:10px 15px;
+font-size:14px;
+font-weight:bold;
+color:#2e539e;
+background:white;
+border-bottom:1px solid #e5e7eb;
+display: block !important;
+flex-direction: column;
+}
 </style>
 </head>
 
@@ -843,8 +855,11 @@ id="modalTopTitle">
 
 <div id="mediaContainer"></div>
 
-<div class="image-bar"
-id="imageBar"></div>
+
+<div class="bar-text">
+וידיאו ותמונות
+</div>
+<div class="image-bar" id="imageBar"></div>
 
 <div class="modal-body">
 
