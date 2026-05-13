@@ -835,7 +835,15 @@ class="side-link">
 העלת פוסט
 </a>
 
-
+<a href="developer-notes.html"
+class="side-link">
+הערות למפתחים
+</a>
+<a href="#"
+class="side-link"
+onclick="showAboutPage()">
+אודות
+</a>
 <div class="links1">
   <span style="position: absolute; color: rgb(116, 114, 114); margin-bottom: 10px; margin-top: 10px;">קישורים של ערוץ התורה</span>
 <a
@@ -967,6 +975,98 @@ id="modalContent"></div>
 
 </div>
 
+<!-- דף אודות -->
+<div id="aboutPage" style="
+display:none;
+position:fixed;
+top:0;
+right:0;
+width:100%;
+height:100%;
+background:white;
+z-index:5000;
+overflow:auto;
+padding:25px;
+">
+
+<button onclick="closeAboutPage()" class="close-btn">
+סגירה
+</button>
+
+<h1 style="
+font-size:32px;
+margin-bottom:20px;
+color:#111827;
+text-align:center;
+">
+אודות האתר
+</h1>
+
+<h2 style="
+font-size:22px;
+margin-bottom:15px;
+color:#374151;
+">
+ברוכים הבאים
+</h2>
+
+<p style="
+line-height:2;
+font-size:17px;
+color:#4b5563;
+margin-bottom:20px;
+">
+
+שלום, דף זה נועד לתת הסבר אודות האתר,
+מטרתו להציג תכנים מחזקים, עדויות וסיפורים אמיתיים מהחיים,
+וכן לשתף את הציבור בפעילות הרבה הנעשית למען זיכוי הרבים.
+
+</p>
+
+<h2 style="
+font-size:22px;
+margin-bottom:15px;
+color:#374151;
+">
+הצצה לפעילות הרב
+</h2>
+
+<p style="
+line-height:2;
+font-size:17px;
+color:#4b5563;
+margin-bottom:20px;
+">
+
+בדף זה תוכלו לקבל הצצה לחייו של הרב,
+להכיר מקרוב את פועלו ותרומתו לקהילה הקרובה והרחוקה,
+לשמוע על מעשי חסד, חיזוק לבבות,
+ועזרה לאנשים במצבים שונים במהלך חייהם.
+
+</p>
+
+<h2 style="
+font-size:22px;
+margin-bottom:15px;
+color:#374151;
+">
+מטרת האתר
+</h2>
+
+<p style="
+line-height:2;
+font-size:17px;
+color:#4b5563;
+">
+
+האתר הוקם מתוך רצון להפיץ אור,
+לחזק אנשים באמונה,
+ולאפשר לכל אדם להתחבר לתכנים של תורה,
+חסד ואהבת ישראל.
+
+</p>
+
+</div>
 <script type="module">
 
 import { createClient }
@@ -1761,6 +1861,39 @@ ${i}
 
 }
 
+
+function showAboutPage(){
+
+document.getElementById("aboutPage").style.display = "block"
+
+document.querySelector(".container").style.display = "none"
+
+document.querySelector(".page-title").style.display = "none"
+
+document.querySelector(".actions1").style.display = "none"
+
+document.getElementById("pagination").style.display = "none"
+
+closeMenu()
+
+}
+
+function closeAboutPage(){
+
+document.getElementById("aboutPage").style.display = "none"
+
+document.querySelector(".container").style.display = "block"
+
+document.querySelector(".page-title").style.display = "flex"
+
+document.querySelector(".actions1").style.display = "grid"
+
+document.getElementById("pagination").style.display = "flex"
+
+}
+
+window.showAboutPage = showAboutPage
+window.closeAboutPage = closeAboutPage
 window.shareSite = shareSite
 window.openPostById = openPostById
 window.goHome = goHome
