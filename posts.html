@@ -238,7 +238,7 @@ text-overflow:ellipsis;
 .post-modal{
 position:fixed;
 inset:0;
-background:#f8fafc;
+background:#e0dbdb;
 z-index:3000;
 overflow:auto;
 transform:translateY(100%);
@@ -313,7 +313,7 @@ overflow-x:auto;
 padding:14px 12px;
 
 background:rgb(255, 255, 255);
-border-bottom: solid 1px rgb(226, 225, 225);
+border-bottom: solid 2px rgb(161, 159, 159);
 }
 
 .image-thumb{
@@ -322,7 +322,6 @@ height: 60px;
 object-fit:cover;
 border-radius:10px;
 cursor:pointer;
-border: 2px solid  rgba(45, 183, 207, 0.503) !important;
 flex:none;
 }
 
@@ -333,7 +332,7 @@ object-fit:cover;
 }
 
 .image-thumb.active{
-border-color:#97989a;
+border: solid  5px #ffffff !important;
 }
 
 .modal-content{
@@ -349,7 +348,9 @@ overflow-wrap:break-word;
 
 max-width:100%;
 overflow-x:auto;
+margin-top: 60px;
 
+margin-bottom: 100px;
 }
 
 .modal-body{
@@ -425,7 +426,7 @@ overflow-wrap:break-word;
 
 max-width:100%;
 overflow-x:auto;
-
+min-height: 200px;
 /* חדש */
 
 background:
@@ -435,12 +436,12 @@ linear-gradient(
 #f8fafc
 );
 
-padding:24px;
+padding: 3px 10px;
 
 border-radius:5px;
 
 border:
-1px solid #e2e8f0;
+1px solid #e5eaf2;
 
 box-shadow:
 0 8px 24px rgba(15,23,42,.06);
@@ -719,13 +720,13 @@ right: -10px;
 top: -10px;
 z-index:20;
 
-background:rgba(148, 145, 145, 0.6);
+background:rgba(54, 73, 182, 0.187);
 color:rgb(0, 0, 0);
 
 padding:6px 12px;
 border-radius:12px;
 
-font-size:10px;
+font-size:13px;
 font-weight:bold;
 
 pointer-events:none;
@@ -766,6 +767,10 @@ backdrop-filter:blur(4px);
 
 .endallcon{
   border: solid 1px #00000026;
+}
+
+.thumb-text.active{
+color:#4167c1;
 }
 </style>
 </head>
@@ -1426,11 +1431,41 @@ document.createElement("div")
 
 thumbText.className = "thumb-text"
 
-thumbText.innerText = "עוד מדיה"
+thumbText.innerText =
+index === 0
+? "נבחר"
+: "עוד מדיה"
 
 if(index === 0){
 
+
+
+document
+.querySelectorAll(".image-thumb")
+.forEach(el=>{
+
+el.classList.remove("active")
+
+})
+
+/* TEXT RESET */
+
+document
+.querySelectorAll(".thumb-text")
+.forEach(el=>{
+
+el.innerText = "עוד מדיה"
+el.classList.remove("active")
+
+})
+
+/* CURRENT */
+
+thumbText.innerText = "נבחר"
+thumbText.classList.add("active")
+
 mediaThumb.classList.add("active")
+
 
 }
 
@@ -1483,6 +1518,21 @@ document
 el.classList.remove("active")
 
 })
+
+/* TEXT RESET */
+
+document
+.querySelectorAll(".thumb-text")
+.forEach(el=>{
+
+el.innerText = "עוד מדיה"
+el.classList.remove("active")
+thumbText.classList.add("active")
+
+})
+/* CURRENT */
+
+thumbText.innerText = "נבחר"
 
 mediaThumb.classList.add("active")
 
