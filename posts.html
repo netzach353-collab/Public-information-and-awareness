@@ -264,6 +264,7 @@ margin-bottom:20px;
 color:#7a7a7c;
 line-height:1.5;
 text-align: center;
+
 }
 
 
@@ -314,7 +315,7 @@ height: 60px;
 object-fit:cover;
 border-radius:10px;
 cursor:pointer;
-border: 2px solid  rgba(34, 205, 128, 0.503) !important;
+border: 2px solid  rgba(45, 183, 207, 0.503) !important;
 flex:none;
 }
 
@@ -429,7 +430,7 @@ linear-gradient(
 
 padding:24px;
 
-border-radius:24px;
+border-radius:5px;
 
 border:
 1px solid #e2e8f0;
@@ -674,15 +675,53 @@ background:#2563eb;
 
 }
 
-.bar-text{
-padding:10px 15px;
-font-size:14px;
+.image-bar-wrapper{
+position:relative;
+}
+
+
+
+.thumb-wrapper{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:6px;
+flex:none;
+}
+
+.thumb-text{
+font-size:12px;
 font-weight:bold;
-color:#2e539e;
-background:white;
-border-bottom:1px solid #e5e7eb;
-display: block !important;
-flex-direction: column;
+color:#374151;
+text-align:center;
+
+}
+
+.image-thumb{
+width:60px;
+height:60px;
+}
+
+.image-bar-wrapper{
+position:relative;
+}
+
+.bar-text{
+position: relative;
+right: -10px;
+top: -10px;
+z-index:20;
+
+background:rgba(148, 145, 145, 0.6);
+color:rgb(0, 0, 0);
+
+padding:6px 12px;
+border-radius:12px;
+
+font-size:10px;
+font-weight:bold;
+
+pointer-events:none;
 }
 </style>
 </head>
@@ -856,13 +895,16 @@ id="modalTopTitle">
 <div id="mediaContainer"></div>
 
 
-<div class="bar-text">
-וידיאו ותמונות
-</div>
+<div class="image-bar-wrapper">
+
+
+
 <div class="image-bar" id="imageBar"></div>
 
-<div class="modal-body">
+</div>
 
+<div class="modal-body">
+<span class="bar-text">תוכן הפוסט </span>
 <div class="modal-title"
 id="modalTitle"></div>
 
@@ -1263,6 +1305,18 @@ mediaThumb.src = url
 
 mediaThumb.className = "image-thumb"
 
+const thumbWrapper =
+document.createElement("div")
+
+thumbWrapper.className = "thumb-wrapper"
+
+const thumbText =
+document.createElement("div")
+
+thumbText.className = "thumb-text"
+
+thumbText.innerText = "עוד מדיה"
+
 if(index === 0){
 
 mediaThumb.classList.add("active")
@@ -1324,6 +1378,12 @@ mediaThumb.classList.add("active")
 }
 
 imageBar.appendChild(mediaThumb)
+
+thumbWrapper.appendChild(mediaThumb)
+
+thumbWrapper.appendChild(thumbText)
+
+imageBar.appendChild(thumbWrapper)
 
 })
 
