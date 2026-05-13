@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+הערות למפתחים
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#f1f5f9;
+padding:20px;
+}
+
+.top-title{
+
+font-size:30px;
+font-weight:bold;
+
+margin-bottom:20px;
+
+text-align:center;
+
+color:#111827;
+
+}
+
+.note-box{
+
+background:white;
+
+padding:20px;
+
+border-radius:16px;
+
+line-height:2;
+
+font-size:17px;
+
+color:#374151;
+
+margin-bottom:20px;
+
+box-shadow:0 4px 14px rgba(0,0,0,.08);
+
+}
+
+textarea{
+
+width:100%;
+
+height:220px;
+
+border:none;
+
+outline:none;
+
+resize:none;
+
+padding:15px;
+
+font-size:16px;
+
+border-radius:16px;
+
+background:white;
+
+box-shadow:0 4px 14px rgba(0,0,0,.08);
+
+line-height:1.8;
+
+}
+
+.send-btn{
+
+margin-top:20px;
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:14px;
+
+background:#111827;
+
+color:white;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+.send-btn:active{
+
+transform:scale(.98);
+
+}
+
+.back-btn{
+
+display:inline-block;
+
+margin-bottom:20px;
+
+text-decoration:none;
+
+background:#e5e7eb;
+
+padding:10px 15px;
+
+border-radius:10px;
+
+color:black;
+
+font-weight:bold;
+
+}
+
+.status{
+
+margin-top:15px;
+
+text-align:center;
+
+font-weight:bold;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="index.html"
+class="back-btn">
+חזרה
+</a>
+
+<div class="top-title">
+הערות למפתחים
+</div>
+
+<div class="note-box">
+
+הערות למפתחים אנא תימכו בנו ותנו ביקורת על האתר בכל הנוגע לתוכן ולשיפור הנוחות ומראה האתר...
+
+</div>
+
+<textarea
+id="developerText"
+placeholder="כתבו כאן את ההערה שלכם...">
+</textarea>
+
+<button
+class="send-btn"
+onclick="sendDeveloperNote()">
+שלח הערה
+</button>
+
+<div
+class="status"
+id="status"></div>
+
+<script type="module">
+
+import { createClient }
+from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const supabaseUrl =
+'https://pnnfstfabmhjzohkypak.supabase.co'
+
+const supabaseKey =
+'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
+
+const supabase = createClient(
+supabaseUrl,
+supabaseKey
+)
+
+async function sendDeveloperNote(){
+
+const text =
+document.getElementById("developerText")
+.value.trim()
+
+if(!text){
+
+alert("יש לכתוב הערה")
+
+return
+
+}
+
+document.getElementById("status")
+.innerText = "שולח..."
+
+const { error } =
+await supabase
+.from("developer_notes")
+.insert([
+{
+content:text
+}
+])
+
+if(error){
+
+document.getElementById("status")
+.innerText = "שגיאה בשליחה"
+
+console.log(error)
+
+return
+
+}
+
+document.getElementById("developerText")
+.value = ""
+
+document.getElementById("status")
+.innerText = "ההערה נשלחה בהצלחה"
+
+}
+
+window.sendDeveloperNote =
+sendDeveloperNote
+
+</script>
+
+</body>
+</html>
