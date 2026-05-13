@@ -189,15 +189,12 @@ height:100%;
 object-fit:cover;
 
 }
-
 .preview-item video{
 
 width:100%;
 height:100%;
 
 object-fit:cover;
-
-pointer-events:none;
 
 }
 
@@ -951,12 +948,26 @@ class="remove-btn"
 
 <video
 src="${fileUrl}"
+controls
 muted
 playsinline
-preload="metadata"
+webkit-playsinline
+preload="auto"
 ></video>
 
 `
+
+const video =
+div.querySelector("video")
+
+video.addEventListener(
+"loadedmetadata",
+()=>{
+
+video.currentTime = 0.1
+
+}
+)
 
 }else{
 
