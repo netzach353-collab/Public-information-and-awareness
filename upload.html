@@ -26,6 +26,7 @@ padding:20px;
 
 }
 
+
 h2{
 
 margin-bottom:20px;
@@ -242,16 +243,19 @@ opacity:.6;
 
 .status{
 
+animation:showStatus .25s ease;
+
 display:none;
 
-position:fixed;
+position:fixed ;
 
-top:15px;
-right:50%;
+top:20px;
 
-transform:translateX(50%);
+left:50%;
 
-z-index:99999;
+transform:translateX(-50%);
+
+z-index:2147483647;
 
 padding:14px 20px;
 
@@ -263,27 +267,31 @@ font-weight:bold;
 
 min-width:220px;
 
+max-width:90%;
+
 text-align:center;
 
 box-shadow:0 10px 25px rgba(0,0,0,.15);
 
-animation:showStatus .25s ease;
+backdrop-filter:blur(10px);
 
 }
+
+
 
 @keyframes showStatus{
 
 from{
 
 opacity:0;
-transform:translateX(50%) translateY(-15px);
+transform:translate(-50%,-15px);
 
 }
 
 to{
 
 opacity:1;
-transform:translateX(50%) translateY(0);
+transform:translate(-50%,0);
 
 }
 
@@ -485,7 +493,7 @@ overflow-x:hidden;
 
 /* כניסה */
 
-body{
+.page-wrap{
 
 opacity:0;
 
@@ -501,9 +509,10 @@ forwards;
 
 }
 
+
 /* יציאה */
 
-body.page-exit{
+.page-wrap.page-exit{
 
 opacity:0;
 
@@ -604,6 +613,7 @@ width:calc(100% - 28px);
 </head>
 
 <body>
+  <div class="page-wrap">
 
 <div class="back-btn">
 
@@ -724,13 +734,13 @@ id="submitBtn"
 פרסם פוסט
 </button>
 
+
+</form>
+</div>
 <div
 class="status"
 id="statusBox"
 ></div>
-
-</form>
-
 
 <script type="module">
 
@@ -789,9 +799,9 @@ titleCounter.innerText =
 
 function goHome(){
 
-document.body.classList.add(
-"page-exit"
-)
+document
+.querySelector(".page-wrap")
+.classList.add("page-exit")
 
 setTimeout(()=>{
 
@@ -804,10 +814,34 @@ window.location.href =
 
 let selectedFiles = []
 
-
 function showStatus(text,type){
 
+statusBox.style.position = "fixed"
+
+statusBox.style.top = "20px"
+
+statusBox.style.left = "50%"
+
+statusBox.style.transform = "translateX(-50%)"
+
+statusBox.style.zIndex = "999999999"
+
 statusBox.style.display = "flex"
+
+statusBox.style.alignItems = "center"
+
+statusBox.style.justifyContent = "center"
+
+statusBox.style.gap = "10px"
+
+statusBox.style.padding = "14px 20px"
+
+statusBox.style.borderRadius = "18px"
+
+statusBox.style.maxWidth = "90%"
+
+statusBox.style.boxShadow =
+"0 10px 30px rgba(0,0,0,.18)"
 
 statusBox.className =
 `status ${type}`
