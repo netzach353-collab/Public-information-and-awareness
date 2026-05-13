@@ -720,12 +720,17 @@ playsinline
 webkit-playsinline
 preload="metadata"
 
+onloadedmetadata="
+this.currentTime = 0.1
+"
+
 style="
 width:100%;
 height:130px;
 object-fit:cover;
 display:block;
 background:black;
+pointer-events:none;
 "
 >
 
@@ -915,6 +920,13 @@ mediaThumb.playsInline = true
 
 mediaThumb.preload = "metadata"
 
+mediaThumb.currentTime = 0.1
+
+mediaThumb.onloadedmetadata = ()=>{
+
+mediaThumb.currentTime = 0.1
+
+}
 mediaThumb.style.objectFit = "cover"
 
 mediaThumb.style.background = "black"
