@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
 <title>כל הפוסטים - יראת השם</title>
 
 <style>
@@ -95,7 +99,15 @@ transition:.25s;
 box-shadow:-10px 0 20px rgba(0,0,0,.15);
 padding:20px;
 overflow:auto;
+-ms-overflow-style:none;
+scrollbar-width:none;
+
 }
+
+.sidebar::-webkit-scrollbar{
+display:none;
+}
+
 
 .sidebar.show{
 right:0;
@@ -460,6 +472,206 @@ text-overflow:ellipsis;
 
 flex:1;
 }
+
+.links1{
+
+display:grid;
+grid-template-columns:repeat(3,1fr);
+
+border-top:solid 1px #d1d5db;
+border-bottom:solid 1px #d1d5db;
+
+margin-top: 40px;
+padding:10px 0;
+position: relative;
+gap:8px;
+
+}
+
+.links1 .bottom-item{
+
+margin-bottom:0;
+
+min-width:auto;
+
+padding:5px 4px;
+
+font-size:11px;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+}
+
+.links1 .bottom-item i{
+
+font-size:20px;
+
+margin-bottom:5px;
+margin-top: 40px;
+}
+
+.links1 .bottom-item span{
+
+font-size:10px;
+
+line-height:1.2;
+
+}
+
+ 
+ /* TIKTOK */
+.tiktok i,
+.tiktok span{
+color:#000000;
+}
+
+/* WEBSITE */
+.website i,
+.website span{
+color:#2563eb;
+}
+
+/* WHATSAPP */
+.whatsapp i,
+.whatsapp span{
+color:#22c55e;
+}
+
+/* FACEBOOK */
+.facebook i,
+.facebook span{
+color:#1877f2;
+}
+
+/* TELEGRAM */
+.instagram i,
+.instagram span{
+color:#229ED9;
+}
+
+/* YOUTUBE */
+.youtube i,
+.youtube span{
+color:#ff0000;
+}
+
+.iconser1{
+
+display:flex;
+align-items:center;
+justify-content:center;
+display: flex;
+  flex-direction: column;
+}
+
+.iconser1 .bottom-item{
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+text-decoration:none;
+
+color:rgb(202, 200, 200);
+
+width:42px;
+height:25px;
+
+border-radius:12px;
+
+background: none;
+transition:.2s;
+}
+.iconser1 span {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.share-btn{
+
+border:none;
+background:none;
+
+cursor:pointer;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:#d1d5db;
+
+width:42px;
+height:25px;
+}
+.iconser1 .bottom-item i{
+
+font-size:23px;
+
+}
+
+.iconser1 .bottom-item span{
+
+display:none;
+
+}
+
+.iconser1 .bottom-item:active{
+
+transform:scale(.92);
+
+}
+
+.pagination{
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+gap:10px;
+
+margin-top:30px;
+margin-bottom:30px;
+
+flex-wrap:wrap;
+
+direction:ltr;
+
+}
+
+.pagination button{
+
+border:none;
+
+background:#111827;
+color:white;
+
+padding:10px 14px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-size:15px;
+
+min-width:45px;
+
+}
+
+.pagination button.active{
+
+background:#2563eb;
+
+}
 </style>
 </head>
 
@@ -471,12 +683,24 @@ flex:1;
 
 <button class="menu-btn"
 onclick="openMenu()">
-☰ תפריט
+☰ 
 </button>
+
+<div class="iconser1">
+   <button
+onclick="shareSite()"
+class="bottom-item share-btn">
+
+<i class="fas fa-share-alt"></i>
+
+</button>
+ <span>שתף אותנו</span>
+</div>
 
 <div class="logo">
 ״בסייעתא דשמיא״
 </div>
+
 
 </div>
 
@@ -511,6 +735,58 @@ class="side-link">
 העלת פוסט
 </a>
 
+
+<div class="links1">
+  <span style="position: absolute; color: rgb(116, 114, 114); margin-bottom: 10px; margin-top: 10px;">קישורים של ערוץ התורה</span>
+<a
+href="https://www.tiktok.com/@rabenu156"
+target="_blank"
+class="bottom-item tiktok">
+<i class="fab fa-tiktok color12"></i>
+<span class="color1">TikTok</span>
+</a>
+<a
+href="https://daily-torah.tv"
+target="_blank"
+class="bottom-item website">
+<i class="fas fa-globe color13"></i>
+<span class="color2">אתר ערוץ התורה</span>
+</a>
+
+<a
+href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbDY0R2dtUGo5eFE2Tk9NOVNvdmFHZGRlQmdpZ3xBQ3Jtc0tuTUFmUFNBd1hpaUY4UC0zcGkxbmVocEhDWGNiMzR0MF9XQUNiRWRUMlp6S0RGY2V5Wl9yektUSEk4M0tUczExdDRYQl9TU3RJLXNZaXJuSXFyQ3BtZkRKQVVYbU44TnAwakhfV1NGNUNzbjJvWWFaVQ&q=https%3A%2F%2Fwhatsapp.com%2Fchannel%2F0029VaHBaz0Bfxo6YuOUKk1D"
+target="_blank"
+class="bottom-item whatsapp">
+<i class="fab fa-whatsapp"></i>
+<span>וואטסאפ</span>
+</a>
+
+<a
+href="https://www.facebook.com/harutzhatorah/"
+target="_blank"
+class="bottom-item facebook">
+<i class="fab fa-facebook-f"></i>
+<span>פייסבוק</span>
+</a>
+
+
+<a
+href="https://t.me/Rabenu156"
+target="_blank"
+class="bottom-item instagram">
+<i class="fab fa-instagram"></i>
+<span>ערוץ התורה בטלגרם</span>
+</a>
+
+<a
+href="https://www.youtube.com/@harutzhatorah"
+target="_blank"
+class="bottom-item youtube">
+<i class="fab fa-youtube"></i>
+<span>ערוץ התורה</span>
+</a>
+
+</div>
 </div>
 
 <!-- ACTIONS -->
@@ -544,6 +820,29 @@ class="side-link">
 <div class="posts-grid"
 id="postsGrid"></div>
 
+<div class="pagination" id="pagination">
+
+<button onclick="goToPage(1)">
+1
+</button>
+
+<button onclick="goToPage(2)">
+2
+</button>
+
+<button onclick="goToPage(3)">
+3
+</button>
+
+<button onclick="goToPage(4)">
+4
+</button>
+
+<button onclick="goToPage(5)">
+5
+</button>
+
+</div>
 </div>
 
 <!-- MODAL -->
@@ -651,28 +950,53 @@ document.getElementById("postsGrid")
 const postModal =
 document.getElementById("postModal")
 
-async function loadPosts(){
+async function loadPosts(page = 1){
+
+const from =
+(page - 1) * POSTS_PER_PAGE
+
+const to =
+from + POSTS_PER_PAGE - 1
+
+postsGrid.innerHTML = `
+<div style="
+padding:40px;
+text-align:center;
+font-size:18px;
+grid-column:1/-1;
+">
+טוען...
+</div>
+`
 
 const { data, error } =
 await supabase
 .from('posts')
-.select('*')
+.select(`
+id,
+title,
+content,
+media_urls,
+links,
+created_at
+`)
+.eq('type', 'post')
 .order('created_at',{ascending:false})
-.limit(20)
+.range(from,to)
+
 if(error){
 console.log(error)
 return
 }
 
-const normalPosts =
-data.filter(post => post.type === "post")
+window.postsData = data || []
 
-renderPosts(normalPosts)
+renderPosts(window.postsData)
 
 if(postId){
 
 const selectedPost =
-normalPosts.find(
+window.postsData.find(
 post => String(post.id) === String(postId)
 )
 
@@ -683,6 +1007,7 @@ openPost(selectedPost)
 }
 
 }
+
 }
 
 const params =
@@ -1054,6 +1379,35 @@ function goUpload(){
 window.location.href = "upload.html"
 }
 
+function goToPage(page){
+
+currentPage = page
+
+loadPosts(page)
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+})
+
+document
+.querySelectorAll(".pagination button")
+.forEach(btn=>{
+
+btn.classList.remove("active")
+
+if(btn.innerText == page){
+
+btn.classList.add("active")
+
+}
+
+})
+
+}
+
+window.goToPage = goToPage
+
 
 function openPostById(id){
 
@@ -1104,12 +1458,52 @@ return "#"
 
 }
 
+async function shareSite(){
+
+const shareData = {
+
+title:"בסייעתא דשמיא",
+
+text:"כנסו לאתר הרב יוסף שובלי",
+
+url:window.location.href
+
+}
+
+if(navigator.share){
+
+try{
+
+await navigator.share(shareData)
+
+}catch(err){
+
+console.log(err)
+
+}
+
+}else{
+
+navigator.clipboard.writeText(
+window.location.href
+)
+
+alert("הלינק הועתק")
+}
+
+}
+let currentPage = 1
+
+const POSTS_PER_PAGE = 20
+
+
+window.shareSite = shareSite
 window.openPostById = openPostById
 window.goHome = goHome
 window.goPosts = goPosts
 window.goUpload = goUpload
 
-loadPosts()
+loadPosts(currentPage)
 </script>
 
 </body>
