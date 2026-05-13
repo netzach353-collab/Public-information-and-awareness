@@ -1140,6 +1140,7 @@ if(mediaUrl.toLowerCase().includes(".mp4")){
 
 mediaContainer.innerHTML = `
 <video
+id="activeVideo"
 class="modal-image"
 src="${mediaUrl}"
 controls
@@ -1343,23 +1344,25 @@ window.scrollTo(0,0)
 
 function closePost(){
 
-const activeVideo =
-document.getElementById("activeVideo")
+const videos =
+document.querySelectorAll("#mediaContainer video")
 
-if(activeVideo){
+videos.forEach(video => {
 
+video.pause()
 
-activeVideo.pause();
-activeVideo.src = "";
-activeVideo.load();
+video.currentTime = 0
 
-activeVideo.currentTime = 0
+video.removeAttribute("src")
 
-}
+video.load()
+
+})
 
 postModal.classList.remove("show")
 
 document.body.style.overflow = ""
+
 }
 
 window.openPost = openPost
