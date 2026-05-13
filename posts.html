@@ -820,29 +820,7 @@ class="bottom-item youtube">
 <div class="posts-grid"
 id="postsGrid"></div>
 
-<div class="pagination" id="pagination">
-
-<button onclick="goToPage(1)">
-1
-</button>
-
-<button onclick="goToPage(2)">
-2
-</button>
-
-<button onclick="goToPage(3)">
-3
-</button>
-
-<button onclick="goToPage(4)">
-4
-</button>
-
-<button onclick="goToPage(5)">
-5
-</button>
-
-</div>
+<div class="pagination" id="pagination"></div>
 </div>
 
 <!-- MODAL -->
@@ -1388,10 +1366,14 @@ currentPage = page
 
 loadPosts(page)
 
+createPagination()
+
 window.scrollTo({
 top:0,
 behavior:"smooth"
 })
+
+
 
 document
 .querySelectorAll(".pagination button")
@@ -1499,6 +1481,42 @@ let currentPage = 1
 
 const POSTS_PER_PAGE = 20
 
+async function createPagination(){
+
+const { count, error } = await supabase
+.from('posts')
+.select('*', { count: 'exact', head: true })
+.eq('type', 'post')
+
+if(error){
+console.log(error)
+return
+}
+
+const totalPages =
+Math.ceil(count / POSTS_PER_PAGE)
+
+const pagination =
+document.getElementById("pagination")
+
+pagination.innerHTML = ""
+
+for(let i = 1; i <= totalPages; i++){
+
+pagination.innerHTML += `
+
+<button
+onclick="goToPage(${i})"
+class="${i === currentPage ? 'active' : ''}"
+>
+${i}
+</button>
+
+`
+
+}
+
+}
 
 window.shareSite = shareSite
 window.openPostById = openPostById
@@ -1506,6 +1524,7 @@ window.goHome = goHome
 window.goPosts = goPosts
 window.goUpload = goUpload
 
+createPagination()
 loadPosts(currentPage)
 </script>
 
