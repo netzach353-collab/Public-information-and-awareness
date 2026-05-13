@@ -190,6 +190,17 @@ object-fit:cover;
 
 }
 
+.preview-item video{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+pointer-events:none;
+
+}
+
 .remove-btn{
 
 position:absolute;
@@ -246,12 +257,13 @@ display:none;
 
 position:fixed;
 
-top:15px;
-right:50%;
+top:20px;
 
-transform:translateX(50%);
+left:50%;
 
-z-index:99999;
+transform:translateX(-50%);
+
+z-index:999999;
 
 padding:14px 20px;
 
@@ -261,13 +273,25 @@ font-size:15px;
 
 font-weight:bold;
 
-min-width:220px;
+min-width:240px;
+
+max-width:90%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:10px;
 
 text-align:center;
 
 box-shadow:0 10px 25px rgba(0,0,0,.15);
 
 animation:showStatus .25s ease;
+
+backdrop-filter:blur(10px);
 
 }
 
@@ -276,14 +300,20 @@ animation:showStatus .25s ease;
 from{
 
 opacity:0;
-transform:translateX(50%) translateY(-15px);
+
+transform:
+translateX(-50%)
+translateY(-20px);
 
 }
 
 to{
 
 opacity:1;
-transform:translateX(50%) translateY(0);
+
+transform:
+translateX(-50%)
+translateY(0);
 
 }
 
@@ -921,10 +951,8 @@ class="remove-btn"
 
 <video
 src="${fileUrl}"
-controls
-playsinline
-webkit-playsinline
 muted
+playsinline
 preload="metadata"
 ></video>
 
