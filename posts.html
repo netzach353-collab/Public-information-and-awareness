@@ -153,15 +153,22 @@ font-weight:bold;
 
 .page-title{
 padding:20px;
-font-size:26px;
+font-size:30px;
 font-weight:bold;
-color:#111827;
+color:#246ba9a0;
+display: flex;
+margin: 0 auto;
+justify-content: center;
+border-bottom: solid 10px;
+margin-bottom: 50px;
+background: rgba(106, 184, 166, 0.215)
 }
 
 /* POSTS */
 
 .container{
 padding:0 12px 20px;
+margin-bottom: 40px;
 }
 
 .posts-grid{
@@ -641,7 +648,7 @@ align-items:center;
 
 gap:10px;
 
-margin-top:30px;
+margin-top:20px;
 margin-bottom:30px;
 
 flex-wrap:wrap;
@@ -654,25 +661,25 @@ direction:ltr;
 
 border:none;
 
-background:#111827;
-color:white;
+background:#bebfc1a9 !important;
+color:rgb(0, 0, 0) !important;
 
-padding:10px 14px;
-
-border-radius:10px;
+width: 30px;
+height: 30px;
+border-radius:8px;
 
 cursor:pointer;
 
-font-size:15px;
+font-size:12px;
 
-min-width:45px;
 
 }
 
 .pagination button.active{
 
-background:#2563eb;
-
+background:#b3b4b76f;
+color: rgb(0, 0, 0);
+font-weight: bolder;
 }
 
 .image-bar-wrapper{
@@ -722,6 +729,43 @@ font-size:10px;
 font-weight:bold;
 
 pointer-events:none;
+}
+
+.card-media{
+position:relative;
+width:100%;
+height:130px;
+overflow:hidden;
+background:black;
+}
+
+.video-icon{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+
+width:52px;
+height:52px;
+
+border-radius:50%;
+
+background:rgba(0,0,0,.6);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:white;
+font-size:22px;
+
+pointer-events:none;
+
+backdrop-filter:blur(4px);
+}
+
+.endallcon{
+  border: solid 3px #246ba9a0;
 }
 </style>
 </head>
@@ -861,7 +905,7 @@ class="bottom-item youtube">
 <!-- TITLE -->
 
 <div class="page-title">
-כל הפוסטים
+כל התכנים 
 </div>
 
 <!-- POSTS -->
@@ -871,8 +915,11 @@ class="bottom-item youtube">
 <div class="posts-grid"
 id="postsGrid"></div>
 
-<div class="pagination" id="pagination"></div>
 </div>
+
+<div class="endallcon"></div>
+
+<div class="pagination" id="pagination"></div>
 
 <!-- MODAL -->
 
@@ -1066,6 +1113,8 @@ html += `
 <div class="card"
 onclick="openPostById('${post.id}')">
 
+<div class="card-media">
+
 ${
 
 post.media_urls?.[0]
@@ -1087,7 +1136,7 @@ this.currentTime = 0.1
 style="
 width:100%;
 height:130px;
-object-fit:cover;
+object-fit:contain;
 display:block;
 background:black;
 pointer-events:none;
@@ -1097,6 +1146,10 @@ pointer-events:none;
 <source src="${post.media_urls[0]}">
 
 </video>
+
+<div class="video-icon">
+<i class="fas fa-play"></i>
+</div>
 
 `
 
@@ -1137,6 +1190,8 @@ color:#6b7280;
 
 `
 }
+
+</div>
 
 <div class="card-body">
 
