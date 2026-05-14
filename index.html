@@ -767,10 +767,114 @@ color: #3954ab;
   background: rgba(15, 15, 166, 0.069) !important;
 }
 
+
+#siteLoader{
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: linear-gradient(135deg,#0f172a,#1e3a8a,#312e81);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  overflow: hidden;
+}
+
+.loader-bg{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(59,130,246,.35), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(139,92,246,.30), transparent 40%);
+  animation: pulseBg 4s ease infinite;
+}
+
+.spinner{
+  width: 72px;
+  height: 72px;
+  animation: rotate 1s linear infinite;
+  z-index: 2;
+}
+
+.spinner circle{
+  stroke: white;
+  stroke-linecap: round;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 90;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+.loaderText{
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  z-index: 2;
+  animation: fadeText 1.5s ease-in-out infinite;
+}
+
+/* אנימציות */
+
+@keyframes rotate{
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash{
+  0%{
+    stroke-dashoffset: 120;
+  }
+
+  50%{
+    stroke-dashoffset: 30;
+  }
+
+  100%{
+    stroke-dashoffset: 120;
+  }
+}
+
+@keyframes fadeText{
+  0%,100%{
+    opacity: .5;
+  }
+
+  50%{
+    opacity: 1;
+  }
+}
+
+@keyframes pulseBg{
+  0%,100%{
+    transform: scale(1);
+  }
+
+  50%{
+    transform: scale(1.05);
+  }
+}
 </style>
 </head>
 
 <body>
+
+  <div id="siteLoader">
+  <div class="loader-bg"></div>
+
+  <svg class="spinner" viewBox="0 0 50 50">
+    <circle
+      cx="25"
+      cy="25"
+      r="20"
+      fill="none"
+      stroke-width="4"
+    />
+  </svg>
+
+  <div class="loaderText">טוען אתר... ״בסייעתא דשמיא״</div>
+</div>
 
 <!-- סרגל עליון -->
 <div class="topbar">
@@ -1547,6 +1651,25 @@ alert("הלינק הועתק")
 }
 
 }
+
+
+window.addEventListener("load", () => {
+
+  const loader = document.getElementById("siteLoader");
+
+  setTimeout(() => {
+
+    loader.style.opacity = "0";
+    loader.style.transition = "0.5s ease";
+
+    setTimeout(() => {
+      loader.remove();
+    }, 500);
+
+  }, 1800);
+
+});
+
 window.showAboutPage = showAboutPage
 window.closeAboutPage = closeAboutPage
 window.openPost = openPost
