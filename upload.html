@@ -796,6 +796,10 @@ required
 פוסטים אודות הוצאות ספרים
 </option>
 
+<option value="פוסט כללי">
+פוסט כללי
+</option>
+
 </select>
 
 </div>
@@ -896,6 +900,9 @@ supabaseKey
 
 const form =
 document.getElementById("postForm")
+
+const category =
+document.getElementById("category").value
 
 const mediaInput =
 document.getElementById("media")
@@ -1531,20 +1538,28 @@ return
 }
 
 
-const category =
-document.getElementById("category").value
 /* ---------- שמירת פוסט ---------- */
 
+const thumbnailUrls = []
+
+const { data, error } =
 await supabase
 .from("posts")
 .insert([{
 
 title,
+
 content,
+
 category,
-links,
-media_urls:mediaUrls,
-type:"post"
+
+type: "post",
+
+media_urls: mediaUrls,
+
+thumbnail_urls: thumbnailUrls,
+
+links
 
 }])
 
@@ -1556,18 +1571,6 @@ showStatus(
 "שגיאה בשמירת הפוסט",
 "error"
 )
-
-clearTimeout(uploadWarningTimeout)
-
-document
-.getElementById("uploadWarning")
-.style.display = "none"
-
-document
-.getElementById("warningOverlay")
-.style.display = "none"
-
-submitBtn.disabled = false
 
 return
 
