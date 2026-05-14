@@ -1180,6 +1180,84 @@ backdrop-filter:blur(4px);
 color:#3b3a3a;
 font-size: 16px;
 }
+
+.filter-btn{
+
+width:100%;
+
+height:52px;
+
+border:none;
+
+border-radius:16px;
+
+background:#111827;
+
+color:white;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+margin-bottom:14px;
+
+}
+
+.filter-menu{
+display: none;
+
+flex-direction:column;
+
+gap:10px;
+
+background:white;
+
+padding:14px;
+
+border-radius:18px;
+
+margin-bottom:18px;
+
+box-shadow:
+0 4px 18px rgba(0,0,0,.08);
+
+}
+
+.filter-menu.show{
+
+display:flex;
+
+}
+
+.filter-menu button{
+
+height:48px;
+
+border:none;
+
+border-radius:14px;
+
+background:#f1f5f9;
+
+font-size:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.filter-menu button:hover{
+
+background:#111827;
+
+color:white;
+
+}
 </style>
 </head>
 
@@ -1252,6 +1330,38 @@ class="side-link"
 onclick="showAboutPage()">
 אודות
 </a>
+
+<button
+class="filter-btn"
+onclick="toggleFilters()"
+>
+חיפוש פוסטים בנושאים
+</button>
+
+<div
+class="filter-menu"
+id="filterMenu"
+>
+
+<button onclick="loadCategory('all')">
+הכל
+</button>
+
+<button onclick="loadCategory('תרומות לאוכלוסיות חלשות ולחברה')">
+תרומות לאוכלוסיות חלשות ולחברה
+</button>
+
+<button onclick="loadCategory('סיפורי הצלחות אישיות')">
+סיפורי הצלחות אישיות
+</button>
+
+
+<button onclick="loadCategory('פוסטים אודות הוצאות ספרים')">
+     פוסטים אודות הוצאות ספרים 
+</button>
+
+</div>
+
 <div class="links1">
   <span style="position: absolute; color: rgb(116, 114, 114); margin-bottom: 10px; margin-top: 10px;">קישורים של ערוץ התורה</span>
 <a
@@ -2302,6 +2412,50 @@ document.getElementById("pagination").style.display = "flex"
 
 }
 
+const filterMenu =
+document.getElementById("filterMenu")
+
+function toggleFilters(){
+
+filterMenu.classList.toggle("show")
+
+}
+
+async function loadCategory(category){
+
+let query = supabase
+.from("posts")
+.select("*")
+.order("created_at",{ascending:false})
+
+if(category !== "all"){
+
+query =
+query.eq("category",category)
+
+}
+
+const { data,error } =
+await query
+
+if(error){
+
+console.log(error)
+
+return
+
+}
+
+renderPosts(data)
+
+filterMenu.classList.remove("show")
+
+closeMenu()
+
+}
+window.toggleFilters = toggleFilters
+
+window.loadCategory = loadCategory
 window.showAboutPage = showAboutPage
 window.closeAboutPage = closeAboutPage
 window.shareSite = shareSite
