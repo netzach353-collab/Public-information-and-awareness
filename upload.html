@@ -611,6 +611,102 @@ transition:width .35s ease;
 width:calc(100% - 28px);
 
 }
+
+
+.category-box{
+
+position:relative;
+
+width:100%;
+
+display:flex;
+
+flex-direction:column;
+
+gap:8px;
+
+}
+
+.category-label{
+
+font-size:15px;
+
+font-weight:bold;
+
+color:#374151;
+
+padding-right:4px;
+
+}
+
+.category-select{
+
+width:100%;
+
+height:56px;
+
+padding:0 16px;
+
+padding-left:42px;
+
+border-radius:16px;
+
+border:1px solid #d1d5db;
+
+background:white;
+
+font-size:15px;
+
+font-family:Arial,sans-serif;
+
+color:#111827;
+
+outline:none;
+
+cursor:pointer;
+
+appearance:none;
+
+-webkit-appearance:none;
+
+-moz-appearance:none;
+
+transition:.2s;
+
+box-shadow:
+0 2px 8px rgba(0,0,0,.03);
+
+}
+
+.category-select:focus{
+
+border-color:#111827;
+
+box-shadow:
+0 0 0 4px rgba(17,24,39,.08);
+
+}
+
+.category-box::after{
+
+content:"⌄";
+
+position:absolute;
+
+left:16px;
+
+top:49px;
+
+transform:translateY(-50%);
+
+font-size:18px;
+
+color:#6b7280;
+
+pointer-events:none;
+
+}
+
 </style>
 
 </head>
@@ -671,11 +767,47 @@ required
 
 </div>
 
+<div class="category-box">
+
+<label class="category-label">
+קטגוריית הפוסט
+</label>
+
+<select
+id="category"
+class="category-select"
+required
+>
+
+<option value="">
+בחר קטגוריה
+</option>
+
+<option value="תרומות לאוכלוסיות חלשות ולחברה">
+תרומות לאוכלוסיות חלשות ולחברה
+</option>
+
+
+<option value="סיפורי הצלחות אישיות">
+סיפורי הצלחות אישיות 
+</option>
+
+<option value="פוסטים אודות הוצאות ספרים">
+פוסטים אודות הוצאות ספרים
+</option>
+
+</select>
+
+</div>
+
 <textarea
 id="content"
 placeholder="תוכן"
 required
 ></textarea>
+
+
+
 
 <div class="links-box">
 
@@ -1398,24 +1530,20 @@ return
 
 }
 
+
+const category =
+document.getElementById("category").value
 /* ---------- שמירת פוסט ---------- */
 
-const { error } =
-
 await supabase
-
 .from("posts")
-
 .insert([{
 
 title,
-
 content,
-
+category,
 links,
-
 media_urls:mediaUrls,
-
 type:"post"
 
 }])
