@@ -259,6 +259,7 @@ height:100%;
 transition:transform .45s ease;
 will-change:transform;
 
+direction:ltr;
 }
 
 .hero-slide{
@@ -1594,6 +1595,7 @@ let currentX = 0;
 let heroDragging = false;
 let auto;
 let heroMoved = false;
+let base = 0;
 
 /* ---------- התחלה ---------- */
 
@@ -1708,26 +1710,27 @@ heroTrack.style.transition =
 
 /* ---------- גרירה ---------- */
 
-heroWrap.addEventListener(
-"touchmove",
-(e)=>{
+heroWrap.addEventListener("touchmove", (e) => {
 
 if(!heroDragging) return;
 
-currentX =
-e.touches[0].clientX;
+currentX = e.touches[0].clientX;
 
 let diff = heroStartX - currentX;
 
+heroTrack.style.transition = "none";
+
+/* בסיס לפי רוחב מסך */
+let base = -current * heroWrap.offsetWidth;
+
+/* תזוזה חיה */
 heroTrack.style.transform =
-`translateX(calc(-${current * 100}% + ${diff}px))`;
+`translateX(${base - diff}px)`;
 
 const DRAG_THRESHOLD = 10;
 heroMoved = Math.abs(diff) > DRAG_THRESHOLD;
 
-},
-{ passive:true }
-);
+}, { passive:true });
 
 /* ---------- שחרור ---------- */
 
@@ -1737,7 +1740,7 @@ heroWrap.addEventListener(
 
 heroDragging = false;
 
-let diff = currentX - heroStartX;
+let diff = heroStartX - currentX;
 
 /* אם זו גרירה אמיתית */
 if(heroMoved){
