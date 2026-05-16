@@ -395,10 +395,7 @@ pointer-events:none;
 
 }
 
-.btn3{
-  border-bottom: solid 0.3px;
-  margin-bottom: 15px;
-}
+
 
 .title{
   text-decoration:none;
@@ -936,6 +933,238 @@ transition:.2s;
 .like-box:active{
 transform:scale(.92);
 }
+
+/* USER BOX */
+/* USER LOGIN ICON */
+
+.user-box{
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+gap:6px;
+
+cursor:pointer;
+
+width:fit-content;
+
+background:none;
+
+padding:0;
+
+margin:0;
+
+transition:.2s;
+}
+
+.user-box:active{
+transform:scale(.94);
+}
+
+.user-avatar{
+
+width:42px;
+height:42px;
+
+border-radius:50%;
+
+background:white;
+
+border:solid 1px #d1d5db;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.user-avatar i{
+
+font-size:18px;
+
+color:#6b7280;
+}
+
+.user-info{
+
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.user-info span{
+
+font-size:12px;
+
+font-weight:bold;
+
+color:#374151;
+
+text-align:center;
+
+max-width:70px;
+
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+}
+
+/* LOGIN MODAL */
+
+.login-modal{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+z-index:99999;
+}
+
+.login-modal.show{
+display:flex;
+}
+
+.login-card{
+
+width:90%;
+max-width:340px;
+
+background:white;
+
+border-radius:22px;
+
+padding:24px;
+
+text-align:center;
+
+animation:pop .25s ease;
+}
+
+.login-card h2{
+
+margin-bottom:10px;
+
+color:#111827;
+}
+
+.login-card p{
+
+font-size:14px;
+
+color:#6b7280;
+
+margin-bottom:22px;
+
+line-height:1.6;
+}
+
+.google-btn{
+
+width:100%;
+
+border:none;
+
+background:#111827;
+
+color:white;
+
+padding:14px;
+
+border-radius:14px;
+
+font-size:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+
+.google-btn i{
+font-size:18px;
+}
+
+@keyframes pop{
+
+from{
+transform:scale(.85);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.bar1-in-s{
+
+display:flex;
+
+grid-template-columns:auto auto;
+
+align-items:center;
+
+gap:30px;
+
+margin-bottom:15px;
+
+padding-bottom:10px;
+
+border-bottom:solid .3px #d1d5db;
+
+}
+
+/* USER BOX בתוך הטופ בר */
+
+.topbar .user-box{
+
+min-width:60px;
+
+}
+
+.topbar .user-avatar{
+
+width:26px;
+height:26px;
+
+}
+
+.topbar .user-avatar img{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+border-radius:50%;
+
+}
+
+.topbar .user-info span{
+
+color:white;
+
+font-size:10px;
+
+max-width:55px;
+
+}
 </style>
 </head>
 
@@ -969,7 +1198,26 @@ class="bottom-item share-btn">
 
 </button>
  <span>שתף אותנו</span>
+ 
 </div>
+
+<!-- TOP BAR USER -->
+
+<div class="user-box" onclick="openLoginModal()">
+
+<div class="user-avatar" id="userAvatarTop">
+<i class="fa-regular fa-user"></i>
+</div>
+
+<div class="user-info">
+<span id="userNameTop">
+כניסה
+</span>
+</div>
+
+</div>
+
+
   <div class="logo">״בסייעתא דשמיא״</div>
 
 </div>
@@ -979,9 +1227,30 @@ class="bottom-item share-btn">
 
 <!-- סרגל צד -->
 <div class="sidebar" id="sidebar">
+  <div class="bar1-in-s">
   <div class="btn3">
   <button class="close-btn" onclick="closeMenu()">סגירה</button>
 </div>
+
+<!-- USER BOX -->
+
+<div class="user-box" onclick="openLoginModal()">
+
+<div class="user-avatar" id="userAvatar">
+<i class="fa-regular fa-user"></i>
+</div>
+
+<div class="user-info">
+
+<span id="userName">
+כניסה
+</span>
+</div>
+</div>
+
+</div>
+
+
   <a href="#" class="side-link">דף הבית</a>
 <a href="upload.html" class="side-link">
 העלת פוסט לדף האתר
@@ -999,7 +1268,6 @@ class="side-link">
 <a href="#" class="side-link" onclick="showAboutPage()">
 אודות
 </a>
-
 
 <div class="links1">
   <span style="position: absolute; color: rgb(116, 114, 114); margin-bottom: 10px; margin-top: 10px;">קישורים של ערוץ התורה</span>
@@ -1289,6 +1557,44 @@ class="bottom-item youtube">
 
 </div>
 
+
+<!-- LOGIN MODAL -->
+
+<div
+class="login-modal"
+id="loginModal"
+onclick="closeLoginModal()"
+>
+
+<div
+class="login-card"
+onclick="event.stopPropagation()"
+>
+
+<h2>
+כניסה מהירה
+</h2>
+
+<p>
+התחבר עם גוגל כדי לעשות לייקים,
+לשמור פעילות ולהשתמש באתר
+</p>
+
+<button
+class="google-btn"
+onclick="signInWithGoogle()"
+>
+
+<i class="fab fa-google"></i>
+
+המשך עם Google
+
+</button>
+
+</div>
+
+</div>
+
 <script type="module">
 
 import { createClient }
@@ -1302,6 +1608,29 @@ const supabase = createClient(
   supabaseKey
 )
 
+async function signInWithGoogle(){
+
+const { error } =
+await supabase.auth.signInWithOAuth({
+
+provider:'google',
+
+options:{
+
+redirectTo:
+window.location.origin + window.location.pathname
+
+}
+
+})
+
+if(error){
+
+console.log(error)
+
+}
+
+}
 
 const sidebar =
 document.getElementById("sidebar")
@@ -1331,6 +1660,72 @@ function closeMenu(){
 
 window.openMenu = openMenu
 window.closeMenu = closeMenu
+
+async function loadUser(){
+
+const {
+
+data:{ user }
+
+} = await supabase.auth.getUser()
+
+if(!user) return
+
+const name =
+
+user.user_metadata?.full_name ||
+
+user.user_metadata?.name ||
+
+"משתמש"
+
+const avatar =
+
+user.user_metadata?.avatar_url ||
+
+"https://cdn-icons-png.flaticon.com/512/149/149071.png"
+
+document.getElementById(
+"userName"
+).innerText = name
+
+document.getElementById(
+"userNameTop"
+).innerText = name
+
+document.getElementById(
+"userAvatar"
+).innerHTML = `
+
+<img
+src="${avatar}"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:50%;
+"
+>
+
+`
+
+document.getElementById(
+"userAvatarTop"
+).innerHTML = `
+
+<img
+src="${avatar}"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:50%;
+"
+>
+
+`
+
+}
 
 async function loadPosts(){
 
@@ -1833,6 +2228,18 @@ window.location.href =
 
 async function likePost(id){
 
+const {
+data:{ user }
+} = await supabase.auth.getUser()
+
+// אם לא מחובר
+if(!user){
+
+openLoginModal()
+return
+
+}
+
 const likesElement =
 document.getElementById(`likes-${id}`)
 
@@ -1841,23 +2248,33 @@ if(!likesElement) return
 let currentLikes =
 parseInt(likesElement.innerText) || 0
 
-// עדכון מיידי במסך
-likesElement.innerText = currentLikes + 1
-
-// עדכון בשרת
+// ניסיון להכניס לייק
 const { error } = await supabase
-.rpc("increment_likes", {
-  p_post_id: id
+.from("post_likes")
+.insert({
+post_id:id,
+user_id:user.id
 })
 
+// אם כבר עשה לייק
 if(error){
 
-console.log(error)
+// unique violation
+if(error.code === "23505"){
 
-// מחזיר אחורה אם נכשל
-likesElement.innerText = currentLikes
+alert("כבר עשית לייק")
+return
 
 }
+
+console.log(error)
+return
+
+}
+
+// הצליח
+likesElement.innerText =
+currentLikes + 1
 
 }
 
@@ -1946,6 +2363,33 @@ window.addEventListener("load", () => {
 
 })
 
+function openLoginModal(){
+
+closeMenu()
+
+document
+.getElementById("loginModal")
+.classList.add("show")
+
+}
+
+function closeLoginModal(){
+
+document
+.getElementById("loginModal")
+.classList.remove("show")
+
+}
+
+window.openLoginModal =
+openLoginModal
+
+window.closeLoginModal =
+closeLoginModal
+
+window.signInWithGoogle =
+signInWithGoogle
+
 window.showAboutPage = showAboutPage
 window.closeAboutPage = closeAboutPage
 window.openPost = openPost
@@ -1954,7 +2398,10 @@ window.goPosts = goPosts
 window.goHome = goHome
 window.goUpload = goUpload
 window.shareSite = shareSite
+
+loadUser()
 loadPosts()
+
 </script>
 
 </body>
