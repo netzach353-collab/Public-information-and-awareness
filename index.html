@@ -250,6 +250,7 @@ border-radius:0;
 margin:0;
 touch-action:pan-y;
 margin-bottom: 40px;
+-webkit-overflow-scrolling: touch;
 }
 
 .hero-track{
@@ -1591,8 +1592,9 @@ let total = slides.length;
 
 let heroStartX = 0;
 let currentX = 0;
-let dragging = false;
+let heroDragging = false;
 let auto;
+let heroMoved = false;
 
 /* ---------- התחלה ---------- */
 
@@ -1665,6 +1667,13 @@ heroTrack.style.transform =
 
 /* ---------- אוטומטי ---------- */
 
+
+function stopAuto(){
+
+clearInterval(auto);
+
+}
+
 function startAuto(){
 
 clearInterval(auto);
@@ -1686,7 +1695,7 @@ heroWrap.addEventListener(
 
 stopAuto();
 
-dragging = true;
+heroDragging = true;
 
 heroStartX = e.touches[0].clientX;
 currentX = heroStartX;
@@ -1704,7 +1713,7 @@ heroWrap.addEventListener(
 "touchmove",
 (e)=>{
 
-if(!dragging) return;
+if(!heroDragging) return;
 
 currentX =
 e.touches[0].clientX;
@@ -1713,6 +1722,9 @@ let diff = heroStartX - currentX;
 
 heroTrack.style.transform =
 `translateX(calc(-${current * 100}% + ${diff}px))`;
+
+const DRAG_THRESHOLD = 10;
+heroMoved = Math.abs(diff) > DRAG_THRESHOLD;
 
 },
 { passive:true }
@@ -1724,30 +1736,25 @@ heroWrap.addEventListener(
 "touchend",
 ()=>{
 
-dragging = false;
+heroDragging = false;
 
-let diff =
-currentX - heroStartX;
+let diff = currentX - heroStartX;
 
-/* הבא */
+/* אם זו גרירה אמיתית */
+if(heroMoved){
+
 if(diff < -70){
-
 nextSlide();
-
 }
-
-/* הקודם */
 else if(diff > 70){
-
 prevSlide();
-
+}
+else{
+updateSlider();
 }
 
-/* חזרה */
-else{
-
+} else {
 updateSlider();
-
 }
 
 startAuto();
@@ -1761,7 +1768,7 @@ heroWrap.addEventListener(
 "touchcancel",
 ()=>{
 
-dragging = false;
+heroDragging = false;
 
 updateSlider();
 
