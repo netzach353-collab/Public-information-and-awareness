@@ -707,6 +707,154 @@ pointer-events:none;
 
 }
 
+
+.tags-box{
+
+position:relative;
+
+width:100%;
+
+display:flex;
+
+flex-direction:column;
+
+gap:8px;
+
+}
+
+.tags-label{
+
+font-size:15px;
+
+font-weight:bold;
+
+color:#374151;
+
+padding-right:4px;
+
+}
+
+.tags-select{
+
+width:100%;
+
+height:56px;
+
+padding:0 16px;
+
+padding-left:42px;
+
+border-radius:16px;
+
+border:1px solid #d1d5db;
+
+background:white;
+
+font-size:15px;
+
+font-family:Arial,sans-serif;
+
+color:#111827;
+
+outline:none;
+
+cursor:pointer;
+
+appearance:none;
+
+-webkit-appearance:none;
+
+-moz-appearance:none;
+
+transition:.2s;
+
+box-shadow:
+0 2px 8px rgba(0,0,0,.03);
+
+}
+
+.tags-select:focus{
+
+border-color:#111827;
+
+box-shadow:
+0 0 0 4px rgba(17,24,39,.08);
+
+}
+
+.tags-box::after{
+
+content:"⌄";
+
+position:absolute;
+
+left:16px;
+
+top:49px;
+
+transform:translateY(-50%);
+
+font-size:18px;
+
+color:#6b7280;
+
+pointer-events:none;
+
+}
+
+#selectedTagsPreview{
+
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:10px;
+
+}
+
+.tag-chip{
+
+background:#111827;
+color:white;
+
+padding:8px 14px;
+
+border-radius:999px;
+
+font-size:14px;
+
+display:flex;
+align-items:center;
+gap:8px;
+
+animation:fadeIn .2s ease;
+
+}
+
+.tag-remove{
+
+cursor:pointer;
+font-size:16px;
+font-weight:bold;
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+transform:scale(.9);
+
+}
+
+to{
+
+opacity:1;
+transform:scale(1);
+
+}
+
+}
 </style>
 
 </head>
@@ -756,13 +904,13 @@ style="display:none"
 <input
 type="text"
 id="title"
-placeholder="שם משתמש"
-maxlength="15"
+placeholder="שם"
+maxlength="10"
 required
 >
 
 <div id="titleCounter">
-0 / 15
+0 / 10
 </div>
 
 </div>
@@ -804,6 +952,76 @@ required
 
 </div>
 
+
+<div class="tags-box">
+
+<label class="tags-label">
+תגיות לפוסט (אופציונאלי)
+</label>
+
+<select id="postTags" class="tags-select">
+
+<option value="">
+בחר תגית
+</option>
+
+<option value="אהבת הזולת">
+אהבת הזולת
+</option>
+
+<option value="פירסום הנס">
+פירסום הנס
+</option>
+
+<option value="צדקה">
+צדקה
+</option>
+
+<option value="חסד">
+חסד
+</option>
+
+<option value="מעלת הצדיקים">
+מעלת הצדיקים
+</option>
+
+<option value="ישיבת תיקון המידות">
+ישיבת תיקון המידות
+</option>
+
+<option value="עבודת קודש">
+עבודת קודש
+</option>
+
+<option value="חיזוק">
+חיזוק
+</option>
+
+<option value="אמונה">
+אמונה
+</option>
+
+<option value="יראת השם">
+יראת השם
+</option>
+
+<option value="לימוד">
+לימוד
+</option>
+
+<option value="מידע כללי">
+מידע כללי
+</option>
+
+<option value="חסידות">
+חסידות
+</option>
+
+</select>
+
+<div id="selectedTagsPreview"></div>
+
+</div>
 <textarea
 id="content"
 placeholder="תוכן"
@@ -926,7 +1144,7 @@ titleInput.addEventListener(
 "input",
 ()=>{
 
-const max = 15
+const max = 10
 
 const current =
 titleInput.value.length
@@ -945,12 +1163,8 @@ document
 .querySelector(".page-wrap")
 .classList.add("page-exit")
 
-setTimeout(()=>{
-
 window.location.href =
 "index.html"
-
-},900)
 
 }
 
@@ -1098,7 +1312,6 @@ class="remove-btn"
 <video
 src="${fileUrl}"
 controls
-autoplay
 muted
 loop
 playsinline
@@ -1409,6 +1622,8 @@ async(e)=>{
 
 e.preventDefault()
 
+const tags = selectedTags
+
 submitBtn.disabled = true
 
 showStatus(
@@ -1553,7 +1768,13 @@ content,
 
 category,
 
+tags, 
+
 type: "post",
+
+approved: false,
+
+reviewed:false,
 
 media_urls: mediaUrls,
 
@@ -1607,6 +1828,82 @@ window.location.href =
 
 })
 
+
+const postTags =
+document.getElementById("postTags")
+
+const selectedTagsPreview =
+document.getElementById("selectedTagsPreview")
+
+let selectedTags = []
+
+postTags.addEventListener(
+"change",
+()=>{
+
+const value = postTags.value
+
+if(!value) return
+
+if(selectedTags.includes(value)){
+
+postTags.value = ""
+
+return
+
+}
+
+selectedTags.push(value)
+
+renderTags()
+
+postTags.value = ""
+
+}
+)
+
+function renderTags(){
+
+selectedTagsPreview.innerHTML = ""
+
+selectedTags.forEach(tag=>{
+
+const div =
+document.createElement("div")
+
+div.className = "tag-chip"
+
+div.innerHTML = `
+
+<span>${tag}</span>
+
+<span class="tag-remove">
+✕
+</span>
+
+`
+
+div
+.querySelector(".tag-remove")
+.addEventListener(
+"click",
+()=>{
+
+selectedTags =
+selectedTags.filter(
+t => t !== tag
+)
+
+renderTags()
+
+}
+)
+
+selectedTagsPreview.appendChild(div)
+
+})
+
+}
 </script>
 
 </body>
