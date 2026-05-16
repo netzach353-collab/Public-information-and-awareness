@@ -259,6 +259,7 @@ height:100%;
 transition:transform .45s ease;
 will-change:transform;
 
+direction:ltr;
 }
 
 .hero-slide{
@@ -1715,7 +1716,7 @@ if(!heroDragging) return;
 
 currentX = e.touches[0].clientX;
 
-let diff = heroStartX - currentX;
+let diff = currentX - heroStartX;
 
 heroTrack.style.transition = "none";
 
@@ -1744,11 +1745,11 @@ let diff = heroStartX - currentX;
 /* אם זו גרירה אמיתית */
 if(heroMoved){
 
-if(diff < -70){
-nextSlide();
+if(diff > 70){
+  nextSlide(); 
 }
-else if(diff > 70){
-prevSlide();
+else if(diff < -70){
+  prevSlide(); 
 }
 else{
 updateSlider();
