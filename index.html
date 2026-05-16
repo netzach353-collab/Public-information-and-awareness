@@ -1,1909 +1,1883 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
-<title>העלת פוסטים ״בסייעתא דשמיא״</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<title>הרב יוסף שובלי</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 body{
-
-font-family:Arial;
-background:#f2f4f5;
-padding:20px;
-
+  font-family:Arial, sans-serif;
+background:#f1f5f9;
 }
 
-
-h2{
-
-margin-bottom:20px;
-font-size:28px;
-display: flex;
-justify-content: center;
-}
-
-form{
-
-display:flex;
-flex-direction:column;
-gap:16px;
-
-}
-
-input,
-textarea{
-
-width:100%;
-
-padding:15px;
-
-border-radius:14px;
-
-border:1px solid #d1d5db;
-
-font-size:16px;
-
-background:white;
-
-}
-
-textarea{
-
-min-height:160px;
-resize:none;
-
-}
-
-.upload-box{
-
-width:100%;
-
-min-height:180px;
-
-border:2px dashed #cbd5e1;
-
-border-radius:20px;
-
-background:white;
-
-display:flex;
-
-align-items:center;
-justify-content:center;
-
-position:relative;
-
-overflow:hidden;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.upload-box:hover{
-
-border-color:#111827;
-
-}
-
-.upload-box input{
-
-position:absolute;
-inset:0;
-
-opacity:0;
-
-cursor:pointer;
-
-}
-
-.upload-content{
-
-text-align:center;
-
-pointer-events:none;
-
-}
-
-.upload-icon{
-
-width:70px;
-height:70px;
-
-border-radius:50%;
-
-background:#111827;
-
-color:white;
-
-display:flex;
-
-align-items:center;
-justify-content:center;
-
-font-size:30px;
-
-margin:auto;
-margin-bottom:14px;
-
-}
-
-.upload-title{
-
-font-size:18px;
-font-weight:bold;
-
-margin-bottom:6px;
-
-}
-
-.upload-subtitle{
-
-color:#64748b;
-font-size:14px;
-
-}
-
-.preview-container{
-
-display:flex;
-flex-wrap:wrap;
-gap:12px;
-
-}
-
-.preview-item{
-
-position:relative;
-
-width:120px;
-height:120px;
-
-border-radius:18px;
-
-overflow:hidden;
-
-background:#000;
-
-}
-
-.preview-item img,
-.preview-item video{
-
-width:100%;
-height:100%;
-
-object-fit:cover;
-
-}
-
-.remove-btn{
-
-position:absolute;
-
-top:8px;
-left:8px;
-
-width:34px;
-height:34px;
-
-border:none;
-
-border-radius:50%;
-
-background:rgba(0,0,0,.8);
-
-color:white;
-
-font-size:18px;
-
-cursor:pointer;
-
-z-index:10;
-
-}
-
-button.submit-btn{
-
-height:54px;
-
-border:none;
-
-background:#111827;
-
-color:white;
-
-border-radius:14px;
-
-font-size:17px;
-
-cursor:pointer;
-
-}
-
-button.submit-btn:disabled{
-
-opacity:.6;
-
-}
-
-.status{
-
-animation:showStatus .25s ease;
-
-display:none;
-
-position:fixed ;
-
-top:20px;
-
-left:50%;
-
-transform:translateX(-50%);
-
-z-index:2147483647;
-
-padding:14px 20px;
-
-border-radius:14px;
-
-font-size:15px;
-
-font-weight:bold;
-
-min-width:220px;
-
-max-width:90%;
-
-text-align:center;
-
-box-shadow:0 10px 25px rgba(0,0,0,.15);
-
-backdrop-filter:blur(10px);
-
-}
-
-
-
-@keyframes showStatus{
-
-from{
-
-opacity:0;
-transform:translate(-50%,-15px);
-
-}
-
-to{
-
-opacity:1;
-transform:translate(-50%,0);
-
-}
-
-}
-
-.loading{
-
-background:#dbeafe;
-color:#1e40af;
-
-}
-
-.success{
-
-background:#dcfce7;
-color:#166534;
-
-}
-
-.error{
-
-background:#fee2e2;
-color:#991b1b;
-
-}
-
-#titleCounter{
-margin-top:6px;
-font-size:13px;
-color:#64748b;
-text-align:left;
-}
-
-
-
-
-.loader{
-
-width:18px;
-height:18px;
-
-border:3px solid rgba(255,255,255,.35);
-
-border-top-color:currentColor;
-
-border-radius:50%;
-
-animation:spin .8s linear infinite;
-
-}
-
-@keyframes spin{
-
-to{
-transform:rotate(360deg);
-}
-
-}
-
-.links-box{
-background:white;
-padding:16px;
-border-radius:18px;
-border:1px solid #e5e7eb;
-}
-
-.links-title{
-font-size:18px;
-font-weight:bold;
-margin-bottom:14px;
-text-align: center;
-}
-
-.link-item{
-display:flex;
-flex-direction:column;
-gap:10px;
-padding:12px;
-background:#f8fafc;
-border-radius:14px;
-margin-bottom:12px;
-border:1px solid #e2e8f0;
-}
-.external-line1{
-  flex:0 0 auto;
-}
-.add-link-btn{
-  display: block;
-height:46px;
-border:none;
-background:#111827;
-color:white;
-padding:0 18px;
-border-radius:12px;
-cursor:pointer;
-font-size:15px;
-margin: 0 auto;
-}
-
-.remove-link{
-height:42px;
-border:none;
-background:#ef4444;
-color:white;
-border-radius:10px;
-cursor:pointer;
-font-size:14px;
-}
-
-.upload-warning{
-
-display:none;
-
-position:fixed;
-
-top:50%;
-left:50%;
-
-transform:translate(-50%,-50%);
-
-z-index:999999;
-
-width:90%;
-max-width:420px;
-
-background:white;
-
-border:1px solid #fdba74;
-
-color:#9a3412;
-
-padding:24px;
-
-border-radius:24px;
-
-text-align:center;
-
-font-size:16px;
-
-line-height:2;
-
-box-shadow:0 20px 60px rgba(0,0,0,.25);
-animation:popup .25s ease;
-}
-
-.warning-overlay{
-
-display:none;
-
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,.45);
-
-backdrop-filter:blur(4px);
-
-z-index:999998;
-
-}
-.back-btn{
-
-display:flex;
-
-justify-content: right;
-margin-bottom:2px;
-margin-top: 10px;
-
-}
-
-@keyframes popup{
-
-from{
-
-opacity:0;
-
-transform:
-translate(-50%,-50%)
-scale(.9);
-
-}
-
-to{
-
-opacity:1;
-
-transform:
-translate(-50%,-50%)
-scale(1);
-
-}
-
-}
-
-/* ---------- PAGE TRANSITION ---------- */
+/* ---------- HIDE PAGE SCROLLBAR ---------- */
 
 html,
 body{
 
-overflow-x:hidden;
+-ms-overflow-style:none;
+scrollbar-width:none;
 
 }
 
-/* כניסה */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
 
-.page-wrap{
-
-opacity:0;
-
-transform:
-translateX(220px)
-scale(.98);
-
-filter:blur(8px);
-
-animation:
-pageEnter 1.1s cubic-bezier(.22,1,.36,1)
-forwards;
+display:none;
 
 }
 
-
-/* יציאה */
-
-.page-wrap.page-exit{
-
-opacity:0;
-
-transform:
-translateX(-220px)
-scale(.98);
-
-filter:blur(8px);
-
-transition:
-transform .9s cubic-bezier(.22,1,.36,1),
-opacity .9s ease,
-filter .9s ease;
-
+/* סרגל עליון */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  height:60px;
+  background:#111827;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 15px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
-/* אנימציית כניסה */
-
-@keyframes pageEnter{
-
-from{
-
-opacity:0;
-
-transform:
-translateX(220px)
-scale(.98);
-
-filter:blur(8px);
-
+.logo{
+  font-family: "Noto Rashi Hebrew", serif;
+  font-size:22px;
+  font-weight:bold;
 }
 
-to{
-
-opacity:1;
-
-transform:
-translateX(0)
-scale(1);
-
-filter:blur(0);
-
+.menu-btn{
+  background:#88a8ee3a;
+  color:rgb(255, 255, 255);
+  border:none;   
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
 }
 
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  opacity:0;
+  visibility:hidden;
+  transition:.25s;
+  z-index:1100;
 }
 
-.back-link{
+.overlay.show{
+  opacity:1;
+  visibility:visible;
+}
 
-height:40px;
+/* סרגל צד */
+.sidebar{
+  position:fixed;
+  top:0;
+  right:-290px;
+  width:280px;
+  height:100%;
+  background:white;
+  z-index:1200;
+  transition:.25s;
+  box-shadow:-10px 0 20px rgba(0,0,0,.15);
+  padding:20px;
+  overflow:auto;
+}
 
-padding:0 14px;
+.sidebar.show{
+  right:0;
+}
 
-border:none;
+.side-link{
+  display:block;
+  padding:12px;
+  background:#f1f5f9;
+  border-radius:10px;
+  margin-bottom:10px;
+  text-decoration:none;
+  color:#111;
+}
 
-background:none;
 
-color:rgb(50,75,186);
+/* תוכן */
+.container{
+  padding-bottom: 20px;
+  height: auto;
+  position: relative;
+  
+}
 
-cursor:pointer;
+.title{
+  color: rgb(65, 93, 149);
+  font-size: 15px;
+  padding: 0 10px;
+  font-weight: bold;
+  white-space: nowrap;
+}
 
+.recipes{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding-bottom:10px;
+  scroll-behavior:smooth;
+  padding: 5px 20px 15px 20px;
+  border-bottom: solid 1px #ccc;
+  margin-top: 15px;
+}
+
+.recipes{
+  -ms-overflow-style:none;
+  scrollbar-width:none;
+}
+
+.recipes::-webkit-scrollbar{
+  display:none;
+}
+/* שלא יתכווצו */
+.recipes .gol{
+  flex:0 0 auto;
+}
+  .card {
+    background: none;
+    width: 130px;
+    height: 200px;
+    text-align: center;
+    overflow:hidden;
+    padding: 10px;
+    border-radius: 13px;
+    position: relative;
+  }
+  
+  .card img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+   border-radius: 5px;
+  }
+
+  .card > div:first-child{
+  margin-bottom:5px;
+}
+  
+    .card h3 {
+   max-width: 90%;    /* מצמצם את רוחב הטקסט */
+  position: relative;
+  top: 0;
+  right: 5px;
+  font-size: 12px;
+  color: #1a1a1a;
+
+  text-align: right;
+  direction: rtl;
+
+  font-weight: 500;
+  line-height: 1.5;
+
+  /* שבירת מילים */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
+  /* חיתוך ל־2 שורות */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+.tag{
+    display: flex;
+    font-size: 15px;
+    font-weight: bolder;
+    position: absolute;
+    bottom: 0;
+      margin-bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+background: rgba(32, 32, 163, 0.322);
+width: 100%;
+color: #2431a5fc;
+    justify-content: center;
+}
+
+  .external-line1{
+    border: solid 0.3px #a29e9edf;
+    background: white;
+    border-radius: 13px;
+  }
+  
+/* ACTIONS */
+
+.actions1{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+}
+
+.actions1 span{
+padding:12px;
+border-left:solid 1px #d1d5db;
+background:white;
 font-size:14px;
-
-position:relative;
-
-}
-
-/* הקו */
-
-.back-link::after{
-
-content:"";
-
-position:absolute;
-
-right:14px;
-
-bottom:4px;
-
-width:0;
-
-
-background:currentColor;
-
-transition:width .35s ease;
-
-}
-
-/* hover */
-
-.back-link:hover::after{
-
-width:calc(100% - 28px);
-
-}
-
-
-.category-box{
-
-position:relative;
-
-width:100%;
-
-display:flex;
-
-flex-direction:column;
-
-gap:8px;
-
-}
-
-.category-label{
-
-font-size:15px;
-
-font-weight:bold;
-
-color:#374151;
-
-padding-right:4px;
-
-}
-
-.category-select{
-
-width:100%;
-
-height:56px;
-
-padding:0 16px;
-
-padding-left:42px;
-
-border-radius:16px;
-
-border:1px solid #d1d5db;
-
-background:white;
-
-font-size:15px;
-
-font-family:Arial,sans-serif;
-
-color:#111827;
-
-outline:none;
-
+text-align:center;
 cursor:pointer;
-
-appearance:none;
-
--webkit-appearance:none;
-
--moz-appearance:none;
-
-transition:.2s;
-
-box-shadow:
-0 2px 8px rgba(0,0,0,.03);
-
-}
-
-.category-select:focus{
-
-border-color:#111827;
-
-box-shadow:
-0 0 0 4px rgba(17,24,39,.08);
-
-}
-
-.category-box::after{
-
-content:"⌄";
-
-position:absolute;
-
-left:16px;
-
-top:49px;
-
-transform:translateY(-50%);
-
-font-size:18px;
-
-color:#6b7280;
-
-pointer-events:none;
-
-}
-
-
-.tags-box{
-
-position:relative;
-
-width:100%;
-
-display:flex;
-
-flex-direction:column;
-
-gap:8px;
-
-}
-
-.tags-label{
-
-font-size:15px;
-
 font-weight:bold;
-
-color:#374151;
-
-padding-right:4px;
-
 }
+  
 
-.tags-select{
-
+.hero-wrap{
+position:relative;
 width:100%;
-
-height:56px;
-
-padding:0 16px;
-
-padding-left:42px;
-
-border-radius:16px;
-
-border:1px solid #d1d5db;
-
-background:white;
-
-font-size:15px;
-
-font-family:Arial,sans-serif;
-
-color:#111827;
-
-outline:none;
-
-cursor:pointer;
-
-appearance:none;
-
--webkit-appearance:none;
-
--moz-appearance:none;
-
-transition:.2s;
-
-box-shadow:
-0 2px 8px rgba(0,0,0,.03);
-
+height:260px;
+overflow:hidden;
+border-radius:0;
+margin:0;
+touch-action:pan-y;
+margin-bottom: 40px;
 }
 
-.tags-select:focus{
-
-border-color:#111827;
-
-box-shadow:
-0 0 0 4px rgba(17,24,39,.08);
-
-}
-
-.tags-box::after{
-
-content:"⌄";
-
-position:absolute;
-
-left:16px;
-
-top:49px;
-
-transform:translateY(-50%);
-
-font-size:18px;
-
-color:#6b7280;
-
-pointer-events:none;
-
-}
-
-#selectedTagsPreview{
-
+.hero-track{
 display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-top:10px;
+height:100%;
+transition:transform .45s ease;
+will-change:transform;
 
+direction:ltr;
 }
 
-.tag-chip{
+.hero-slide{
+flex:0 0 100%;
+height:100%;
+position:relative;
+}
 
-background:#111827;
+.hero-slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.hero-text{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.45);
 color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
 
-padding:8px 14px;
-
+.hero-text span{
+background:#bd3434;
+padding:6px 12px;
 border-radius:999px;
+margin-bottom:10px;
+font-size:13px;
+}
 
-font-size:14px;
+.hero-text h2{
+font-size:28px;
+margin-bottom:10px;
+}
+
+.hero-text p{
+font-size:15px;
+}
+
+
+.title{
+  cursor:pointer;
+}
+
+
+.post-content{
+position: relative;
+ right: 8px;
+   top: 6px !important;
+display:-webkit-box;
+
+-webkit-line-clamp:3;
+-webkit-box-orient:vertical;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+  color: #374151 !important;
+line-height:1.5;
+
+font-size:12px;
+
+text-align:right;
+
+word-break:break-word;
+
+font-size:14px !important;
+}
+
+.recipes{
+
+cursor:grab;
+
+}
+
+.recipes.dragging{
+
+cursor:grabbing;
+
+user-select:none;
+
+}
+
+img{
+
+-webkit-user-drag:none;
+
+user-select:none;
+
+pointer-events:none;
+
+}
+
+
+.card img,
+.hero-slide img{
+
+-webkit-user-drag:none;
+
+user-select:none;
+
+pointer-events:none;
+
+}
+
+.line-more1 {
+  width: 100%;
+  border:none;
+  height:1px;
+  background: #ccc;
+}
+
+
+.line22{
+  display: flex;
+  align-items: center;
+}
+
+.close-btn{
+  background:#d8d5d592;
+  color:rgb(79, 78, 78);
+  border:none;
+  padding: 5px 8px;
+  border-radius:  3px;
+  font-size:16px;
+  cursor:pointer;
+  margin-bottom: 15px;
+
+}
+
+.btn3{
+  border-bottom: solid 0.3px;
+  margin-bottom: 15px;
+}
+
+.title{
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.rabbi-wrap{
+position:relative;
+overflow:hidden;
+}
+
+.rabbi48{
+width:100%;
+display: block;
+}
+
+.blur-half{
+position:absolute;
+top:0;
+right:0;
+
+width:85%;
+height:100%;
+
+backdrop-filter:blur(1.5px);
+-webkit-backdrop-filter:blur(1.5px);
+
+background:rgba(255, 255, 255, 0.109);
+}
+
+  .no-image{
+
+  width: 100px;
+    height: 100px;
+    object-fit: cover;
+   border-radius: 5px;
+background:#e2e8f0;
 
 display:flex;
 align-items:center;
-gap:8px;
+justify-content:center;
 
-animation:fadeIn .2s ease;
+font-size:40px;
+
+color:#64748b;
+
+margin:auto;
 
 }
 
-.tag-remove{
+/* טלפון סופר קטן */
 
-cursor:pointer;
-font-size:16px;
+@media(max-width:360px){
+
+.hero-wrap{
+height:190px;
+}
+
+}
+
+/* מחשב גדול */
+
+@media(min-width:900px){
+
+.hero-wrap{
+height:650px;
+max-width:1400px;
+margin:auto;
+
+}
+
+.hero-wrap p,
+.hero-wrap h2{
+
+font-size:40px;
+
+}
+
+.hero-wrap span{
+  font-size: 20px;
+}
+
+.blur-half{
+position:absolute;
+top:0;
+right:0;
+
+width:85%;
+height:100%;
+
+backdrop-filter:blur(4.5px);
+-webkit-backdrop-filter:blur(4.5px);
+
+background:rgba(255, 255, 255, 0.109);
+}
+
+}
+
+
+
+.bottom-bar{
+
+position:relative;
+
+width:100%;
+
+padding:18px 10px;
+
+background:linear-gradient(
+180deg,
+#161d28,
+#1b263e
+) !important;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-wrap:wrap;
+
+gap:18px;
+
+border-top:1px solid #e5e7eb;
+
+margin-top:30px;
+}
+
+.bottom-bar{
+
+position:relative;
+
+width:100%;
+
+padding:18px 10px;
+
+background:rgb(0, 0, 0);
+
+display:flex;
+justify-content:center;
+align-items:center;
+flex-wrap:wrap;
+
+gap:20px;
+
+border-top:1px solid #e5e7eb;
+
+margin-top:30px;
+}
+
+.bottom-item{
+
+  margin-bottom: 50px ;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+text-decoration:none;
+
+gap:7px;
+
+font-size:12px;
 font-weight:bold;
 
+min-width:70px;
+
+transition:.2s;
 }
 
-@keyframes fadeIn{
+.bottom-item i{
+font-size:26px;
+}
 
-from{
+.bottom-item:active{
+transform:scale(.92);
+}
 
-opacity:0;
-transform:scale(.9);
+.whatsapp{
+color:#25D366;
+}
+
+.facebook{
+color:#1877F2;
+}
+
+.email{
+color:#ea4335;
+}
+
+.telegram{
+color:#229ED9;
+}
+
+.share{
+color:#111827;
+}
+
+.iconser1{
+
+display:flex;
+align-items:center;
+justify-content:center;
+display: flex;
+  flex-direction: column;
+}
+
+.iconser1 .bottom-item{
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+text-decoration:none;
+
+color:rgb(202, 200, 200);
+
+width:42px;
+height:25px;
+
+border-radius:12px;
+
+background: none;
+transition:.2s;
+}
+.iconser1 span {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.share-btn{
+
+border:none;
+background:none;
+
+cursor:pointer;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:#d1d5db;
+
+width:42px;
+height:25px;
+}
+.iconser1 .bottom-item i{
+
+font-size:23px;
 
 }
 
-to{
+.iconser1 .bottom-item span{
 
-opacity:1;
-transform:scale(1);
+display:none;
 
 }
 
+.iconser1 .bottom-item:active{
+
+transform:scale(.92);
+
+}
+
+.fa-youtube{
+  color: #ff0000;
+}
+
+.website{
+color:#ffffff;
+}
+
+.instagram{
+color:#7300ff;
+}
+
+.tiktok{
+color:#ffffff;
+}
+
+.holy-text{
+
+display:block;
+
+width:100%;
+
+text-align:center;
+
+margin-top:18px;
+
+padding:0 15px;
+
+font-size:14px;
+
+line-height:1.9;
+
+font-weight:bold;
+
+color:#ffffff;
+
+opacity:.92;
+
+margin-bottom: 50px;
+
+background:none;
+border-radius: 18px;
+}
+
+.share-btn{
+border:none;
+background:none;
+cursor:pointer;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:#d1d5db;
+
+width:42px;
+height:25px;
+
+margin-bottom:0; 
+}
+
+.links1{
+
+display:grid;
+grid-template-columns:repeat(3,1fr);
+
+border-top:solid 1px #d1d5db;
+border-bottom:solid 1px #d1d5db;
+
+margin-top: 40px;
+padding:10px 0;
+position: relative;
+gap:8px;
+
+}
+
+.links1 .bottom-item{
+
+margin-bottom:0;
+
+min-width:auto;
+
+padding:5px 4px;
+
+font-size:11px;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+}
+
+.links1 .bottom-item i{
+
+font-size:20px;
+
+margin-bottom:5px;
+margin-top: 40px;
+}
+
+.links1 .bottom-item span{
+
+font-size:10px;
+
+line-height:1.2;
+
+}
+
+ .color1, .color12{
+color: #6c03ff;
+ }
+.color2, .color13{
+color: #3954ab;
+ }
+
+.side-link{
+  display:block;
+  padding:12px;
+  background:#f1f5f9;
+  border-radius:10px;
+  margin-bottom:10px;
+  text-decoration:none;
+  color:#111;
+
+  line-height:1.6;
+  white-space:normal;
+}
+
+#siteLoader{
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: linear-gradient(135deg,#0f172a,#1e3a8a,#312e81);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  overflow: hidden;
+}
+
+.loader-bg{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(59,130,246,.35), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(139,92,246,.30), transparent 40%);
+  animation: pulseBg 4s ease infinite;
+}
+
+.spinner{
+  width: 72px;
+  height: 72px;
+  animation: rotate 1s linear infinite;
+  z-index: 2;
+}
+
+.spinner circle{
+  stroke: white;
+  stroke-linecap: round;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 90;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+.loaderText{
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  z-index: 2;
+  animation: fadeText 1.5s ease-in-out infinite;
+}
+
+/* אנימציות */
+
+@keyframes rotate{
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash{
+  0%{
+    stroke-dashoffset: 120;
+  }
+
+  50%{
+    stroke-dashoffset: 30;
+  }
+
+  100%{
+    stroke-dashoffset: 120;
+  }
+}
+
+@keyframes fadeText{
+  0%,100%{
+    opacity: .5;
+  }
+
+  50%{
+    opacity: 1;
+  }
+}
+
+@keyframes pulseBg{
+  0%,100%{
+    transform: scale(1);
+  }
+
+  50%{
+    transform: scale(1.05);
+  }
+}
+
+.like-box{
+display:flex;
+align-items:center;
+gap:6px;
+
+position:absolute;
+top:8px;
+left:8px;
+
+background:rgba(255,255,255,.92);
+
+padding:4px 10px;
+
+border-radius:999px;
+
+font-size:12px;
+font-weight:bold;
+
+color:#ef4444;
+
+box-shadow:0 2px 8px rgba(0,0,0,.12);
+
+z-index:5;
+}
+
+.like-box i{
+font-size:13px;
+}
+
+.text-for-cards1{
+font-size:23px;
+color: rgba(0, 0, 0, 0.842);
+font-weight: 700;
+margin-top: 5px;
+margin-right: 10px;
+display: flex;
+justify-content: center;
+}
+
+.actions1 span.active1{
+background:rgba(126, 127, 130, 0.142);
+color:rgb(0, 0, 0);
 }
 </style>
-
 </head>
 
 <body>
-  <div class="page-wrap">
 
-<div class="back-btn">
+  <div id="siteLoader">
+  <div class="loader-bg"></div>
 
-<button
-onclick="goHome()"
-class="back-link"
->
-❮ חזרה
-</button>
+  <svg class="spinner" viewBox="0 0 50 50">
+    <circle
+      cx="25"
+      cy="25"
+      r="20"
+      fill="none"
+      stroke-width="4"
+    />
+  </svg>
+
+  <div class="loaderText">טוען אתר... ״בסייעתא דשמיא״</div>
 </div>
 
-  <h2>
-העלאת פוסט
+<!-- סרגל עליון -->
+<div class="topbar">
+  <button class="menu-btn" onclick="openMenu()">☰ </button>
+  <div class="iconser1">
+   <button
+onclick="shareSite()"
+class="bottom-item share-btn">
+
+<i class="fas fa-share-alt"></i>
+
+</button>
+ <span>שתף אותנו</span>
+</div>
+  <div class="logo">״בסייעתא דשמיא״</div>
+
+</div>
+
+<!-- רקע -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- סרגל צד -->
+<div class="sidebar" id="sidebar">
+  <div class="btn3">
+  <button class="close-btn" onclick="closeMenu()">סגירה</button>
+</div>
+  <a href="#" class="side-link">דף הבית</a>
+<a href="upload.html" class="side-link">
+העלת פוסט לדף האתר
+</a>
+<a href="posts.html"
+class="side-link">
+כל הפוסטים
+</a>
+
+<a href="developer-notes.html"
+class="side-link">
+הערות/תלונות
+</a>
+
+<a href="#" class="side-link" onclick="showAboutPage()">
+אודות
+</a>
+
+
+<div class="links1">
+  <span style="position: absolute; color: rgb(116, 114, 114); margin-bottom: 10px; margin-top: 10px;">קישורים של ערוץ התורה</span>
+<a
+href="https://www.tiktok.com/@rabenu156"
+target="_blank"
+class="bottom-item tiktok">
+<i class="fab fa-tiktok color12"></i>
+<span class="color1">TikTok</span>
+</a>
+<a
+href="https://daily-torah.tv"
+target="_blank"
+class="bottom-item website">
+<i class="fas fa-globe color13"></i>
+<span class="color2">אתר ערוץ התורה</span>
+</a>
+
+<a
+href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbDY0R2dtUGo5eFE2Tk9NOVNvdmFHZGRlQmdpZ3xBQ3Jtc0tuTUFmUFNBd1hpaUY4UC0zcGkxbmVocEhDWGNiMzR0MF9XQUNiRWRUMlp6S0RGY2V5Wl9yektUSEk4M0tUczExdDRYQl9TU3RJLXNZaXJuSXFyQ3BtZkRKQVVYbU44TnAwakhfV1NGNUNzbjJvWWFaVQ&q=https%3A%2F%2Fwhatsapp.com%2Fchannel%2F0029VaHBaz0Bfxo6YuOUKk1D"
+target="_blank"
+class="bottom-item whatsapp">
+<i class="fab fa-whatsapp"></i>
+<span>וואטסאפ</span>
+</a>
+
+<a
+href="https://www.facebook.com/harutzhatorah/"
+target="_blank"
+class="bottom-item facebook">
+<i class="fab fa-facebook-f"></i>
+<span>פייסבוק</span>
+</a>
+
+
+<a
+href="https://t.me/Rabenu156"
+target="_blank"
+class="bottom-item instagram">
+<i class="fab fa-instagram"></i>
+<span>ערוץ התורה בטלגרם</span>
+</a>
+
+<a
+href="https://www.youtube.com/@harutzhatorah"
+target="_blank"
+class="bottom-item youtube">
+<i class="fab fa-youtube"></i>
+<span>ערוץ התורה</span>
+</a>
+
+</div>
+</div>
+
+<!-- תוכן -->
+  <div  class="actions1">
+
+  <span class="active1" onclick="goHome()">
+    דף ראשי
+  </span>
+
+  <span onclick="goPosts()">
+    לכל הפוסטים
+  </span>
+
+  <span onclick="goUpload()">
+    העלת פוסט
+  </span>
+
+</div>
+  <hr>
+
+  <div class="hero-wrap">
+
+  <div class="hero-track" id="heroTrack">
+
+        <div class="hero-slide">
+      <img src="rabbi.jpg">
+      <div class="hero-text" >
+        <span>אהבת חינם</span>
+        <h2 >בית תמחוי  חלוקת אוכל לנזקקים</h2>
+        <p>כל רעב ממנו יכל וכל צמה ממנו ישתה</p>
+
+        <br>
+        <p>עומד לזכות הרב יוסף שובלי<br>ותלמידו</p>
+      </div>
+    </div>
+
+<div class="hero-slide">
+
+
+    <img
+    class="rabbi48"
+    src="rabbi48.jpg">
+
+    <div class="blur-half"></div>
+
+    <div class="hero-text">
+
+      <span>שיעורי תורה</span>
+
+      <h2 id="title1">
+      חיזוק לבבות והפצת שם השם ברבים
+      </h2>
+
+      <p id="type1">
+      אהבת השם הרב יוסף שובלי
+      </p>
+
+    </div>
+
+</div>
+
+
+    <div class="hero-slide">
+       <img
+    class="rabbi48"
+    src="The Tikun Hamidot Yeshiva.jpeg">
+      <div class="hero-text">
+        <span>ישיבה לחיזוק הרבים תיקון המידות</span>
+        <h2 id="title2">זיכוי הרבים</h2>
+        <p id="type2">שתעמוד לזכות הרב יוסף שובלי ותלמידו</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="container">
+  <div class="line22">
+<hr class="line-more1">
+<a href="posts.html" class="title">
+  ראה עוד
+</a>
+</div>
+<span class="text-for-cards1">סליידר פוסטים</span>
+
+  <div class="recipes"></div>
+  </div>
+
+  <!-- דף אודות -->
+<div id="aboutPage" style="
+display:none;
+position:fixed;
+top:0;
+right:0;
+width:100%;
+height:100%;
+background:white;
+z-index:5000;
+overflow:auto;
+padding:25px;
+">
+
+<button onclick="closeAboutPage()" class="close-btn">
+סגירה
+</button>
+
+<h1 style="
+font-size:32px;
+margin-bottom:20px;
+color:#111827;
+text-align:center;
+">
+אודות האתר
+</h1>
+
+<h2 style="
+font-size:22px;
+margin-bottom:15px;
+color:#374151;
+">
+ברוכים הבאים
 </h2>
 
-  <div
-class="warning-overlay"
-id="warningOverlay"
-></div>
+<p style="
+line-height:2;
+font-size:17px;
+color:#4b5563;
+margin-bottom:20px;
+">
 
-<div
-class="upload-warning"
-id="uploadWarning"
-style="display:none"
->
+שלום, דף זה נועד לתת הסבר אודות האתר,
+מטרתו להציג תכנים מחזקים, עדויות וסיפורים אמיתיים מהחיים,
+וכן לשתף את הציבור בפעילות הרבה הנעשית למען זיכוי הרבים.
 
-העלאת מספר סרטונים כבדה ויכולה לקחת
-מספר שניות / דקות.
-<br><br>
+</p>
 
-נא להתאזר בסבלנות 🙏
-<br>
+<h2 style="
+font-size:22px;
+margin-bottom:15px;
+color:#374151;
+">
+הצצה לפעילות הרב
+</h2>
 
-אנחנו מודים לכם מאוד.
+<p style="
+line-height:2;
+font-size:17px;
+color:#4b5563;
+margin-bottom:20px;
+">
 
-</div>
-<form id="postForm">
+בדף זה תוכלו לקבל הצצה לחייו של הרב,
+להכיר מקרוב את פועלו ותרומתו לקהילה הקרובה והרחוקה,
+לשמוע על מעשי חסד, חיזוק לבבות,
+ועזרה לאנשים במצבים שונים במהלך חייהם.
 
-<div>
+</p>
 
-<input
-type="text"
-id="title"
-placeholder="שם"
-maxlength="10"
-required
->
+<h2 style="
+font-size:22px;
+margin-bottom:15px;
+color:#374151;
+">
+מטרת האתר
+</h2>
 
-<div id="titleCounter">
-0 / 10
-</div>
+<p style="
+line-height:2;
+font-size:17px;
+color:#4b5563;
+">
 
-</div>
+האתר הוקם מתוך רצון להפיץ אור,
+לחזק אנשים באמונה,
+ולאפשר לכל אדם להתחבר לתכנים של תורה,
+חסד ואהבת ישראל.
 
-<div class="category-box">
-
-<label class="category-label">
-קטגוריית הפוסט
-</label>
-
-<select
-id="category"
-class="category-select"
-required
->
-
-<option value="">
-בחר קטגוריה
-</option>
-
-<option value="תרומות לאוכלוסיות חלשות ולחברה">
-תרומות לאוכלוסיות חלשות ולחברה
-</option>
-
-
-<option value="סיפורי הצלחות אישיות">
-סיפורי הצלחות אישיות 
-</option>
-
-<option value="פוסטים אודות הוצאות ספרים">
-פוסטים אודות הוצאות ספרים
-</option>
-
-<option value="פוסט כללי">
-פוסט כללי
-</option>
-
-</select>
-
+</p>
 </div>
 
+<div class="bottom-bar">
 
-<div class="tags-box">
+  <span class="holy-text">
+ הכל על ערוץ התורה והעבודת הקודש של
+הרב יוסף שובלי שליט״ה וכל תלמידיו העוסקים במלכת הקודש  
+</span>
+<a
+href="https://www.tiktok.com/@rabenu156"
+target="_blank"
+class="bottom-item tiktok">
+<i class="fab fa-tiktok"></i>
+<span>TikTok</span>
+</a>
+<a
+href="https://daily-torah.tv"
+target="_blank"
+class="bottom-item website">
+<i class="fas fa-globe"></i>
+<span>אתר ערוץ התורה</span>
+</a>
 
-<label class="tags-label">
-תגיות לפוסט (אופציונאלי)
-</label>
+<a
+href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbDY0R2dtUGo5eFE2Tk9NOVNvdmFHZGRlQmdpZ3xBQ3Jtc0tuTUFmUFNBd1hpaUY4UC0zcGkxbmVocEhDWGNiMzR0MF9XQUNiRWRUMlp6S0RGY2V5Wl9yektUSEk4M0tUczExdDRYQl9TU3RJLXNZaXJuSXFyQ3BtZkRKQVVYbU44TnAwakhfV1NGNUNzbjJvWWFaVQ&q=https%3A%2F%2Fwhatsapp.com%2Fchannel%2F0029VaHBaz0Bfxo6YuOUKk1D"
+target="_blank"
+class="bottom-item whatsapp">
+<i class="fab fa-whatsapp"></i>
+<span>וואטסאפ</span>
+</a>
 
-<select id="postTags" class="tags-select">
+<a
+href="https://www.facebook.com/harutzhatorah/"
+target="_blank"
+class="bottom-item facebook">
+<i class="fab fa-facebook-f"></i>
+<span>פייסבוק</span>
+</a>
 
-<option value="">
-בחר תגית
-</option>
 
-<option value="אהבת הזולת">
-אהבת הזולת
-</option>
+<a
+href="https://t.me/Rabenu156"
+target="_blank"
+class="bottom-item instagram">
+<i class="fab fa-instagram"></i>
+<span>ערוץ התורה בטלגרם</span>
+</a>
 
-<option value="פירסום הנס">
-פירסום הנס
-</option>
-
-<option value="צדקה">
-צדקה
-</option>
-
-<option value="חסד">
-חסד
-</option>
-
-<option value="מעלת הצדיקים">
-מעלת הצדיקים
-</option>
-
-<option value="ישיבת תיקון המידות">
-ישיבת תיקון המידות
-</option>
-
-<option value="עבודת קודש">
-עבודת קודש
-</option>
-
-<option value="חיזוק">
-חיזוק
-</option>
-
-<option value="אמונה">
-אמונה
-</option>
-
-<option value="יראת השם">
-יראת השם
-</option>
-
-<option value="לימוד">
-לימוד
-</option>
-
-<option value="מידע כללי">
-מידע כללי
-</option>
-
-<option value="חסידות">
-חסידות
-</option>
-
-</select>
-
-<div id="selectedTagsPreview"></div>
+<a
+href="https://www.youtube.com/@harutzhatorah"
+target="_blank"
+class="bottom-item youtube">
+<i class="fab fa-youtube"></i>
+<span>ערוץ התורה</span>
+</a>
 
 </div>
-<textarea
-id="content"
-placeholder="תוכן"
-required
-></textarea>
-
-
-
-
-<div class="links-box">
-
-<div class="links-title">
-לינקים לפוסט <br>(אופציונאלי וכן אפשרי בתוכן עצמו)
-</div>
-
-<div id="linksContainer"></div>
-
-<button
-type="button"
-class="add-link-btn"
-onclick="addLinkField()"
->
-+ הוסף לינק
-</button>
-
-</div>
-
-
-<label class="upload-box">
-
-<input
-type="file"
-id="media"
-accept="image/*,video/*"
-multiple
->
-
-<div class="upload-content">
-
-<div class="upload-icon">
-⬆
-</div>
-
-<div class="upload-title">
-העלאת תמונות וסרטונים (אופציונאלי)
-</div>
-
-<div class="upload-subtitle">
-אפשר לבחור כמה קבצים
-<br>
-עד 4 סרטונים
-</div>
-
-</div>
-
-</label>
-
-<div
-class="preview-container"
-id="previewContainer"
-></div>
-
-<button
-class="submit-btn"
-id="submitBtn"
->
-פרסם פוסט
-</button>
-
-
-</form>
-</div>
-<div
-class="status"
-id="statusBox"
-></div>
 
 <script type="module">
 
 import { createClient }
-from 'https://esm.sh/@supabase/supabase-js'
+from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-const supabaseUrl =
-'https://pnnfstfabmhjzohkypak.supabase.co'
+const supabaseUrl = 'https://pnnfstfabmhjzohkypak.supabase.co'
+const supabaseKey = 'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
 
-const supabaseKey =
-'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
-
-const supabase =
-createClient(
-supabaseUrl,
-supabaseKey
+const supabase = createClient(
+  supabaseUrl,
+  supabaseKey
 )
 
-const form =
-document.getElementById("postForm")
 
-const category =
-document.getElementById("category").value
+const sidebar =
+document.getElementById("sidebar")
 
-const mediaInput =
-document.getElementById("media")
+const overlay =
+document.getElementById("overlay")
 
-const previewContainer =
-document.getElementById("previewContainer")
+function openMenu(){
 
-const statusBox =
-document.getElementById("statusBox")
+  sidebar.classList.add("show")
+  overlay.classList.add("show")
 
-const submitBtn =
-document.getElementById("submitBtn")
+  // חסימת גלילה בדף הראשי
+  document.body.style.overflow = "hidden"
 
-const titleInput =
-document.getElementById("title")
+}
 
-const titleCounter =
-document.getElementById("titleCounter")
+function closeMenu(){
 
-titleInput.addEventListener(
-"input",
+  sidebar.classList.remove("show")
+  overlay.classList.remove("show")
+
+  // החזרת גלילה רגילה
+  document.body.style.overflow = ""
+
+}
+
+window.openMenu = openMenu
+window.closeMenu = closeMenu
+
+async function loadPosts(){
+
+  // ---------- שלב 2: טעינה מהשרת ----------
+
+  const { data, error } = await supabase
+  .from('posts')
+  .select('*')
+  .order('created_at',{ascending:false})
+
+  if(error){
+
+    console.log(error)
+
+    return
+
+  }
+
+  // ---------- שלב 3: סינון ----------
+
+  const normalPosts =
+  data.filter(
+    post => post.type === "post"
+  )
+
+
+  // ---------- שלב 5: רינדור ----------
+
+  renderPosts(
+    normalPosts.slice(0,10)
+  )
+
+}
+
+
+const recipes =
+document.querySelector(".recipes")
+
+let isDown = false
+let startX
+let scrollLeft
+
+// חדש
+let isDragging = false
+
+recipes.addEventListener(
+"mousedown",
+(e)=>{
+
+isDown = true
+isDragging = false
+
+recipes.classList.add("dragging")
+
+startX =
+e.pageX - recipes.offsetLeft
+
+scrollLeft =
+recipes.scrollLeft
+
+}
+)
+
+recipes.addEventListener(
+"mouseleave",
 ()=>{
 
-const max = 10
+isDown = false
 
-const current =
-titleInput.value.length
-
-const left =
-max - current
-
-titleCounter.innerText =
-`${current} / ${max}`
-
-})
-
-function goHome(){
-
-document
-.querySelector(".page-wrap")
-.classList.add("page-exit")
-
-window.location.href =
-"index.html"
-
-}
-
-let selectedFiles = []
-
-function showStatus(text,type){
-
-statusBox.style.position = "fixed"
-
-statusBox.style.top = "20px"
-
-statusBox.style.left = "50%"
-
-statusBox.style.transform = "translateX(-50%)"
-
-statusBox.style.zIndex = "999999999"
-
-statusBox.style.display = "flex"
-
-statusBox.style.alignItems = "center"
-
-statusBox.style.justifyContent = "center"
-
-statusBox.style.gap = "10px"
-
-statusBox.style.padding = "14px 20px"
-
-statusBox.style.borderRadius = "18px"
-
-statusBox.style.maxWidth = "90%"
-
-statusBox.style.boxShadow =
-"0 10px 30px rgba(0,0,0,.18)"
-
-statusBox.className =
-`status ${type}`
-
-if(type === "loading"){
-
-statusBox.innerHTML = `
-
-<div class="loader"></div>
-
-<span>${text}</span>
-
-`
-
-}else{
-
-statusBox.innerHTML = `
-
-<span>${text}</span>
-
-`
-
-}
-
-}
-
-/* ---------- תצוגה מקדימה ---------- */
-
-mediaInput.addEventListener(
-"change",
-()=>{
-
-const files =
-Array.from(mediaInput.files)
-
-const currentVideos =
-selectedFiles.filter(
-f => f.type.startsWith("video")
-).length
-
-const newVideos =
-files.filter(
-f => f.type.startsWith("video")
-).length
-
-if(currentVideos + newVideos > 4){
-
-showStatus(
-"אפשר להעלות עד 4 סרטונים בלבד",
-"error"
-)
-
-mediaInput.value = ""
-
-return
-
-}
-
-files.forEach(file=>{
-
-    const alreadyExists =
-selectedFiles.some(
-f =>
-f.name === file.name &&
-f.size === file.size
-)
-
-if(alreadyExists){
-
-  return
-
-}
-
-const maxSize =
-50 * 1024 * 1024
-
-if(file.size > maxSize){
-
-showStatus(
-`הקובץ ${file.name} גדול מ־50MB`,
-"error"
-)
-
-return
-
-}
-
-selectedFiles.push(file)
-
-const fileUrl =
-URL.createObjectURL(file)
-
-const div =
-document.createElement("div")
-
-div.className =
-"preview-item"
-
-if(
-file.type.startsWith("video")
-){
-
-div.innerHTML = `
-
-<button
-type="button"
-class="remove-btn"
->
-✕
-</button>
-
-<video
-src="${fileUrl}"
-controls
-muted
-loop
-playsinline
-webkit-playsinline
-preload="auto"
-></video>
-`
-
-}else{
-
-div.innerHTML = `
-
-<button
-type="button"
-class="remove-btn"
->
-✕
-</button>
-
-<img loading="lazy" decoding="async"
-src="${fileUrl}"
->
-
-`
-
-}
-
-div
-.querySelector(".remove-btn")
-
-.addEventListener(
-"click",
-()=>{
-
-URL.revokeObjectURL(fileUrl)
-
-selectedFiles =
-selectedFiles.filter(
-f => f !== file
-)
-
-div.remove()
-
-})
-
-previewContainer.appendChild(div)
+recipes.classList.remove("dragging")
 
 setTimeout(()=>{
-
-div.scrollIntoView({
-behavior:"smooth",
-block:"end"
-})
-
-},100)
-})
-
-mediaInput.value = ""
-
-})
-
-
-let links = []
-
-function addLinkField(){
-
-const id = Date.now()
-
-links.push({
-id,
-title:"",
-url:""
-})
-
-renderLinks()
+isDragging = false
+},50)
 
 }
-
-function renderLinks(){
-
-const container =
-document.getElementById("linksContainer")
-
-let html = ""
-
-links.forEach(link=>{
-
-html += `
-
-<div class="link-item">
-
-<input
-placeholder="שם הלינק"
-value="${link.title}"
-oninput="updateLinkTitle(${link.id},this.value)"
->
-
-<input
-placeholder="https://example.com"
-value="${link.url}"
-oninput="updateLinkUrl(${link.id},this.value)"
->
-
-<button
-type="button"
-class="remove-link"
-onclick="removeLink(${link.id})"
->
-מחק לינק
-</button>
-
-</div>
-
-`
-
-})
-
-container.innerHTML = html
-
-}
-
-window.updateLinkTitle =
-(id,value)=>{
-
-links = links.map(link=>
-
-link.id === id
-
-? {...link,title:value}
-
-: link
-
 )
 
+recipes.addEventListener(
+"mouseup",
+()=>{
+
+isDown = false
+
+recipes.classList.remove("dragging")
+
+setTimeout(()=>{
+isDragging = false
+},50)
+
 }
-
-window.updateLinkUrl =
-(id,value)=>{
-
-links = links.map(link=>
-
-link.id === id
-
-? {...link,url:value}
-
-: link
-
 )
 
-}
+recipes.addEventListener(
+"mousemove",
+(e)=>{
 
-window.removeLink =
-(id)=>{
-
-links =
-links.filter(link=>link.id !== id)
-
-renderLinks()
-
-}
-
-window.addLinkField =
-addLinkField
-
-
-
-window.goHome = goHome
-
-
-async function compressImage(file){
-
-return new Promise((resolve,reject)=>{
-
-const img = new Image()
-
-const reader = new FileReader()
-
-reader.onload = e => {
-
-img.src = e.target.result
-
-}
-
-img.onload = ()=>{
-
-const canvas =
-document.createElement("canvas")
-
-const ctx =
-canvas.getContext("2d")
-
-/* גודל מקסימלי */
-
-const MAX_WIDTH = 1200
-const MAX_HEIGHT = 1200
-
-let width = img.width
-let height = img.height
-
-/* הגנה מתמונות ענק */
-
-if(
-width > 4000 ||
-height > 4000
-){
-
-const ratio =
-Math.min(
-4000 / width,
-4000 / height
-)
-
-width *= ratio
-height *= ratio
-
-}
-/* הקטנה פרופורציונלית */
-
-if(width > height){
-
-if(width > MAX_WIDTH){
-
-height *= MAX_WIDTH / width
-width = MAX_WIDTH
-
-}
-
-}else{
-
-if(height > MAX_HEIGHT){
-
-width *= MAX_HEIGHT / height
-height = MAX_HEIGHT
-
-}
-
-}
-
-canvas.width = width
-canvas.height = height
-
-ctx.drawImage(
-img,
-0,
-0,
-width,
-height
-)
-
-/* איכות JPG */
-
-canvas.toBlob(
-
-(blob)=>{
-
-if(!blob){
-
-reject(
-new Error("Compression failed")
-)
-
-return
-
-}
-
-const compressedFile =
-new File(
-
-[blob],
-
-file.name.replace(
-/\.\w+$/,
-".jpg"
-),
-
-{
-type:"image/jpeg"
-}
-
-)
-
-resolve(compressedFile)
-
-},
-
-"image/jpeg",
-
-0.7 /* איכות */
-
-)
-
-}
-
-reader.onerror = reject
-
-reader.readAsDataURL(file)
-
-})
-
-}
-
-/* ---------- שליחה ---------- */
-
-form.addEventListener(
-"submit",
-
-async(e)=>{
+if(!isDown) return
 
 e.preventDefault()
 
-const tags = selectedTags
+// אם זז קצת → זה drag
+isDragging = true
 
-submitBtn.disabled = true
+const x =
+e.pageX - recipes.offsetLeft
 
-showStatus(
-"מעלה פוסט...",
-"loading"
+const walk =
+(x - startX) * 2
+
+recipes.scrollLeft =
+scrollLeft - walk
+
+}
 )
 
-const uploadWarningTimeout =
-setTimeout(()=>{
 
-document
-.getElementById("uploadWarning")
-.style.display = "block"
+function renderPosts(posts){
 
-document
-.getElementById("warningOverlay")
-.style.display = "block"
+  const recipes = document.querySelector(".recipes")
 
-},10000)
-const title =
-document.getElementById("title").value
+  recipes.innerHTML = ""
 
-const content =
-document.getElementById("content").value
+  posts.forEach(post=>{
+
+    recipes.innerHTML += `
+    
+    <div class="external-line1">
+
+      <div class="card"
+      
+      onclick="openPost('${post.id}')">
+
+${
+post.media_urls?.[0]
+?.toLowerCase()
+?.includes(".mp4")
+? `
+<div style="
+position:relative;
+width: 100px;
+height: 100px;
+overflow:hidden;
+border-radius:5px;
+background:black;
+margin: 0 auto;
+">
+
+<video
+src="${post.media_urls[0]}"
+poster="${post.media_urls?.[1] || ''}"
+playsinline
+webkit-playsinline
+preload="metadata"
+onloadedmetadata="
+this.pause();
+this.currentTime = 0.1;
+"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+pointer-events:none;
+"
+></video>
+
+<div style="
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:28px;
+height:28px;
+border-radius:50%;
+background:rgba(0,0,0,.55);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:14px;
+">
+▶
+</div>
+
+</div>
+`
+
+: post.media_urls?.[0]
+
+? `<img src="${post.media_urls[0]}" alt="">`
+
+: `<div class="no-image">
+👤
+</div>`
+}
+        
+        <div class="card-body">
+
+          <h3 class="post-content">
+            ${post.content}
+          </h3>
+
+          <div class="like-box">
+<i class="fa-regular fa-thumbs-up"></i>
+        <span>128</span>
+        </div>
 
 
-let mediaUrls = []
+        <span class="tag">
+         ${post.title}
+        </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    `
+
+  })
+
+}
+
+function goHome(){
+
+  window.location.href = "index.html"
+
+}
+
+function goPosts(){
+
+  window.location.href = "posts.html"
+
+}
+
+function goUpload(){
+
+  window.location.href = "upload.html"
+
+}
+
+function goIndex2(){
+
+  window.location.href =
+  "index2.html"
+
+}
+  
+const heroWrap = document.querySelector(".hero-wrap");
+const heroTrack = document.querySelector(".hero-track");
+
+let slides = document.querySelectorAll(".hero-slide");
+
+/* ---------- שכפול ---------- */
+
+const firstClone = slides[0].cloneNode(true);
+const lastClone = slides[slides.length - 1].cloneNode(true);
+
+heroTrack.appendChild(firstClone);
+heroTrack.insertBefore(lastClone, slides[0]);
+
+slides = document.querySelectorAll(".hero-slide");
+
+let current = 1;
+let total = slides.length;
+
+let heroStartX = 0;
+let currentX = 0;
+let dragging = false;
+let auto;
+
+/* ---------- התחלה ---------- */
+
+updateSlider(false);
+
+/* ---------- */
+
+function updateSlider(withTransition = true){
+
+heroTrack.style.transition =
+withTransition ? ".4s ease" : "none";
+
+heroTrack.style.transform =
+`translateX(-${current * 100}%)`;
+
+}
+
+/* ---------- הבא ---------- */
+
+function nextSlide(){
+
+current++;
+
+updateSlider();
+
+}
+
+/* ---------- הקודם ---------- */
+
+function prevSlide(){
+
+current--;
+
+updateSlider();
+
+}
+
+/* ---------- אינפיניטי ---------- */
+
+heroTrack.addEventListener(
+"transitionend",
+()=>{
+
+/* אם הגענו לשכפול הראשון */
+if(current === total - 1){
+
+heroTrack.style.transition = "none";
+
+current = 1;
+
+heroTrack.style.transform =
+`translateX(-${current * 100}%)`;
+
+}
+
+/* אם הגענו לשכפול האחרון */
+if(current === 0){
+
+heroTrack.style.transition = "none";
+
+current = total - 2;
+
+heroTrack.style.transform =
+`translateX(-${current * 100}%)`;
+
+}
+
+}
+);
+
+/* ---------- אוטומטי ---------- */
+
+function startAuto(){
+
+clearInterval(auto);
+
+auto = setInterval(
+nextSlide,
+5000
+);
+
+}
+
+startAuto();
+
+/* ---------- טאץ׳ ---------- */
+
+heroWrap.addEventListener(
+"touchstart",
+(e)=>{
+
+stopAuto();
+
+dragging = true;
+
+heroStartX = e.touches[0].clientX;
+currentX = heroStartX;
+
+heroTrack.style.transition =
+"none";
+
+},
+{ passive:true }
+);
+
+/* ---------- גרירה ---------- */
+
+heroWrap.addEventListener(
+"touchmove",
+(e)=>{
+
+if(!dragging) return;
+
+currentX =
+e.touches[0].clientX;
+
+let diff = heroStartX - currentX;
+
+heroTrack.style.transform =
+`translateX(calc(-${current * 100}% + ${diff}px))`;
+
+},
+{ passive:true }
+);
+
+/* ---------- שחרור ---------- */
+
+heroWrap.addEventListener(
+"touchend",
+()=>{
+
+dragging = false;
+
+let diff =
+currentX - heroStartX;
+
+/* הבא */
+if(diff < -70){
+
+nextSlide();
+
+}
+
+/* הקודם */
+else if(diff > 70){
+
+prevSlide();
+
+}
+
+/* חזרה */
+else{
+
+updateSlider();
+
+}
+
+startAuto();
+
+}
+);
+
+/* ---------- ביטול ---------- */
+
+heroWrap.addEventListener(
+"touchcancel",
+()=>{
+
+dragging = false;
+
+updateSlider();
+
+startAuto();
+
+}
+);
+
+/* ---------- התחלה ---------- */
+
+updateSlider(false);
+
+function openPost(id){
+
+// אם היה drag לא פותחים
+if(isDragging) return
+
+window.location.href =
+`posts.html?id=${id}`
+
+}
+
+function showAboutPage(){
+
+document.getElementById("aboutPage").style.display = "block"
+
+document.querySelector(".container").style.display = "none"
+
+document.querySelector(".hero-wrap").style.display = "none"
+
+document.querySelector(".actions1").style.display = "none"
+
+closeMenu()
+
+}
 
 
-/* ---------- העלאת קבצים ---------- */
+function closeAboutPage(){
+
+document.getElementById("aboutPage").style.display = "none"
+
+document.querySelector(".container").style.display = "block"
+
+document.querySelector(".hero-wrap").style.display = "block"
+
+document.querySelector(".actions1").style.display = "grid"
+
+}
+
+async function shareSite(){
+
+const shareData = {
+
+title:"בסייעתא דשמיא",
+
+text:"כנסו לאתר הרב יוסף שובלי",
+
+url:window.location.href
+
+}
+
+if(navigator.share){
 
 try{
 
-const uploadPromises =
-selectedFiles.map(async(file)=>{
-
-let uploadFile = file
-
-/* רק לתמונות */
-
-if(file.type.startsWith("image")){
-
-uploadFile =
-await compressImage(file)
-
-}
-
-const fileName =
-
-Date.now() +
-"-" +
-Math.random()
-.toString(36)
-.slice(2)
-+
-"-" +
-uploadFile.name
-
-const { error:uploadError } =
-
-await supabase.storage
-
-.from("posts")
-
-.upload(
-fileName,
-uploadFile
-)
-
-if(uploadError){
-
-throw uploadError
-
-}
-
-const { data:urlData } =
-
-supabase.storage
-
-.from("posts")
-
-.getPublicUrl(fileName)
-
-return urlData.publicUrl
-
-})
-
-mediaUrls =
-await Promise.race([
-
-Promise.all(uploadPromises),
-
-new Promise((_, reject)=>
-
-setTimeout(
-()=>reject(new Error("timeout")),
-30000
-)
-
-)
-
-])
+await navigator.share(shareData)
 
 }catch(err){
 
 console.log(err)
 
-showStatus(
-"שגיאה בהעלאת קבצים",
-"error"
+}
+
+}else{
+
+navigator.clipboard.writeText(
+window.location.href
 )
 
-clearTimeout(uploadWarningTimeout)
-
-document
-.getElementById("uploadWarning")
-.style.display = "none"
-
-document
-.getElementById("warningOverlay")
-.style.display = "none"
-
-submitBtn.disabled = false
-
-return
+alert("הלינק הועתק")
+}
 
 }
 
 
-/* ---------- שמירת פוסט ---------- */
+window.addEventListener("load", () => {
 
-const thumbnailUrls = []
+  const loader =
+  document.getElementById("siteLoader")
 
-const { data, error } =
-await supabase
-.from("posts")
-.insert([{
+  // כניסה ראשונה
+  setTimeout(()=>{
 
-title,
+    loader.style.opacity = "0"
+    loader.style.transition = "0.5s ease"
 
-content,
+    setTimeout(()=>{
 
-category,
+      loader.remove()
 
-tags, 
 
-type: "post",
+    },100)
 
-approved: false,
-
-reviewed:false,
-
-media_urls: mediaUrls,
-
-thumbnail_urls: thumbnailUrls,
-
-links
-
-}])
-
-if(error){
-
-console.log(error)
-
-showStatus(
-"שגיאה בשמירת הפוסט",
-"error"
-)
-
-return
-
-}
-
-showStatus(
-"הפוסט פורסם בהצלחה, מעביר לדף הראשי",
-"success"
-)
-
-selectedFiles = []
-links = []
-form.reset()
-previewContainer.innerHTML = ""
-
-renderLinks()
-
-clearTimeout(uploadWarningTimeout)
-
-document
-.getElementById("uploadWarning")
-.style.display = "none"
-
-document
-.getElementById("warningOverlay")
-.style.display = "none"
-
-setTimeout(()=>{
-
-window.location.href =
-"index.html"
-
-},1500)
+  },1500)
 
 })
 
+window.showAboutPage = showAboutPage
+window.closeAboutPage = closeAboutPage
+window.openPost = openPost
 
-const postTags =
-document.getElementById("postTags")
-
-const selectedTagsPreview =
-document.getElementById("selectedTagsPreview")
-
-let selectedTags = []
-
-postTags.addEventListener(
-"change",
-()=>{
-
-const value = postTags.value
-
-if(!value) return
-
-if(selectedTags.includes(value)){
-
-postTags.value = ""
-
-return
-
-}
-
-selectedTags.push(value)
-
-renderTags()
-
-postTags.value = ""
-
-}
-)
-
-function renderTags(){
-
-selectedTagsPreview.innerHTML = ""
-
-selectedTags.forEach(tag=>{
-
-const div =
-document.createElement("div")
-
-div.className = "tag-chip"
-
-div.innerHTML = `
-
-<span>${tag}</span>
-
-<span class="tag-remove">
-✕
-</span>
-
-`
-
-div
-.querySelector(".tag-remove")
-.addEventListener(
-"click",
-()=>{
-
-selectedTags =
-selectedTags.filter(
-t => t !== tag
-)
-
-renderTags()
-
-}
-)
-
-selectedTagsPreview.appendChild(div)
-
-})
-
-}
+window.goPosts = goPosts
+window.goHome = goHome
+window.goUpload = goUpload
+window.shareSite = shareSite
+loadPosts()
 </script>
 
 </body>
