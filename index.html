@@ -1594,7 +1594,6 @@ let currentX = 0;
 let heroDragging = false;
 let auto;
 let heroMoved = false;
-let base = 0;
 
 /* ---------- התחלה ---------- */
 
@@ -1607,8 +1606,10 @@ function updateSlider(withTransition = true){
 heroTrack.style.transition =
 withTransition ? ".4s ease" : "none";
 
+const slideWidth = heroWrap.offsetWidth;
+
 heroTrack.style.transform =
-`translateX(-${current * 100}%)`;
+`translateX(-${current * slideWidth}px)`;
 
 }
 
@@ -1646,7 +1647,7 @@ heroTrack.style.transition = "none";
 current = 1;
 
 heroTrack.style.transform =
-`translateX(-${current * 100}%)`;
+`translateX(-${current * heroWrap.offsetWidth}px)`;
 
 }
 
@@ -1658,12 +1659,27 @@ heroTrack.style.transition = "none";
 current = total - 2;
 
 heroTrack.style.transform =
-`translateX(-${current * 100}%)`;
+`translateX(-${current * heroWrap.offsetWidth}px)`;
 
 }
 
 }
 );
+
+document.addEventListener("visibilitychange", () => {
+
+if(document.hidden){
+
+stopAuto();
+
+}else{
+
+updateSlider(false);
+startAuto();
+
+}
+
+});
 
 /* ---------- אוטומטי ---------- */
 
@@ -1696,6 +1712,7 @@ heroWrap.addEventListener(
 stopAuto();
 
 heroDragging = true;
+heroMoved = false;
 
 heroStartX = e.touches[0].clientX;
 currentX = heroStartX;
@@ -1707,6 +1724,11 @@ heroTrack.style.transition =
 { passive:true }
 );
 
+window.addEventListener("resize", () => {
+
+updateSlider(false);
+
+});
 /* ---------- גרירה ---------- */
 
 heroWrap.addEventListener("touchmove", (e) => {
