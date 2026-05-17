@@ -131,20 +131,14 @@ display:none;
 
 .recipes{
   display:flex;
-  flex-wrap:wrap;
-
   gap:16px;
-
   overflow-x:auto;
   overflow-y:hidden;
-
+  padding-bottom:10px;
   scroll-behavior:smooth;
-
-  padding:5px 20px 15px 20px;
-
-  border-bottom:solid 1px #ccc;
-
-  margin-top:15px;
+  padding: 5px 20px 15px 20px;
+  border-bottom: solid 1px #ccc;
+  margin-top: 15px;
 }
 
 .recipes{
@@ -1887,9 +1881,9 @@ async function loadPosts(){
 
   // ---------- שלב 5: רינדור ----------
 
-renderPosts(
-  normalPosts.slice(0,10)
-)
+  renderPosts(
+    normalPosts.slice(0,5)
+  )
 
 }
 
