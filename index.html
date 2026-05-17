@@ -137,8 +137,8 @@ display:none;
   padding-bottom:10px;
   scroll-behavior:smooth;
   padding: 5px 20px 15px 20px;
-  border-bottom: solid 1px #ccc;
   margin-top: 15px;
+  
 }
 
 .recipes{
@@ -1172,6 +1172,14 @@ font-size: 12px !important;
   align-items: center;
 }
 
+.border-1{
+  border-bottom: solid 1px #ccc;
+
+}
+
+.success-recipes .gol{
+  flex:0 0 auto;
+}
 
 </style>
 </head>
@@ -1416,8 +1424,26 @@ class="bottom-item youtube">
 <span class="text-for-cards1">סליידר פוסטים</span>
 
   <div class="recipes"></div>
+  
   </div>
+<div class="container">
 
+<div class="line22">
+<hr class="line-more1">
+
+<a href="posts.html" class="title">
+ראה עוד
+</a>
+
+</div>
+
+<span class="text-for-cards1">
+סיפורי הצלחות אישיות
+</span>
+
+<div class="recipes success-recipes"></div>
+
+</div>
   <!-- דף אודות -->
 <div id="aboutPage" style="
 display:none;
@@ -1856,8 +1882,6 @@ document
 
 async function loadPosts(){
 
-  // ---------- שלב 2: טעינה מהשרת ----------
-
   const { data, error } = await supabase
   .from('posts')
   .select('*')
@@ -1871,19 +1895,37 @@ async function loadPosts(){
 
   }
 
+    console.log(data)
+
   // ---------- שלב 3: סינון ----------
 
-  const normalPosts =
-  data.filter(
-    post => post.type === "post"
-  )
+const normalPosts = data.filter(post => {
+
+const isSuccessStory =
+post.tags &&
+post.tags.includes("סיפורי הצלחות אישיות")
+
+return post.type === "post" && !isSuccessStory
+
+})
+
+    const successPosts =
+   data.filter(
+  post =>
+  post.tags &&
+  post.tags.includes("סיפורי הצלחות אישיות")
+)
 
 
   // ---------- שלב 5: רינדור ----------
 
   renderPosts(
-    normalPosts.slice(0,10)
+    normalPosts.slice(0,5)
   )
+
+  renderSuccessPosts(
+  successPosts.slice(0,5)
+)
 
 }
 
@@ -2082,6 +2124,62 @@ ${post.likes || 0}
     `
 
   })
+
+}
+
+function renderSuccessPosts(posts){
+
+const container =
+document.querySelector(".success-recipes")
+
+container.innerHTML = ""
+
+posts.forEach(post=>{
+
+container.innerHTML += `
+
+<div class="gol">
+
+<div
+class="card"
+onclick="location.href='posts.html?id=${post.id}'"
+>
+
+<div class="external-line1">
+
+${
+post.media_urls?.[0]
+
+? `<img src="${post.media_urls[0]}">`
+
+: `
+<div class="no-image">
+<i class="fa-regular fa-image"></i>
+</div>
+`
+}
+
+<h3>
+${post.title || ""}
+</h3>
+
+<p class="post-content">
+${post.content || ""}
+</p>
+
+<div class="tag">
+סיפור אישי
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`
+
+})
 
 }
 
