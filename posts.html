@@ -7,7 +7,7 @@
 rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 />
-
+<link rel="icon" href="favicon.ico">
 <title>כל הפוסטים - יראת השם</title>
 
 <style>
@@ -102,14 +102,8 @@ box-shadow:-10px 0 20px rgba(0,0,0,.15);
 padding:20px;
 overflow:auto;
 -ms-overflow-style:none;
-scrollbar-width:none;
 
 }
-
-.sidebar::-webkit-scrollbar{
-display:none;
-}
-
 
 .sidebar.show{
 right:0;
@@ -1225,6 +1219,7 @@ display:flex;
 
 }
 
+
 .filter-menu button{
 
 height:48px;
@@ -1353,6 +1348,254 @@ color:#2563eb;
 .mini-tag i{
 font-size:13px;
 }
+
+.login-modal{
+
+position:fixed;
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+z-index:99999;
+}
+
+.login-modal.show{
+display:flex;
+}
+
+.login-card{
+
+width:90%;
+max-width:340px;
+
+background:white;
+
+border-radius:22px;
+
+padding:24px;
+
+text-align:center;
+
+animation:pop .25s ease;
+}
+
+.login-card h2{
+
+margin-bottom:10px;
+
+color:#111827;
+}
+
+.login-card p{
+
+font-size:14px;
+
+color:#6b7280;
+
+margin-bottom:22px;
+
+line-height:1.6;
+}
+
+.google-btn{
+
+width:100%;
+
+border:none;
+
+background:#111827;
+
+color:white;
+
+padding:14px;
+
+border-radius:14px;
+
+font-size:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+
+.google-btn i{
+font-size:18px;
+}
+
+@keyframes pop{
+
+from{
+transform:scale(.85);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.likes-tag:active{
+transform:scale(.95);
+}
+
+/* ================= DESKTOP FIXES ================= */
+
+@media (min-width: 900px){
+
+/* המודל עצמו */
+.post-modal{
+
+background:#e9e6e1;
+
+}
+
+#postTags{
+
+max-width:500px;
+
+margin:0 auto;
+
+padding-top:0;
+
+padding-bottom:0;
+
+}
+
+/* התגיות עצמן */
+
+#postTags > div{
+
+margin-top:0 !important;
+
+padding-top:0 !important;
+
+}
+
+.border-bottom-for{
+
+margin-bottom:0 !important;
+
+padding-bottom:0 !important;
+
+}
+
+/* אזור המדיה */
+#mediaContainer{
+
+max-width:900px;
+
+margin:0 auto;
+background: none;
+
+}
+
+/* הווידאו / תמונה */
+.modal-image{
+
+max-width:500px;
+
+width:100%;
+
+height:520px;
+
+margin:90px auto 0;
+
+display:block;
+
+background:none;
+border-radius: 18px;
+
+}
+
+/* תוכן כללי */
+.modal-body{
+
+max-width:500px;
+
+margin:0 auto;
+
+
+}
+
+
+/* התוכן של הפוסט */
+.modal-content{
+
+max-width:500px;
+
+margin:0 auto ;
+margin-bottom: 30px;
+
+
+font-size:18px;
+
+}
+
+/* תגיות */
+#postTags{
+max-width:500px;
+margin:0 auto;
+margin-bottom: 30px;
+
+}
+
+/* שורת הכותרת */
+.border-bottom-for{
+
+max-width:500px;
+
+margin:0 auto ;
+
+
+}
+
+/* פס התמונות */
+.image-bar-wrapper{
+
+max-width:500px;
+border-radius: 10px;
+margin:0 auto;
+
+}
+
+.image-bar{
+
+justify-content:center;
+
+}
+
+/* קישורים */
+.post-links{
+
+max-width:500px;
+
+margin:25px auto 0;
+
+}
+
+
+
+/* טופ בר */
+.modal-topbar{
+
+padding:0 30px;
+
+}
+
+}
+
+
 </style>
 </head>
 
@@ -1593,18 +1836,22 @@ id="modalTitle"></div>
 <span id="postViews">0</span>
 </div>
 
-<div class="mini-tag likes-tag">
+<button
+class="mini-tag likes-tag" style="border: none;"
+onclick="toggleLike(currentOpenedPost)"
+type="button"
+>
 <i class="fa-regular fa-thumbs-up"></i>
 <span id="postLikes">0</span>
+</button>
 
 </div>
-</div>
-</div>
 
+</div>
 <div id="postTags"></div>
-
 <div class="modal-content"
 id="modalContent"></div>
+</div>
 
 </div>
 
@@ -1702,6 +1949,44 @@ color:#4b5563;
 </p>
 
 </div>
+
+<!-- LOGIN MODAL -->
+
+<div
+class="login-modal"
+id="loginModal"
+onclick="closeLoginModal()"
+>
+
+<div
+class="login-card"
+onclick="event.stopPropagation()"
+>
+
+<h2>
+כניסה מהירה
+</h2>
+
+<p>
+התחבר עם גוגל כדי לעשות לייקים
+ולשמור צפיות בפוסטים
+</p>
+
+<button
+class="google-btn"
+onclick="signInWithGoogle()"
+>
+
+<i class="fab fa-google"></i>
+
+המשך עם Google
+
+</button>
+
+</div>
+
+</div>
+
 <script type="module">
 
 import { createClient }
@@ -1717,6 +2002,22 @@ const supabase = createClient(
 supabaseUrl,
 supabaseKey
 )
+
+let currentUser = null
+
+async function getCurrentUser(){
+
+const {
+data:{ user }
+} = await supabase.auth.getUser()
+
+currentUser = user || null
+
+return currentUser
+
+}
+
+await getCurrentUser()
 
 /* SIDEBAR */
 
@@ -1875,6 +2176,8 @@ content,
 media_urls,
 links,
 tags,
+likes,
+views,
 created_at
 `)
 .eq('approved', true)
@@ -2048,8 +2351,11 @@ postsGrid.innerHTML = html
 
 }
 
+window.currentOpenedPost = null
 
-function openPost(post){
+async function openPost(post){
+
+window.currentOpenedPost = post
 
 const mediaContainer =
 document.getElementById("mediaContainer")
@@ -2098,6 +2404,13 @@ document.getElementById("modalTitle")
 
 document.getElementById("modalTopTitle")
 .innerText = post.title || ''
+
+document.getElementById("postLikes").innerText =
+post.likes || 0
+
+document.getElementById("postViews").innerText =
+post.views || 0
+
 document.getElementById("modalContent")
 .innerHTML = `
 
@@ -2392,7 +2705,47 @@ document.body.style.overflow = "hidden"
 
 window.scrollTo(0,0)
 
+const {
+data:{ user }
+} = await supabase.auth.getUser()
+
+if(user){
+
+const viewedKey =
+`viewed_${post.id}_${user.id}`
+
+const alreadyViewed =
+localStorage.getItem(viewedKey)
+
+if(!alreadyViewed){
+
+const currentViews =
+post.views || 0
+
+const newViews =
+currentViews + 1
+
+await supabase
+.from("posts")
+.update({
+views:newViews
+})
+.eq("id",post.id)
+
+post.views = newViews
+
+localStorage.setItem(
+viewedKey,
+"1"
+)
+
 }
+
+}
+
+}
+
+
 
 function closePost(){
 
@@ -2568,6 +2921,8 @@ const { count, error } = await supabase
 .from('posts')
 .select('*', { count: 'exact', head: true })
 .eq('type', 'post')
+.eq('approved', true)
+
 
 if(error){
 console.log(error)
@@ -2671,8 +3026,104 @@ filterMenu.classList.remove("show")
 closeMenu()
 
 }
-window.toggleFilters = toggleFilters
 
+
+async function signInWithGoogle(){
+
+const { error } =
+await supabase.auth.signInWithOAuth({
+
+provider:'google',
+
+options:{
+
+redirectTo:
+window.location.origin + window.location.pathname
+
+}
+
+})
+
+if(error){
+
+console.log(error)
+
+}
+
+}
+
+
+function openLoginModal(){
+
+const modal =
+document.getElementById("loginModal")
+
+modal.classList.add("show")
+
+}
+
+function closeLoginModal(){
+
+const modal =
+document.getElementById("loginModal")
+
+modal.classList.remove("show")
+
+}
+
+async function toggleLike(post){
+
+const {
+data:{ user }
+} = await supabase.auth.getUser()
+
+if(!user){
+
+openLoginModal()
+return
+
+}
+
+const likeKey =
+`liked_${post.id}_${user.id}`
+
+const alreadyLiked =
+localStorage.getItem(likeKey)
+
+if(alreadyLiked){
+return
+}
+
+const newLikes =
+(post.likes || 0) + 1
+
+const { error } = await supabase
+.from("posts")
+.update({
+likes:newLikes
+})
+.eq("id",post.id)
+
+if(error){
+console.log(error)
+return
+}
+
+post.likes = newLikes
+
+document.getElementById("postLikes").innerText =
+newLikes
+
+localStorage.setItem(
+likeKey,
+"1"
+)
+
+}
+
+window.toggleLike = toggleLike
+window.closeLoginModal = closeLoginModal
+window.toggleFilters = toggleFilters
 window.loadCategory = loadCategory
 window.showAboutPage = showAboutPage
 window.closeAboutPage = closeAboutPage
