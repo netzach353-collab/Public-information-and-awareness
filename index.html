@@ -1226,8 +1226,9 @@ class="bottom-item share-btn">
 </div>
 
 
-  <div class="logo">״בסייעתא דשמיא״</div>
-
+<div class="logo" id="secretAdminBtn">
+״בסייעתא דשמיא״
+</div>
 </div>
 
 <!-- רקע -->
@@ -2564,6 +2565,77 @@ window.goPosts = goPosts
 window.goHome = goHome
 window.goUpload = goUpload
 window.shareSite = shareSite
+
+
+const secretBtn =
+document.getElementById("secretAdminBtn")
+
+let secretTimer
+
+secretBtn.addEventListener(
+"touchstart",
+()=>{
+
+secretTimer = setTimeout(()=>{
+
+window.location.href =
+"admin.html"
+
+},5000)
+
+}
+)
+
+secretBtn.addEventListener(
+"touchend",
+()=>{
+
+clearTimeout(secretTimer)
+
+}
+)
+
+secretBtn.addEventListener(
+"touchmove",
+()=>{
+
+clearTimeout(secretTimer)
+
+}
+)
+
+// גם למחשב
+secretBtn.addEventListener(
+"mousedown",
+()=>{
+
+secretTimer = setTimeout(()=>{
+
+window.location.href =
+"admin.html"
+
+},5000)
+
+}
+)
+
+secretBtn.addEventListener(
+"mouseup",
+()=>{
+
+clearTimeout(secretTimer)
+
+}
+)
+
+secretBtn.addEventListener(
+"mouseleave",
+()=>{
+
+clearTimeout(secretTimer)
+
+}
+)
 
 trackPageView()
 loadUser()
