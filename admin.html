@@ -2,210 +2,475 @@
 <html lang="he">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Admin Panel</title>
 
 <style>
 body{
-background:#111;
-color:white;
-font-family:Arial;
-padding:20px;
-}
-
-.post{
-border:1px solid #444;
-padding:15px;
-margin-bottom:20px;
-border-radius:10px;
+  background:#0f0f0f;
+  color:#fff;
+  font-family:Arial;
+  padding:20px;
 }
 
 button{
-padding:10px 20px;
-cursor:pointer;
-border:none;
-border-radius:8px;
-margin-top:10px;
+  padding:10px 16px;
+  margin:5px;
+  cursor:pointer;
+  border-radius:8px;
+  border:none;
+}
+
+.login{ background:#2563eb; color:white; }
+.logout{ background:#444; color:white; }
+
+.post{
+  border:1px solid #333;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
 }
 
 .approve{
-background:#16a34a;
-color:white;
+  background:#16a34a;
+  color:white;
+  margin-top:10px;
 }
 
-.login{
-background:#2563eb;
-color:white;
-font-size:18px;
+.stats-wrap{
+
+  display:grid;
+width: 50%;
+  grid-template-columns:
+  repeat(4,1fr);
+
+  gap:10px;
+
+  margin-top:15px;
+  margin-bottom:20px;
+}
+
+.stat-card{
+
+  background:#1e293b;
+
+  border-radius:12px;
+
+  padding:5px;
+
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  box-shadow:0 2px 10px rgba(0,0,0,.25);
+}
+
+.stat-title{
+
+  font-size:12px;
+
+  color:#cbd5e1;
+
+  margin-bottom:6px;
+
+  text-align:center;
+}
+
+.stat-number{
+
+  font-size:24px;
+
+  font-weight:bold;
+
+  color:white;
 }
 </style>
 </head>
+
 <body>
 
-<h1>ניהול פוסטים</h1>
+<h2>ניהול פוסטים</h2>
 
-<button class="login" id="loginBtn">
-התחבר עם Google
-</button>
-
-<button id="logoutBtn">
-Logout
-</button>
+<button class="login" id="loginBtn">Login Google</button>
+<button class="logout" id="logoutBtn">Logout</button>
 
 <div id="posts"></div>
 
 <script type="module">
 
-import { createClient }
-from 'https://esm.sh/@supabase/supabase-js@2'
-
-const supabaseUrl = 'https://pnnfstfabmhjzohkypak.supabase.co'
-const supabaseKey = 'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const supabase = createClient(
-  supabaseUrl,
-  supabaseKey,
+  'https://pnnfstfabmhjzohkypak.supabase.co',
+  'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo',
   {
     auth:{
-      persistSession:false
+      persistSession:true,
+      autoRefreshToken:true
     }
   }
 )
+const postsDiv = document.getElementById("posts")
 
-const postsDiv = document.getElementById('posts')
-const loginBtn = document.getElementById('loginBtn')
+/* ---------- STATS ---------- */
 
+async function loadStats(){
 
+  // אם כבר קיים - לא ליצור שוב
+  const existing =
+  document.getElementById("statsBox")
 
+  if(existing){
+    existing.remove()
+  }
 
-loginBtn.onclick = async () => {
-
-await supabase.auth.signInWithOAuth({
-
-provider:'google',
-
-options:{
-redirectTo:
-window.location.origin + '/admin.html'
-}
-
-})
-
-}
-
-
-async function checkUser(){
-
+  // כלל הכניסות
 const {
-data:{user}
-} = await supabase.auth.getUser()
+  count
+} = await supabase
+  .from("page_views")
+  .select("*", {
+    count:"exact",
+    head:true
+  })
 
-if(!user){
-return
-}
+console.log(count)
 
-loadPosts()
+  // שבוע אחרון
+  const lastWeekDate = new Date()
 
-}
+  lastWeekDate.setDate(
+    lastWeekDate.getDate() - 7
+  )
+const {
+  count: weekViews
+} = await supabase
+  .from("page_views")
+  .select("*", {
+    count:"exact",
+    head:true
+  })
+  .gte(
+    "created_at",
+    lastWeekDate.toISOString()
+  )
 
-async function loadPosts(){
+  const statsDiv =
+  document.createElement("div")
 
-const { data, error } = await supabase
-.from('posts')
-.select('*')
-.eq('reviewed', false)
-.order('created_at',{ascending:false})
+  statsDiv.id = "statsBox"
 
-if(error){
-console.log(error)
-return
-}
+  statsDiv.innerHTML = `
 
+<div class="stats-wrap">
 
+  <div class="stat-card">
 
-postsDiv.innerHTML = ''
+    <div class="stat-title">
+      סה״כ כניסות
+    </div>
 
+    <div class="stat-number">
+      ${count || 0}
+    </div>
 
+  </div>
 
-data.forEach(post => {
+  <div class="stat-card">
 
-const div = document.createElement('div')
+    <div class="stat-title">
+      כניסות השבוע
+    </div>
 
-div.className = 'post'
+    <div class="stat-number">
+      ${weekViews || 0}
+    </div>
 
+  </div>
 
-div.innerHTML = `
-
-<h2>${post.title || ''}</h2>
-
-<p>${post.content || ''}</p>
-
-<button class="approve">
-אשר פוסט
-</button>
+</div>
 
 `
 
+  document.body.insertBefore(
+    statsDiv,
+    postsDiv
+  )
+}
 
+/* ---------- USER ---------- */
 
-const btn = div.querySelector('button')
+async function checkUser(){
 
-btn.onclick = async () => {
+  const { data } =
+  await supabase.auth.getUser()
 
-const { data, error } = await supabase
-.from('posts')
-.update({
-approved:true,
-reviewed:true
-})
-.eq('id', post.id)
-.select()
+  const user = data?.user
 
-console.log(post.id)
-console.log(data)
-console.log(error)
+  if(!user){
 
-if(error){
+    postsDiv.innerHTML =
+    "<p>יש להתחבר כדי לראות פוסטים</p>"
 
-console.log(error)
+    return
+  }
 
-alert(error.message)
+  await loadStats()
 
-return
+  loadPosts()
+}
+
+/* ---------- POSTS ---------- */
+
+async function loadPosts(){
+
+  const { data, error } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("reviewed", false)
+    .order("created_at", {
+      ascending:false
+    })
+
+  if(error){
+
+    postsDiv.innerHTML =
+    "<p>שגיאה בטעינת פוסטים</p>"
+
+    return
+  }
+
+  postsDiv.innerHTML = ""
+
+  if(!data.length){
+
+    postsDiv.innerHTML =
+    "<p>אין פוסטים חדשים</p>"
+
+    return
+  }
+
+  data.forEach(post => {
+
+    const div = document.createElement("div")
+
+    div.className = "post"
+
+    /* ---------- MEDIA ---------- */
+
+    let mediaHTML = ""
+
+    if(post.media_urls?.length){
+
+      post.media_urls.forEach(url => {
+
+        if(
+          url.toLowerCase().includes(".mp4")
+        ){
+
+          mediaHTML += `
+
+            <video
+              src="${url}"
+              controls
+              style="
+                width:100%;
+                margin-top:10px;
+                border-radius:10px;
+              "
+            ></video>
+
+          `
+
+        } else {
+
+          mediaHTML += `
+
+            <img
+              src="${url}"
+              style="
+                width:100%;
+                margin-top:10px;
+                border-radius:10px;
+              "
+            >
+
+          `
+        }
+
+      })
+
+    }
+
+    /* ---------- LINKS ---------- */
+
+    let linksHTML = ""
+
+    if(post.links){
+
+      try{
+
+        const links = Array.isArray(post.links)
+          ? post.links
+          : [post.links]
+
+        links.forEach(link => {
+
+          if(link?.url){
+
+            linksHTML += `
+
+              <a
+                href="${link.url}"
+                target="_blank"
+                style="
+                  display:block;
+                  margin-top:8px;
+                  color:#60a5fa;
+                "
+              >
+                ${link.title || link.url}
+              </a>
+
+            `
+          }
+
+        })
+
+      }catch(err){}
+    }
+
+    /* ---------- TAGS ---------- */
+
+    let tagsHTML = ""
+
+    if(post.tags?.length){
+
+      tagsHTML = post.tags.map(tag => `
+
+        <span style="
+          background:#334155;
+          padding:5px 10px;
+          border-radius:999px;
+          font-size:12px;
+        ">
+          #${tag}
+        </span>
+
+      `).join("")
+    }
+
+    /* ---------- HTML ---------- */
+
+    div.innerHTML = `
+
+      <h2>${post.title || ""}</h2>
+
+      <p>${post.content || ""}</p>
+
+      <div style="
+        margin-top:10px;
+        color:#94a3b8;
+      ">
+        קטגוריה:
+        ${post.category || "ללא"}
+      </div>
+
+      <div style="
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+        margin-top:10px;
+      ">
+        ${tagsHTML}
+      </div>
+
+      ${mediaHTML}
+
+      <div style="margin-top:10px;">
+        ${linksHTML}
+      </div>
+
+      <button class="approve">
+        אשר פוסט
+      </button>
+
+    `
+
+    div.querySelector("button")
+    .onclick = async () => {
+
+      await supabase
+        .from("posts")
+        .update({
+          approved:true,
+          reviewed:true
+        })
+        .eq("id", post.id)
+
+      div.remove()
+    }
+
+    postsDiv.appendChild(div)
+  })
+}
+
+/* ---------- LOGIN ---------- */
+
+document.getElementById(
+"loginBtn"
+).onclick = async () => {
+
+  await supabase.auth.signInWithOAuth({
+
+    provider:"google",
+
+    options:{
+      redirectTo: window.location.href
+    }
+
+  })
+}
+
+/* ---------- LOGOUT ---------- */
+
+document.getElementById(
+"logoutBtn"
+).onclick = async () => {
+
+  await supabase.auth.signOut()
+
+  window.location.href =
+  window.location.pathname
 
 }
 
-
-div.remove()
-
-}
-
-
-
-postsDiv.appendChild(div)
-
-})
-
-}
-
-const logoutBtn =
-document.getElementById('logoutBtn')
-
-logoutBtn.onclick = async () => {
-
-await supabase.auth.signOut()
-
-location.reload()
-
-}
+/* ---------- START ---------- */
 
 checkUser()
 
-supabase.auth.onAuthStateChange(() => {
+supabase.auth.onAuthStateChange(
+  async (event, session) => {
 
-checkUser()
+    console.log(event)
 
-})
+    if(event === "SIGNED_IN"){
+
+      await checkUser()
+
+    }
+
+    if(event === "SIGNED_OUT"){
+
+      postsDiv.innerHTML =
+      "<p>יש להתחבר כדי לראות פוסטים</p>"
+
+    }
+
+  }
+)
 
 </script>
 
