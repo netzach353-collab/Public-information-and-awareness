@@ -1855,7 +1855,6 @@ id="modalContent"></div>
 
 </div>
 
-</div>
 
 <!-- דף אודות -->
 <div id="aboutPage" style="
@@ -2003,6 +2002,52 @@ supabaseUrl,
 supabaseKey
 )
 
+
+let inactivityTimer
+
+function resetInactivityTimer(){
+
+clearTimeout(inactivityTimer)
+
+inactivityTimer = setTimeout(async ()=>{
+
+const {
+data:{ user }
+} = await supabase.auth.getUser()
+
+if(user){
+
+await supabase.auth.signOut()
+
+location.reload()
+
+}
+
+}, 1000 * 60 * 30) // 30 דקות
+
+}
+
+/* EVENTS */
+
+[
+"click",
+"touchstart",
+"scroll",
+"keydown"
+].forEach(event => {
+
+document.addEventListener(
+event,
+resetInactivityTimer,
+true
+)
+
+})
+
+/* START */
+
+resetInactivityTimer()
+
 let currentUser = null
 
 async function getCurrentUser(){
@@ -2058,7 +2103,7 @@ window.closeMenu = closeMenu
 target="_blank"
 rel="noopener noreferrer"
 class="live-link">
-${url}
+${escapeHtml(url)}
 </a>
 `
 
@@ -2079,6 +2124,20 @@ let currentY = 0
 let isDragging = false
 
 postModal.addEventListener("touchstart", e => {
+
+if(
+e.target.closest("video") ||
+e.target.closest("button") ||
+e.target.closest(".post-link-card")
+){
+return
+}
+
+if(postModal.scrollTop > 0) return
+
+startY = e.touches[0].clientY
+isDragging = true
+
 
 if(postModal.scrollTop > 0) return
 
@@ -2370,6 +2429,7 @@ mediaContainer.innerHTML = `
 id="activeVideo"
 class="modal-image"
 src="${mediaUrl}"
+poster="${mediaUrl}#t=0.1"
 controls
 playsinline
 webkit-playsinline
@@ -2383,6 +2443,18 @@ background:black;
 ">
 </video>
 `
+const activeVideo =
+document.getElementById("activeVideo")
+
+activeVideo.addEventListener("loadeddata", () => {
+
+activeVideo.currentTime = 0.1
+
+activeVideo.play()
+
+activeVideo.pause()
+
+})
 
 }else{
 
@@ -2549,8 +2621,6 @@ mediaThumb.playsInline = true
 
 mediaThumb.preload = "metadata"
 
-mediaThumb.currentTime = 0.1
-
 mediaThumb.onloadedmetadata = ()=>{
 
 mediaThumb.currentTime = 0.1
@@ -2648,6 +2718,19 @@ background:black;
 </video>
 
 `
+
+const activeVideo =
+document.getElementById("activeVideo")
+
+activeVideo.addEventListener("loadeddata", () => {
+
+activeVideo.currentTime = 0.1
+
+activeVideo.play()
+
+activeVideo.pause()
+
+})
 
 }else{
 
@@ -2748,6 +2831,10 @@ viewedKey,
 
 
 function closePost(){
+    
+isDragging = false
+startY = 0
+currentY = 0
 
 postModal.style.transform =
 "translateY(100%)"
