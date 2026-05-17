@@ -864,12 +864,12 @@ transform:scale(1);
 
 <div class="back-btn">
 
-<button
-onclick="goHome()"
+<a
+href="index.html"
 class="back-link"
 >
 ❮ חזרה
-</button>
+</a>
 </div>
 
   <h2>
@@ -1119,8 +1119,8 @@ supabaseKey
 const form =
 document.getElementById("postForm")
 
-const category =
-document.getElementById("category").value
+const categoryInput =
+document.getElementById("category")
 
 const mediaInput =
 document.getElementById("media")
@@ -1157,16 +1157,7 @@ titleCounter.innerText =
 
 })
 
-function goHome(){
 
-document
-.querySelector(".page-wrap")
-.classList.add("page-exit")
-
-window.location.href =
-"index.html"
-
-}
 
 let selectedFiles = []
 
@@ -1649,6 +1640,8 @@ document.getElementById("title").value
 const content =
 document.getElementById("content").value
 
+const category =
+categoryInput.value
 
 let mediaUrls = []
 
