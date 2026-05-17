@@ -428,7 +428,14 @@ document.getElementById(
     provider:"google",
 
     options:{
-      redirectTo: window.location.href
+
+      redirectTo: window.location.href,
+
+      queryParams:{
+        access_type:'offline',
+        prompt:'select_account'
+      }
+
     }
 
   })
