@@ -1353,8 +1353,8 @@ class="bottom-item youtube">
   <div class="hero-track" id="heroTrack">
 
         <div class="hero-slide">
-      <img src="rabbi.jpg">
-      <div class="hero-text" >
+ההההההה<img src="rabbi.jpg" loading="lazy">
+      הה<div class="hero-text" >
         <span>אהבת חינם</span>
         <h2 >בית תמחוי  חלוקת אוכל לנזקקים</h2>
         <p>כל רעב ממנו יכל וכל צמה ממנו ישתה</p>
@@ -1603,6 +1603,88 @@ onclick="signInWithGoogle()"
 
 </div>
 
+<!-- LOGOUT MODAL -->
+
+<div
+class="login-modal"
+id="logoutModal"
+onclick="closeLogoutModal()"
+>
+
+<div
+class="login-card"
+onclick="event.stopPropagation()"
+style="position:relative;"
+>
+
+<button
+onclick="closeLogoutModal()"
+style="
+position:absolute;
+top:10px;
+left:10px;
+border:none;
+background:none;
+font-size:20px;
+cursor:pointer;
+"
+>
+✕
+</button>
+
+<h2>
+יציאה מהחשבון
+</h2>
+
+<p>
+האם אתה בטוח שברצונך לצאת מהחשבון?
+</p>
+
+<div
+style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:20px;
+"
+>
+
+<button
+onclick="logoutUser()"
+style="
+border:none;
+background:#dc2626;
+color:white;
+padding:12px;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer;
+"
+>
+אישור
+</button>
+
+<button
+onclick="closeLogoutModal()"
+style="
+border:none;
+background:#e5e7eb;
+color:#111827;
+padding:12px;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer;
+"
+>
+ביטול
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 <script type="module">
 
 import { createClient }
@@ -1672,10 +1754,10 @@ window.closeMenu = closeMenu
 async function loadUser(){
 
 const {
-
 data:{ user }
-
 } = await supabase.auth.getUser()
+
+/* לא מחובר */
 
 if(!user) return
 
@@ -1693,13 +1775,19 @@ user.user_metadata?.avatar_url ||
 
 "https://cdn-icons-png.flaticon.com/512/149/149071.png"
 
+/* סיידבר = יציאה */
+
 document.getElementById(
 "userName"
-).innerText = name
+).innerText = "יציאה"
+
+/* טופ בר = השם */
 
 document.getElementById(
 "userNameTop"
 ).innerText = name
+
+/* תמונות */
 
 document.getElementById(
 "userAvatar"
@@ -1732,6 +1820,30 @@ border-radius:50%;
 >
 
 `
+
+/* יציאה מהסיידבר */
+
+document.querySelector(
+"#sidebar .user-box"
+).onclick = async ()=>{
+
+await supabase.auth.signOut()
+
+window.location.reload()
+
+}
+
+/* בטופ בר פותחים באנר */
+
+document.querySelector(
+".topbar .user-box"
+).onclick = ()=>{
+
+document
+.getElementById("logoutModal")
+.classList.add("show")
+
+}
 
 }
 
@@ -1923,7 +2035,7 @@ font-size:14px;
 
 : post.media_urls?.[0]
 
-? `<img src="${post.media_urls[0]}" alt="">`
+? `<img src="${post.media_urls[0]}" loading="lazy">`
 
 : `<div class="no-image">
 👤
@@ -2281,9 +2393,16 @@ return
 }
 
 // הצליח
+
+await supabase
+.from("posts")
+.update({
+likes: currentLikes + 1
+})
+.eq("id", id)
+
 likesElement.innerText =
 currentLikes + 1
-
 }
 
 function showAboutPage(){
@@ -2367,7 +2486,7 @@ window.addEventListener("load", () => {
 
     },100)
 
-  },1500)
+  },1000)
 
 })
 
@@ -2389,15 +2508,33 @@ document
 
 }
 
-window.openLoginModal =
-openLoginModal
 
-window.closeLoginModal =
-closeLoginModal
+function closeLogoutModal(){
 
-window.signInWithGoogle =
-signInWithGoogle
+document
+.getElementById("logoutModal")
+.classList.remove("show")
 
+}
+
+async function logoutUser(){
+
+await supabase.auth.signOut()
+
+window.location.reload()
+
+}
+
+window.closeLogoutModal =
+closeLogoutModal
+
+window.logoutUser =
+logoutUser
+
+
+window.openLoginModal = openLoginModal
+window.closeLoginModal = closeLoginModal
+window.signInWithGoogle = signInWithGoogle
 window.showAboutPage = showAboutPage
 window.closeAboutPage = closeAboutPage
 window.openPost = openPost
