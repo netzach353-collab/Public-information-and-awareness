@@ -5,23 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link
 rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-/>
-<link rel="icon" href="favicon.ico">
-<title>כל הפוסטים - יראת השם</title>
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<title>הרב יוסף שובלי</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 body{
-font-family:Arial,sans-serif;
+  font-family:Arial, sans-serif;
 background:#f1f5f9;
 }
+
+/* ---------- HIDE PAGE SCROLLBAR ---------- */
 
 html,
 body{
@@ -38,96 +37,192 @@ display:none;
 
 }
 
-/* TOPBAR */
-
+/* סרגל עליון */
 .topbar{
-position:sticky;
-top:0;
-z-index:1000;
-height:60px;
-background:#111827;
-color:white;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 15px;
-box-shadow:0 4px 12px rgba(0,0,0,.15);
+  position:sticky;
+  top:0;
+  z-index:1000;
+  height:60px;
+  background:#111827;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 15px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
 .logo{
-font-size:22px;
-font-weight:bold;
-    font-family: "Noto Rashi Hebrew", serif;
+  font-family: "Noto Rashi Hebrew", serif;
+  font-size:22px;
+  font-weight:bold;
 }
 
 .menu-btn{
-background:#ffffff1a;
-color:white;
-border:none;
-padding:10px 14px;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
+  background:#88a8ee3a;
+  color:rgb(255, 255, 255);
+  border:none;   
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
 }
 
-/* OVERLAY */
-
 .overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.45);
-opacity:0;
-visibility:hidden;
-transition:.25s;
-z-index:1100;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  opacity:0;
+  visibility:hidden;
+  transition:.25s;
+  z-index:1100;
 }
 
 .overlay.show{
-opacity:1;
-visibility:visible;
+  opacity:1;
+  visibility:visible;
 }
 
-/* SIDEBAR */
-
+/* סרגל צד */
 .sidebar{
-position:fixed;
-top:0;
-right:-290px;
-width:280px;
-height:100%;
-background:white;
-z-index:1200;
-transition:.25s;
-box-shadow:-10px 0 20px rgba(0,0,0,.15);
-padding:20px;
-overflow:auto;
--ms-overflow-style:none;
-
+  position:fixed;
+  top:0;
+  right:-290px;
+  width:280px;
+  height:100%;
+  background:white;
+  z-index:1200;
+  transition:.25s;
+  box-shadow:-10px 0 20px rgba(0,0,0,.15);
+  padding:20px;
+  overflow:auto;
 }
 
 .sidebar.show{
-right:0;
+  right:0;
 }
 
 .side-link{
-display:block;
-padding:12px;
-background:#f1f5f9;
-border-radius:10px;
-margin-bottom:10px;
-text-decoration:none;
-color:#111;
+  display:block;
+  padding:12px;
+  background:#f1f5f9;
+  border-radius:10px;
+  margin-bottom:10px;
+  text-decoration:none;
+  color:#111;
 }
 
-.close-btn{
-background:#e5e7eb;
-border:none;
-padding:7px 12px;
-border-radius:8px;
-cursor:pointer;
-margin-bottom:15px;
+
+/* תוכן */
+.container{
+  padding-bottom: 20px;
+  height: auto;
+  position: relative;
+  
 }
 
+.title{
+  color: rgb(29, 83, 191);
+  font-size: 15px;
+  padding: 0 10px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.recipes{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding-bottom:10px;
+  scroll-behavior:smooth;
+  padding: 5px 20px 15px 20px;
+  border-bottom: solid 1px #ccc;
+  margin-top: 15px;
+}
+
+.recipes{
+  -ms-overflow-style:none;
+  scrollbar-width:none;
+}
+
+.recipes::-webkit-scrollbar{
+  display:none;
+}
+/* שלא יתכווצו */
+.recipes .gol{
+  flex:0 0 auto;
+}
+  .card {
+    background: none;
+    width: 130px;
+    height: 200px;
+    text-align: center;
+    overflow:hidden;
+    padding: 10px;
+    border-radius: 13px;
+    position: relative;
+  }
+  
+  .card img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+   border-radius: 5px;
+  }
+
+  .card > div:first-child{
+  margin-bottom:5px;
+}
+  
+    .card h3 {
+   max-width: 90%;    /* מצמצם את רוחב הטקסט */
+  position: relative;
+  top: 0;
+  right: 5px;
+  font-size: 12px;
+  color: #1a1a1a;
+
+  text-align: right;
+  direction: rtl;
+
+  font-weight: 500;
+  line-height: 1.5;
+
+  /* שבירת מילים */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
+  /* חיתוך ל־2 שורות */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+.tag{
+    display: flex;
+    font-size: 15px;
+    font-weight: bolder;
+    position: absolute;
+    bottom: 0;
+      margin-bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+background: rgba(191, 191, 208, 0.25);
+width: 100%;
+color: #3b4171;
+    justify-content: center;
+}
+
+  .external-line1{
+    border: solid 0.3px #a29e9edf;
+    background: white;
+    border-radius: 13px;
+  }
+  
 /* ACTIONS */
 
 .actions1{
@@ -135,11 +230,6 @@ display:grid;
 grid-template-columns:repeat(3,1fr);
 }
 
-/* הכפתור הפעיל */
-.actions1 span.active1{
-background:rgba(126, 127, 130, 0.142);
-color:rgb(0, 0, 0);
-}
 .actions1 span{
 padding:12px;
 border-left:solid 1px #d1d5db;
@@ -149,520 +239,360 @@ text-align:center;
 cursor:pointer;
 font-weight:bold;
 }
+  
 
-
-/* POSTS */
-
-.container{
-padding:0 12px 20px;
-margin-bottom: 40px;
-}
-
-.posts-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-}
-
-/* CARD */
-
-.card{
-background:white;
-border-radius:18px;
+.hero-wrap{
+position:relative;
+width:100%;
+height:260px;
 overflow:hidden;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
-cursor:pointer;
+border-radius:0;
+margin:0;
+margin-bottom: 40px;
+-webkit-overflow-scrolling: touch;
+}
+
+.hero-track{
+display:flex;
+height:100%;
+transition:transform .45s ease;
+will-change:transform;
+
+direction:ltr;
+}
+
+.hero-slide{
+flex:0 0 100%;
+height:100%;
+position:relative;
+}
+
+.hero-slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.hero-text{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.45);
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero-text span{
+background:#bd3434;
+padding:6px 12px;
+border-radius:999px;
+margin-bottom:10px;
+font-size:13px;
+}
+
+.hero-text h2{
+font-size:28px;
+margin-bottom:10px;
+}
+
+.hero-text p{
+font-size:15px;
+}
+
+
+.title{
+  cursor:pointer;
+}
+
+
+.post-content{
+position: relative;
+ right: 8px;
+   top: 6px !important;
+display:-webkit-box;
+
+-webkit-line-clamp:3;
+-webkit-box-orient:vertical;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+  color: #374151 !important;
+line-height:1.5;
+
+font-size:12px;
+
+text-align:right;
+
+word-break:break-word;
+
+font-size:14px !important;
+}
+
+.recipes{
+
+cursor:grab;
+
+}
+
+.recipes.dragging{
+
+cursor:grabbing;
+
+user-select:none;
+
+}
+
+img{
+
+-webkit-user-drag:none;
+
+user-select:none;
+
+pointer-events:none;
+
+}
+
+
+.card img,
+.hero-slide img{
+
+-webkit-user-drag:none;
+
+user-select:none;
+
+pointer-events:none;
+
+}
+
+.line-more1 {
+  width: 100%;
+  border:none;
+  height:1px;
+  background: #ccc;
+}
+
+
+.line22{
+  display: flex;
+  align-items: center;
+}
+
+.close-btn{
+  background:#d8d5d592;
+  color:rgb(79, 78, 78);
+  border:none;
+  padding: 5px 8px;
+  border-radius:  3px;
+  font-size:16px;
+  cursor:pointer;
+  margin-bottom: 15px;
+
+}
+
+
+
+.title{
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.rabbi-wrap{
+position:relative;
+overflow:hidden;
+}
+
+.rabbi48{
+width:100%;
+display: block;
+}
+
+.blur-half{
+position:absolute;
+top:0;
+right:0;
+
+width:85%;
+height:100%;
+
+backdrop-filter:blur(1.5px);
+-webkit-backdrop-filter:blur(1.5px);
+
+background:rgba(255, 255, 255, 0.109);
+}
+
+  .no-image{
+
+  width: 100px;
+    height: 100px;
+    object-fit: cover;
+   border-radius: 5px;
+background:#e2e8f0;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:40px;
+
+color:#64748b;
+
+margin:auto;
+
+}
+
+/* טלפון סופר קטן */
+
+@media(max-width:360px){
+
+.hero-wrap{
+height:190px;
+}
+
+}
+
+/* מחשב גדול */
+
+@media(min-width:900px){
+
+.hero-wrap{
+height:650px;
+max-width:1400px;
+margin:auto;
+
+}
+
+.hero-wrap p,
+.hero-wrap h2{
+
+font-size:40px;
+
+}
+
+.hero-wrap span{
+  font-size: 20px;
+}
+
+.blur-half{
+position:absolute;
+top:0;
+right:0;
+
+width:85%;
+height:100%;
+
+backdrop-filter:blur(4.5px);
+-webkit-backdrop-filter:blur(4.5px);
+
+background:rgba(255, 255, 255, 0.109);
+}
+
+}
+
+
+
+.bottom-bar{
+
+position:relative;
+
+width:100%;
+
+padding:18px 10px;
+
+background:linear-gradient(
+180deg,
+#161d28,
+#1b263e
+) !important;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-wrap:wrap;
+
+gap:18px;
+
+border-top:1px solid #e5e7eb;
+
+margin-top:30px;
+}
+
+.bottom-bar{
+
+position:relative;
+
+width:100%;
+
+padding:18px 10px;
+
+background:rgb(0, 0, 0);
+
+display:flex;
+justify-content:center;
+align-items:center;
+flex-wrap:wrap;
+
+gap:20px;
+
+border-top:1px solid #e5e7eb;
+
+margin-top:30px;
+}
+
+.bottom-item{
+
+  margin-bottom: 50px ;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+text-decoration:none;
+
+gap:7px;
+
+font-size:12px;
+font-weight:bold;
+
+min-width:70px;
+
 transition:.2s;
 }
 
-.card:active{
-transform:scale(.98);
+.bottom-item i{
+font-size:26px;
 }
 
-.card img{
-width:100%;
-height:130px;
-object-fit:contain;
-display:block;
-background:black;
-   
+.bottom-item:active{
+transform:scale(.92);
 }
 
-.card-body{
-padding:10px;
+.whatsapp{
+color:#25D366;
 }
 
-.tag{
-font-size:16px;
-font-weight:bold;
-color:#111827;
-margin-bottom:6px;
-
-display:-webkit-box;
--webkit-line-clamp:1;
--webkit-box-orient:vertical;
-
-overflow:hidden;
-
+.facebook{
+color:#1877F2;
 }
 
-.post-content{
-font-size:14px;
-line-height:1.6;
-color:#4b5563;
-text-align:right;
-
-display:-webkit-box;
--webkit-box-orient:vertical;
-
-overflow:hidden;
-text-overflow:ellipsis;
+.email{
+color:#ea4335;
 }
 
-/* MODAL */
-
-.post-modal{
-position:fixed;
-inset:0;
-background:#ede9e9;
-z-index:3000;
-overflow:auto;
-transform:translateY(100%);
-transition:.3s;
-}
-
-.post-modal.show{
-transform:translateY(0);
-}
-
-.modal-image{
-
-width:100%;
-
-height:280px;
-
-object-fit:contain;
-
-background:black;
-
-margin-top:80px;
-
-}
-
-
-.modal-close{
-position:fixed;
-top: 10px;
-left:15px;
-width:42px;
-height:42px;
-border:none;
-border-radius:50%;
-background:white;
-font-size:20px;
-cursor:pointer;
-box-shadow:0 4px 10px rgba(0,0,0,.15);
-z-index:5000;
-}
-
-.modal-close{
-position:fixed;
-top:10px;
-left:15px;
-
-width:42px;
-height:42px;
-
-border:none;
-border-radius:50%;
-
-background:white;
-
-font-size:20px;
-
-cursor:pointer;
-
-box-shadow:0 4px 10px rgba(0,0,0,.15);
-
-z-index:5000;
-}
-
-/* MOBILE */
-
-@media(max-width:700px){
-
-.modal-close{
-position: absolute;
-top:12px;
-left: 15%;
-
-transform:translateX(-50%);
-
-width:auto;
-height:auto;
-
-padding:0;
-
-border-radius:0;
-
-display:flex;
-align-items:center;
-gap:8px;
-
-font-size:14px;
-font-weight:bold;
-
-background:none;
-
-backdrop-filter:none;
-
-box-shadow:none;
-
-border:none;
-
-}
-
-/* HIDE X */
-
-.modal-close{
-
-color:transparent;
-
-}
-
-/* NEW CONTENT */
-
-.modal-close::before{
-
-content:"\f078   לסגירה";
-
-font-family:"Font Awesome 6 Free";
-
-font-weight:900;
-
-background: none;
-
-border-radius:10px;
-
-padding:10px;
-
-color:#000;
-
-font-size:14px;
-
-}
-}
-/* DESKTOP */
-
-@media(min-width:800px){
-
-.posts-grid{
-grid-template-columns:repeat(4,1fr);
-}
-
-.card img{
-height:180px;
-}
-
-}
-/* IMAGE BAR */
-
-.image-bar-wrapper {
-    background: #ffffff;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.image-bar {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 14px 20px;
-    scrollbar-width: none;
-}
-
-.image-bar::-webkit-scrollbar {
-    display: none;
-}
-
-.image-thumb {
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
-    border-radius: 12px;
-    cursor: pointer;
-    flex: none;
-    opacity: 0.6;
-    transition: all 0.3s ease;
-}
-
-.image-thumb:hover {
-    opacity: 0.85;
-}
-
-.image-thumb.active {
-    border: 2px solid #3b3a3a !important;
- 
-    opacity: 1;
-    box-shadow: 0 2px 12px rgba(176, 141, 87, 0.25);
-}
-.modal-body {
-    padding: 0 24px 100px;
-    max-width: 720px;
-    margin: 0 auto;
-    overflow-x: hidden;
-}
-
-
-
-.modal-title {
-    font-family: 'Frank Ruhl Libre', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1A1A1A;
-    line-height: 1.5;
-    text-align: right;
-    margin-bottom: 0;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(176, 141, 87, 0.2);
-}
-
-
-
-.modal-content {
-    font-family: 'Assistant', sans-serif;
-    font-size: 1.1rem;
-    color: #a39259;
-    white-space: pre-wrap;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    max-width: 100%;
-    overflow-x: hidden;
-    margin-bottom: 60px;
-    text-align: right;
-padding: 0 20px;
-margin-top: 30px;
-    background: linear-gradient(135deg, #ffffff 0%, #fdfaf6 100%);
-    border-radius: 20px;
-    border: 1px solid rgba(176, 141, 87, 0.12);
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.03),
-        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
-    position: relative;
-}
-
-/* קישוט עדין בפינה */
-.modal-content::before {
-    content: '❝';
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    font-size: 2.5rem;
-    color: rgba(176, 140, 87, 0.781);
-    font-family: Georgia, serif;
-    line-height: 1;
-    pointer-events: none;
-}
-
-@media (max-width: 600px) {
-    .modal-body {
-        padding: 0 16px 80px;
-        
-    }
-
-    .modal-title{
-margin:10px auto !important;
-padding-bottom:0;
-
-border:none;
-
-width:100%;
-
-min-width:0;
-
-}
-
-    .modal-content {
-    padding: 0 20px;
-    }
-}
-  
-  .live-link{
-color:#2563eb;
-font-weight:bold;
-text-decoration:underline;
-word-break:break-word;
-}
-
-.live-link:hover{
-color:#1d4ed8;
-}
-
-.post-links{
-display:flex;
-flex-direction:column;
-gap:12px;
-margin-top:20px;
-}
-
-.post-link-card{
-display:flex;
-align-items:center;
-gap:12px;
-padding:14px;
-border-radius:16px;
-background:white;
-border:1px solid #e5e7eb;
-text-decoration:none;
-}
-
-.post-link-icon{
-width:46px;
-height:46px;
-border-radius:12px;
-background:#111827;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:20px;
-flex:none;
-}
-
-.post-link-title{
-font-weight:bold;
-color:#111827;
-margin-bottom:4px;
-}
-
-.post-link-url{
-font-size:13px;
-color:#6b7280;
-word-break:break-all;
-}
-
-
-
-.modal-topbar{
-position:fixed;
-top:0;
-right:0;
-left:0;
-height:60px;
-
-display:flex;
-align-items:center;
-gap:12px;
-
-padding:0 16px;
-
-background:rgba(255,255,255,.9);
-backdrop-filter:blur(10px);
-
-z-index:5000;
-
-border-bottom:1px solid #e5e7eb;
-}
-
-.modal-post-title{
-font-size:16px;
-font-weight:bold;
-
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-
-flex:1;
-}
-
-.links1{
-
-display:grid;
-grid-template-columns:repeat(3,1fr);
-
-border-top:solid 1px #d1d5db;
-border-bottom:solid 1px #d1d5db;
-
-margin-top: 40px;
-padding:10px 0;
-position: relative;
-gap:8px;
-
-}
-
-.links1 .bottom-item{
-
-margin-bottom:0;
-
-min-width:auto;
-
-padding:5px 4px;
-
-font-size:11px;
-
-display:flex;
-flex-direction:column;
-
-align-items:center;
-justify-content:center;
-
-text-align:center;
-
-}
-
-.links1 .bottom-item i{
-
-font-size:20px;
-
-margin-bottom:5px;
-margin-top: 40px;
-}
-
-.links1 .bottom-item span{
-
-font-size:10px;
-
-line-height:1.2;
-
-}
-
- 
- /* TIKTOK */
-.tiktok i,
-.tiktok span{
-color:#000000;
-}
-
-/* WEBSITE */
-.website i,
-.website span{
-color:#2563eb;
-}
-
-/* WHATSAPP */
-.whatsapp i,
-.whatsapp span{
-color:#22c55e;
-}
-
-/* FACEBOOK */
-.facebook i,
-.facebook span{
-color:#1877f2;
-}
-
-/* TELEGRAM */
-.instagram i,
-.instagram span{
+.telegram{
 color:#229ED9;
 }
 
-/* YOUTUBE */
-.youtube i,
-.youtube span{
-color:#ff0000;
+.share{
+color:#111827;
 }
 
 .iconser1{
+
 display:flex;
 align-items:center;
 justify-content:center;
@@ -731,627 +661,364 @@ transform:scale(.92);
 
 }
 
-/* ====================== PAGE TITLE ====================== */
+.fa-youtube{
+  color: #ff0000;
+}
 
-.page-title{
+.website{
+color:#ffffff;
+}
 
-font-family:'Frank Ruhl Libre',serif;
+.instagram{
+color:#7300ff;
+}
 
-font-size:clamp(28px,4vw,42px);
+.tiktok{
+color:#ffffff;
+}
 
-font-weight:500;
+.holy-text{
 
-color:#1f1f1f;
+display:block;
 
-letter-spacing:2px;
+width:100%;
 
 text-align:center;
 
-padding:30px 38px 26px;
+margin-top:18px;
 
-margin:0 auto 55px;
+padding:0 15px;
 
-max-width:1100px;
+font-size:14px;
 
-position:relative;
+line-height:1.9;
+
+font-weight:bold;
+
+color:#ffffff;
+
+opacity:.92;
+
+margin-bottom: 50px;
+
+background:none;
+border-radius: 18px;
+}
+
+.share-btn{
+border:none;
+background:none;
+cursor:pointer;
 
 display:flex;
 align-items:center;
 justify-content:center;
 
-/* רקע יותר נקי */
+color:#d1d5db;
 
-background:
-linear-gradient(
-180deg,
-#ebdfae 0%,
-#e2e2dfb2 50%,
-#ffffffb2 100%
-);
+width:42px;
+height:25px;
 
-/* עומק עדין יותר */
+margin-bottom:0; 
+}
 
-box-shadow:
-0 10px 30px rgba(176,141,87,.10),
-0 2px 8px rgba(0,0,0,.04);
+.links1{
 
-border:
-1px solid rgba(176,141,87,.10);
+display:grid;
+grid-template-columns:repeat(3,1fr);
 
-overflow:hidden;
+border-top:solid 1px #d1d5db;
+border-bottom:solid 1px #d1d5db;
 
-transition:
-transform .35s ease,
-box-shadow .35s ease;
+margin-top: 40px;
+padding:10px 0;
+position: relative;
+gap:8px;
 
 }
 
-/* Glow עדין */
+.links1 .bottom-item{
 
-.page-title::before{
+margin-bottom:0;
 
-content:"";
+min-width:auto;
 
-position:absolute;
+padding:5px 4px;
 
-inset:0;
+font-size:11px;
 
-background:
-radial-gradient(
-circle at top,
-rgba(176,141,87,.08),
-transparent 65%
-);
+display:flex;
+flex-direction:column;
 
-pointer-events:none;
+align-items:center;
+justify-content:center;
+
+text-align:center;
 
 }
 
-/* קו זהב נקי */
+.links1 .bottom-item i{
 
-.page-title::after{
+font-size:20px;
 
-content:"";
+margin-bottom:5px;
+margin-top: 40px;
+}
+
+.links1 .bottom-item span{
+
+font-size:10px;
+
+line-height:1.2;
+
+}
+
+ .color1, .color12{
+color: #6c03ff;
+ }
+.color2, .color13{
+color: #3954ab;
+ }
+
+.side-link{
+  display:block;
+  padding:12px;
+  background:#f1f5f9;
+  border-radius:10px;
+  margin-bottom:10px;
+  text-decoration:none;
+  color:#111;
+
+  line-height:1.6;
+  white-space:normal;
+}
+
+#siteLoader{
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: linear-gradient(135deg,#0f172a,#1e3a8a,#312e81);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  overflow: hidden;
+}
+
+.loader-bg{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(59,130,246,.35), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(139,92,246,.30), transparent 40%);
+  animation: pulseBg 4s ease infinite;
+}
+
+.spinner{
+  width: 72px;
+  height: 72px;
+  animation: rotate 1s linear infinite;
+  z-index: 2;
+}
+
+.spinner circle{
+  stroke: white;
+  stroke-linecap: round;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 90;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+.loaderText{
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  z-index: 2;
+  animation: fadeText 1.5s ease-in-out infinite;
+}
+
+/* אנימציות */
+
+@keyframes rotate{
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash{
+  0%{
+    stroke-dashoffset: 120;
+  }
+
+  50%{
+    stroke-dashoffset: 30;
+  }
+
+  100%{
+    stroke-dashoffset: 120;
+  }
+}
+
+@keyframes fadeText{
+  0%,100%{
+    opacity: .5;
+  }
+
+  50%{
+    opacity: 1;
+  }
+}
+
+@keyframes pulseBg{
+  0%,100%{
+    transform: scale(1);
+  }
+
+  50%{
+    transform: scale(1.05);
+  }
+}
+
+.like-box{
+display:flex;
+align-items:center;
+gap:6px;
 
 position:absolute;
+top:8px;
+left:8px;
 
-bottom:0;
-left:50%;
+background:rgba(255,255,255,.92);
 
-transform:translateX(-50%);
-
-width:85px;
-height:2px;
+padding:4px 10px;
 
 border-radius:999px;
 
-background:
-linear-gradient(
-90deg,
-transparent,
-#c1b5a3,
-transparent
-);
+font-size:12px;
+font-weight:bold;
 
-opacity:.9;
+color:#252684;
 
+box-shadow:0 2px 8px rgba(0,0,0,.12);
+
+z-index:5;
 }
 
-/* טקסט */
-
-.page-title span{
-
-position:relative;
-
-z-index:2;
-
-text-shadow:
-0 1px 2px rgba(176,141,87,.06);
-
+.like-box i{
+font-size:13px;
 }
 
-/* hover קטן ואלגנטי */
-
-.page-title:hover{
-
-transform:translateY(-2px);
-
-box-shadow:
-0 14px 36px rgba(176,141,87,.14),
-0 4px 10px rgba(0,0,0,.05);
-
+.text-for-cards1{
+font-size:23px;
+color: rgba(0, 0, 0, 0.842);
+font-weight: 700;
+margin-top: 5px;
+margin-right: 10px;
+display: flex;
+justify-content: center;
 }
 
-/* אנימציה רכה */
-
-.page-title{
-
-animation:titleFade .8s ease;
-
+.actions1 span.active1{
+background:rgba(126, 127, 130, 0.142);
+color:rgb(0, 0, 0);
 }
 
-@keyframes titleFade{
-
-from{
-
-opacity:0;
-transform:translateY(18px);
-
+.like-box{
+cursor:pointer;
+transition:.2s;
 }
 
-to{
-
-opacity:1;
-transform:translateY(0);
-
+.like-box:active{
+transform:scale(.92);
 }
 
-}
+/* USER BOX */
+/* USER LOGIN ICON */
 
-/* ====================== PAGINATION ====================== */
-
-.pagination{
+.user-box{
 
 display:flex;
+flex-direction:column;
 
-justify-content:center;
 align-items:center;
+justify-content:center;
 
-gap:10px;
+gap:2px;
 
-margin-top:24px;
-margin-bottom:34px;
+cursor:pointer;
 
-flex-wrap:wrap;
+width:fit-content;
 
-direction:ltr;
+background:none;
 
+padding:0;
+
+margin:0;
+
+transition:.2s;
 }
 
-/* כפתורים */
+.user-box:active{
+transform:scale(.94);
+}
 
-.pagination button{
-
-border:none;
-
-background:#faf6ef !important;
-
-color:#2a2a2a !important;
+.user-avatar{
 
 width:42px;
 height:42px;
 
-border-radius:13px;
-
-cursor:pointer;
-
-font-size:15px;
-font-weight:500;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-box-shadow:
-0 4px 10px rgba(176,141,87,.10);
-
-transition:
-all .28s ease;
-
-}
-
-/* hover */
-
-.pagination button:hover{
-
-background:#f4ebdd !important;
-
-transform:translateY(-2px);
-
-box-shadow:
-0 8px 18px rgba(176,141,87,.18);
-
-}
-
-/* active */
-
-.pagination button.active{
-
-background: #e8ddaf !important;
-
-color:#ffffff !important;
-
-font-weight:600;
-
-box-shadow:
-0 8px 20px rgba(176,141,87,.24);
-
-}
-
-/* מובייל */
-
-@media(max-width:640px){
-
-.page-title{
-
-padding:24px 18px 20px;
-
-margin-bottom:40px;
-
-font-size:clamp(24px,5vw,34px);
-
-letter-spacing:1px;
-
-}
-
-.page-title::after{
-
-width:70px;
-
-}
-
-.pagination button{
-
-width:38px;
-height:38px;
-
-font-size:14px;
-
-}
-
-}
-
-.image-bar-wrapper{
-position:relative;
-}
-
-
-
-.thumb-wrapper{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:6px;
-flex:none;
-}
-
-.thumb-text{
-font-size:12px;
-font-weight:bold;
-color:#374151;
-text-align:center;
-
-}
-
-.image-thumb{
-width:60px;
-height:60px;
-}
-
-.image-bar-wrapper{
-position:relative;
-}
-
-.bar-text{
-display:inline-flex;
-
-align-items:center;
-justify-content:center;
-
-padding:8px 16px;
-
-margin-bottom:22px;
-
-border-radius:999px;
-
-font-size:13px;
-font-weight:700;
-
-letter-spacing:.5px;
-
-color:#8b6b3f;
-
-background:
-linear-gradient(
-180deg,
-#fffdf8,
-#f7f1e7
-);
-
-border:
-1px solid rgba(176,141,87,.18);
-
-box-shadow:
-0 4px 12px rgba(176,141,87,.08);
-
-    margin-bottom: 12px;
-    margin-top: 36px;
-    opacity: 0.8;
-}
-
-
-.more-content-tag{
-
-white-space:nowrap;
-padding:5px 16px;
-position: absolute;
-top: 10px;
-right: 10px;
-
-
-font-size:13px;
-font-weight:700;
-
-
-color:#000000;
-
-    margin-top: 5px;
-    opacity: 0.8;
-  }
-
-
-.more-content-tag2 {
-border-bottom: 1px solid rgba(176, 140, 87, 0.382);
-}
-/* קו קטן ליד */
-
-.bar-text::before{
-
-content:"";
-
-width:8px;
-height:8px;
-
 border-radius:50%;
-
-background:#b08d57;
-
-margin-left:8px;
-
-opacity:.9;
-
-}
-
-.border-bottom-for{
-display:grid;
-
-grid-template-columns:
-1fr auto auto;
-
-align-items:center;
-
-gap:10px;
-
-border-bottom:
-1px solid rgba(176,141,87,.2);
-margin-top: 20px;
-}
-
-.card-media{
-position:relative;
-width:100%;
-height:130px;
-overflow:hidden;
-background:rgb(0, 0, 0);
-}
-
-.video-icon{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-
-width:45px;
-height:45px;
-
-border-radius:50%;
-
-background:rgba(0, 0, 0, 0.49);
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-color:white;
-font-size:18px;
-
-pointer-events:none;
-
-backdrop-filter:blur(4px);
-}
-
-.endallcon{
-  border: solid 1px #00000026;
-}
-
-.thumb-text.active{
-color:#3b3a3a;
-font-size: 16px;
-}
-
-.filter-btn{
-
-width:100%;
-
-height:52px;
-
-border:none;
-
-border-radius:16px;
-
-background:#111827;
-
-color:white;
-
-font-size:16px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-margin-bottom:14px;
-
-}
-
-.filter-menu{
-display: none;
-
-flex-direction:column;
-
-gap:10px;
 
 background:white;
 
-padding:14px;
+border:solid 1px #d1d5db;
 
-border-radius:18px;
-
-margin-bottom:18px;
-
-box-shadow:
-0 4px 18px rgba(0,0,0,.08);
-
-}
-
-.filter-menu.show{
-
-display:flex;
-
-}
-
-
-.filter-menu button{
-
-height:48px;
-
-border:none;
-
-border-radius:14px;
-
-background:#f1f5f9;
-
-font-size:15px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.filter-menu button:hover{
-
-background:#111827;
-
-color:white;
-
-}
-
-.top-like-box{
 display:flex;
 align-items:center;
-gap:6px;
-justify-content: center;
-background:#fff5f5;
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-padding:7px 14px;
+justify-content:center;
 
-border-radius:999px;
-
-color:#ef4444;
-
-font-size:14px;
-font-weight:bold;
-
-border:1px solid rgba(239,68,68,.12);
+box-shadow:0 2px 8px rgba(0,0,0,.06);
 }
 
-.top-like-box i{
-font-size:15px;
+.user-avatar i{
+
+font-size:18px;
+
+color:#6b7280;
 }
 
-.post-tags-row{
+.user-info{
+
 display:flex;
 align-items:center;
-gap:8px;
-
-flex-wrap:wrap;
-
-margin-bottom:8px;
+justify-content:center;
 }
 
-.mini-tag{
-display:flex;
-align-items:center;
-gap:5px;
-
-padding:5px 10px;
-
-border-radius:999px;
+.user-info span{
 
 font-size:12px;
+
 font-weight:bold;
-}
 
-.views-tag{
-background:#f3f4f6;
 color:#374151;
+
+text-align:center;
+
+max-width:70px;
+
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
 }
 
-.likes-tag{
-background:#eff6ff;
-color:#2563eb;
-}
-
-.mini-tag i{
-font-size:12px;
-}
-
-.post-top-tags{
-display:flex;
-align-items:center;
-gap:10px;
-flex-wrap:wrap;
-
-margin-top:0;
-margin-bottom:0;
-}
-
-
-
-.mini-tag{
-display:flex;
-align-items:center;
-gap:6px;
-
-padding:8px 14px;
-
-border-radius:999px;
-
-font-size:13px;
-font-weight:bold;
-}
-
-.views-tag{
-background:#f3f4f6;
-color:#374151;
-}
-
-.likes-tag{
-background:#eff6ff;
-color:#2563eb;
-}
-
-.mini-tag i{
-font-size:13px;
-}
+/* LOGIN MODAL */
 
 .login-modal{
 
 position:fixed;
+
 inset:0;
 
 background:rgba(0,0,0,.45);
@@ -1445,154 +1112,64 @@ opacity:1;
 }
 }
 
-.likes-tag:active{
-transform:scale(.95);
-}
+.bar1-in-s{
 
-/* ================= DESKTOP FIXES ================= */
+display:flex;
 
-@media (min-width: 900px){
+grid-template-columns:auto auto;
 
-/* המודל עצמו */
-.post-modal{
+align-items:center;
 
-background:#e9e6e1;
+gap:30px;
 
-}
+margin-bottom:15px;
 
-#postTags{
+padding-bottom:10px;
 
-max-width:500px;
-
-margin:0 auto;
-
-padding-top:0;
-
-padding-bottom:0;
+border-bottom:solid .3px #d1d5db;
 
 }
 
-/* התגיות עצמן */
+/* USER BOX בתוך הטופ בר */
 
-#postTags > div{
+.topbar .user-box{
 
-margin-top:0 !important;
-
-padding-top:0 !important;
+min-width:60px;
 
 }
 
-.border-bottom-for{
+.topbar .user-avatar{
 
-margin-bottom:0 !important;
-
-padding-bottom:0 !important;
-
-}
-
-/* אזור המדיה */
-#mediaContainer{
-
-max-width:900px;
-
-margin:0 auto;
-background: none;
+width:20px;
+height:20px;
 
 }
 
-/* הווידאו / תמונה */
-.modal-image{
-
-max-width:500px;
+.topbar .user-avatar img{
 
 width:100%;
+height:100%;
+object-fit:cover;
 
-height:520px;
-
-margin:90px auto 0;
-
-display:block;
-
-background:none;
-border-radius: 18px;
+border-radius:50%;
 
 }
 
-/* תוכן כללי */
-.modal-body{
+.topbar .user-info span{
 
-max-width:500px;
+color:white;
 
-margin:0 auto;
+font-size:10px;
 
-
-}
-
-
-/* התוכן של הפוסט */
-.modal-content{
-
-max-width:500px;
-
-margin:0 auto ;
-margin-bottom: 30px;
-
-
-font-size:18px;
+max-width:55px;
 
 }
 
-/* תגיות */
-#postTags{
-max-width:500px;
-margin:0 auto;
-margin-bottom: 30px;
-
-}
-
-/* שורת הכותרת */
-.border-bottom-for{
-
-max-width:500px;
-
-margin:0 auto ;
-
-
-}
-
-/* פס התמונות */
-.image-bar-wrapper{
-
-max-width:500px;
-border-radius: 10px;
-margin:0 auto;
-
-}
-
-.image-bar{
-
-justify-content:center;
-
-}
-
-/* קישורים */
-.post-links{
-
-max-width:500px;
-
-margin:25px auto 0;
-
-}
-
-
-
-/* טופ בר */
-.modal-topbar{
-
-padding:0 30px;
-
-}
-
+.img1{
+font-size: 12px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -1601,16 +1178,26 @@ padding:0 30px;
 
 <body>
 
-<!-- TOPBAR -->
+  <div id="siteLoader">
+  <div class="loader-bg"></div>
 
+  <svg class="spinner" viewBox="0 0 50 50">
+    <circle
+      cx="25"
+      cy="25"
+      r="20"
+      fill="none"
+      stroke-width="4"
+    />
+  </svg>
+
+  <div class="loaderText">טוען אתר... ״בסייעתא דשמיא״</div>
+</div>
+
+<!-- סרגל עליון -->
 <div class="topbar">
-
-<button class="menu-btn"
-onclick="openMenu()">
-☰ 
-</button>
-
-<div class="iconser1">
+  <button class="menu-btn" onclick="openMenu()">☰ </button>
+  <div class="iconser1">
    <button
 onclick="shareSite()"
 class="bottom-item share-btn">
@@ -1619,90 +1206,77 @@ class="bottom-item share-btn">
 
 </button>
  <span>שתף אותנו</span>
+ 
 </div>
 
-<div class="logo">
+<!-- TOP BAR USER -->
+
+<div class="user-box" onclick="openLoginModal()">
+
+<div class="user-avatar" id="userAvatarTop">
+<i class="fa-regular img1 fa-user"></i>
+</div>
+
+<div class="user-info">
+<span id="userNameTop">
+כניסה
+</span>
+</div>
+
+</div>
+
+
+<div class="logo" id="secretAdminBtn">
 ״בסייעתא דשמיא״
 </div>
+</div>
 
+<!-- רקע -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- סרגל צד -->
+<div class="sidebar" id="sidebar">
+  <div class="bar1-in-s">
+  <div class="btn3">
+  <button class="close-btn" onclick="closeMenu()">סגירה</button>
+</div>
+
+<!-- USER BOX -->
+
+<div class="user-box" onclick="openLoginModal()">
+
+<div class="user-avatar" id="userAvatar">
+<i class="fa-regular fa-user"></i>
+</div>
+
+<div class="user-info">
+
+<span id="userName">
+כניסה
+</span>
+</div>
+</div>
 
 </div>
 
-<!-- OVERLAY -->
 
-<div class="overlay"
-id="overlay"
-onclick="closeMenu()"></div>
-
-<!-- SIDEBAR -->
-
-<div class="sidebar"
-id="sidebar">
-
-<button class="close-btn"
-onclick="closeMenu()">
-סגירה
-</button>
-
-<a href="index.html"
-class="side-link">
-דף הבית
+  <a href="#" class="side-link">דף הבית</a>
+<a href="upload.html" class="side-link">
+העלת פוסט לדף האתר
 </a>
-
 <a href="posts.html"
 class="side-link">
 כל הפוסטים
 </a>
 
-<a href="upload.html"
-class="side-link">
-העלת פוסט לדף האתר
-</a>
-
 <a href="developer-notes.html"
 class="side-link">
-הערות למפתחים
+הערות/תלונות
 </a>
-<a href="#"
-class="side-link"
-onclick="showAboutPage()">
+
+<a href="#" class="side-link" onclick="showAboutPage()">
 אודות
 </a>
-
-<button
-class="filter-btn"
-onclick="toggleFilters()"
->
-חיפוש פוסטים בנושאים
-</button>
-
-<div
-class="filter-menu"
-id="filterMenu"
->
-
-<button onclick="loadCategory('all')">
-הכל
-</button>
-
-<button onclick="loadCategory('תרומות לאוכלוסיות חלשות ולחברה')">
-תרומות לאוכלוסיות חלשות ולחברה
-</button>
-
-<button onclick="loadCategory('סיפורי הצלחות אישיות')">
-סיפורי הצלחות אישיות
-</button>
-
-
-<button onclick="loadCategory('פוסטים אודות הוצאות ספרים')">
-     פוסטים אודות הוצאות ספרים 
-</button>
-
-<button onclick="loadCategory('פוסט כללי')">
-פוסטים כללים
-</button>
-
-</div>
 
 <div class="links1">
   <span style="position: absolute; color: rgb(116, 114, 114); margin-bottom: 10px; margin-top: 10px;">קישורים של ערוץ התורה</span>
@@ -1757,107 +1331,94 @@ class="bottom-item youtube">
 </div>
 </div>
 
-<!-- ACTIONS -->
+<!-- תוכן -->
+  <div  class="actions1">
 
-<div class="actions1">
+  <span class="active1" onclick="goHome()">
+    דף ראשי
+  </span>
 
-<span onclick="goHome()">
-דף ראשי
-</span>
+  <span onclick="goPosts()">
+    לכל הפוסטים
+  </span>
 
-<span class="active1" onclick="goPosts()">
-לכל הפוסטים
-</span>
+  <span onclick="goUpload()">
+    העלת פוסט
+  </span>
 
-<span onclick="goUpload()">
-העלת פוסט
-</span>
+</div>
+  <hr>
+
+  <div class="hero-wrap">
+
+  <div class="hero-track" id="heroTrack">
+
+        <div class="hero-slide">
+<img src="rabbi.jpg" loading="lazy">
+     <div class="hero-text" >
+        <span>אהבת חינם</span>
+        <h2 >בית תמחוי  חלוקת אוכל לנזקקים</h2>
+        <p>כל רעב ממנו יכל וכל צמה ממנו ישתה</p>
+
+        <br>
+        <p>עומד לזכות הרב יוסף שובלי<br>ותלמידו</p>
+      </div>
+    </div>
+
+<div class="hero-slide">
+
+
+    <img
+    class="rabbi48"
+    src="rabbi48.jpg">
+
+    <div class="blur-half"></div>
+
+    <div class="hero-text">
+
+      <span>שיעורי תורה</span>
+
+      <h2 id="title1">
+      חיזוק לבבות והפצת שם השם ברבים
+      </h2>
+
+      <p id="type1">
+      אהבת השם הרב יוסף שובלי
+      </p>
+
+    </div>
 
 </div>
 
-<!-- TITLE -->
 
-<div class="page-title">
- פעילות הישיבה <br> כל התכנים ועבודת הקודש
+    <div class="hero-slide">
+       <img
+    class="rabbi48"
+    src="The Tikun Hamidot Yeshiva.jpeg">
+      <div class="hero-text">
+        <span>ישיבה לחיזוק הרבים תיקון המידות</span>
+        <h2 id="title2">זיכוי הרבים</h2>
+        <p id="type2">שתעמוד לזכות הרב יוסף שובלי ותלמידו</p>
+      </div>
+    </div>
+
+  </div>
+
 </div>
-
-<!-- POSTS -->
 
 <div class="container">
-
-<div class="posts-grid"
-id="postsGrid"></div>
-
+  <div class="line22">
+<hr class="line-more1">
+<a href="posts.html" class="title">
+  ראה עוד
+</a>
 </div>
+<span class="text-for-cards1">סליידר פוסטים</span>
 
-<div class="endallcon"></div>
+  <div class="recipes"></div>
+  </div>
 
-<div class="pagination" id="pagination"></div>
-
-<!-- MODAL -->
-
-<div class="post-modal"
-id="postModal">
-
-<div class="modal-topbar">
-
-<div class="modal-post-title"
-id="modalTopTitle">
-</div>
-
-<button class="modal-close"
-onclick="closePost()">
-✕
-</button>
-
-</div>
-
-<div id="mediaContainer"></div>
-
-
-<div class="image-bar-wrapper">
-
-
-
-<div class="image-bar" id="imageBar"></div>
-
-</div>
-
-<div class="modal-body">
-    
-  <div class="border-bottom-for">
-
-<div class="modal-title bar-text"
-id="modalTitle"></div>
-
-<div class="post-top-tags">
-<div class="mini-tag views-tag">
-<i class="fa-regular fa-eye"></i>
-<span id="postViews">0</span>
-</div>
-
-<button
-class="mini-tag likes-tag" style="border: none;"
-onclick="toggleLike(currentOpenedPost)"
-type="button"
->
-<i class="fa-regular fa-thumbs-up"></i>
-<span id="postLikes">0</span>
-</button>
-
-</div>
-
-</div>
-<div id="postTags"></div>
-<div class="modal-content"
-id="modalContent"></div>
-</div>
-
-</div>
-
-</div>
-
-<!-- דף אודות -->
+  <!-- דף אודות -->
 <div id="aboutPage" style="
 display:none;
 position:fixed;
@@ -1947,8 +1508,64 @@ color:#4b5563;
 חסד ואהבת ישראל.
 
 </p>
+</div>
+
+<div class="bottom-bar">
+
+  <span class="holy-text">
+ הכל על ערוץ התורה והעבודת הקודש של
+הרב יוסף שובלי שליט״ה וכל תלמידיו העוסקים במלכת הקודש  
+</span>
+<a
+href="https://www.tiktok.com/@rabenu156"
+target="_blank"
+class="bottom-item tiktok">
+<i class="fab fa-tiktok"></i>
+<span>TikTok</span>
+</a>
+<a
+href="https://daily-torah.tv"
+target="_blank"
+class="bottom-item website">
+<i class="fas fa-globe"></i>
+<span>אתר ערוץ התורה</span>
+</a>
+
+<a
+href="https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbDY0R2dtUGo5eFE2Tk9NOVNvdmFHZGRlQmdpZ3xBQ3Jtc0tuTUFmUFNBd1hpaUY4UC0zcGkxbmVocEhDWGNiMzR0MF9XQUNiRWRUMlp6S0RGY2V5Wl9yektUSEk4M0tUczExdDRYQl9TU3RJLXNZaXJuSXFyQ3BtZkRKQVVYbU44TnAwakhfV1NGNUNzbjJvWWFaVQ&q=https%3A%2F%2Fwhatsapp.com%2Fchannel%2F0029VaHBaz0Bfxo6YuOUKk1D"
+target="_blank"
+class="bottom-item whatsapp">
+<i class="fab fa-whatsapp"></i>
+<span>וואטסאפ</span>
+</a>
+
+<a
+href="https://www.facebook.com/harutzhatorah/"
+target="_blank"
+class="bottom-item facebook">
+<i class="fab fa-facebook-f"></i>
+<span>פייסבוק</span>
+</a>
+
+
+<a
+href="https://t.me/Rabenu156"
+target="_blank"
+class="bottom-item instagram">
+<i class="fab fa-instagram"></i>
+<span>ערוץ התורה בטלגרם</span>
+</a>
+
+<a
+href="https://www.youtube.com/@harutzhatorah"
+target="_blank"
+class="bottom-item youtube">
+<i class="fab fa-youtube"></i>
+<span>ערוץ התורה</span>
+</a>
 
 </div>
+
 
 <!-- LOGIN MODAL -->
 
@@ -1968,8 +1585,8 @@ onclick="event.stopPropagation()"
 </h2>
 
 <p>
-התחבר עם גוגל כדי לעשות לייקים
-ולשמור צפיות בפוסטים
+התחבר עם גוגל כדי לעשות לייקים,
+לשמור פעילות ולהשתמש באתר
 </p>
 
 <button
@@ -1987,39 +1604,130 @@ onclick="signInWithGoogle()"
 
 </div>
 
+<!-- LOGOUT MODAL -->
+
+<div
+class="login-modal"
+id="logoutModal"
+onclick="closeLogoutModal()"
+>
+
+<div
+class="login-card"
+onclick="event.stopPropagation()"
+style="position:relative;"
+>
+
+<button
+onclick="closeLogoutModal()"
+style="
+position:absolute;
+top:10px;
+left:10px;
+border:none;
+background:none;
+font-size:20px;
+cursor:pointer;
+"
+>
+✕
+</button>
+
+<h2>
+יציאה מהחשבון
+</h2>
+
+<p>
+האם אתה בטוח שברצונך לצאת מהחשבון?
+</p>
+
+<div
+style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:20px;
+"
+>
+
+<button
+onclick="logoutUser()"
+style="
+border:none;
+background:#dc2626;
+color:white;
+padding:12px;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer;
+"
+>
+אישור
+</button>
+
+<button
+onclick="closeLogoutModal()"
+style="
+border:none;
+background:#e5e7eb;
+color:#111827;
+padding:12px;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer;
+"
+>
+ביטול
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 <script type="module">
 
 import { createClient }
 from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-const supabaseUrl =
-'https://pnnfstfabmhjzohkypak.supabase.co'
-
-const supabaseKey =
-'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
+const supabaseUrl = 'https://pnnfstfabmhjzohkypak.supabase.co'
+const supabaseKey = 'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
 
 const supabase = createClient(
-supabaseUrl,
-supabaseKey
+  supabaseUrl,
+  supabaseKey
 )
 
-let currentUser = null
+async function signInWithGoogle(){
 
-async function getCurrentUser(){
+const { error } =
+await supabase.auth.signInWithOAuth({
 
-const {
-data:{ user }
-} = await supabase.auth.getUser()
+provider:'google',
 
-currentUser = user || null
+options:{
 
-return currentUser
+redirectTo:
+window.location.origin + window.location.pathname,
+
+queryParams:{
+
+prompt:'select_account'
 
 }
 
-await getCurrentUser()
+}
 
-/* SIDEBAR */
+})
+
+if(error){
+
+console.log(error)
+
+}
+
+}
 
 const sidebar =
 document.getElementById("sidebar")
@@ -2029,875 +1737,705 @@ document.getElementById("overlay")
 
 function openMenu(){
 
-sidebar.classList.add("show")
-overlay.classList.add("show")
+  sidebar.classList.add("show")
+  overlay.classList.add("show")
+
+  // חסימת גלילה בדף הראשי
+  document.body.style.overflow = "hidden"
 
 }
 
 function closeMenu(){
 
-sidebar.classList.remove("show")
-overlay.classList.remove("show")
+  sidebar.classList.remove("show")
+  overlay.classList.remove("show")
+
+  // החזרת גלילה רגילה
+  document.body.style.overflow = ""
 
 }
 
 window.openMenu = openMenu
 window.closeMenu = closeMenu
 
-  
-  function makeLinksClickable(text){
-
-  if(!text) return ""
-
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
-
-  return text.replace(urlRegex, function(url){
-
- return `
-<a href="${safeUrl(url)}"
-target="_blank"
-rel="noopener noreferrer"
-class="live-link">
-${url}
-</a>
-`
-
-  })
-
-}
-  
-/* POSTS */
-
-const postsGrid =
-document.getElementById("postsGrid")
-const postModal =
-document.getElementById("postModal")
-
-
-let startY = 0
-let currentY = 0
-let isDragging = false
-
-postModal.addEventListener("touchstart", e => {
-
-if(postModal.scrollTop > 0) return
-
-startY = e.touches[0].clientY
-isDragging = true
-
-})
-
-postModal.addEventListener("touchmove", e => {
-
-if(!isDragging) return
-
-currentY = e.touches[0].clientY
-
-const diff = currentY - startY
-
-if(diff > 0){
-
-postModal.style.transition = "none"
-
-postModal.style.transform =
-`translateY(${diff}px)`
-
-}
-
-})
-
-postModal.addEventListener("touchend", () => {
-
-if(!isDragging) return
-
-isDragging = false
-
-const diff = currentY - startY
-
-postModal.style.transition = ".3s"
-
-if(diff > 120){
-
-closePost()
-
-}else{
-
-postModal.style.transform =
-"translateY(0)"
-
-}
-
-})
-
-async function loadPosts(page = 1){
-
-const from =
-(page - 1) * POSTS_PER_PAGE
-
-const to =
-from + POSTS_PER_PAGE - 1
-
-const cachedPosts =
-localStorage.getItem("postsCache")
-
-/* SHOW CACHE FIRST */
-
-if(cachedPosts){
-
-const parsedPosts =
-JSON.parse(cachedPosts)
-
-renderPosts(parsedPosts)
-
-}else{
-
-postsGrid.innerHTML = `
-<div style="
-padding:40px;
-text-align:center;
-font-size:18px;
-grid-column:1/-1;
-">
-טוען...
-</div>
-`
-
-}
-
-/* LOAD FROM SUPABASE */
-
-const { data, error } =
-await supabase
-.from('posts')
-.select(`
-id,
-title,
-content,
-media_urls,
-links,
-tags,
-likes,
-views,
-created_at
-`)
-.eq('approved', true)
-.eq('type', 'post')
-.order('created_at',{ascending:false})
-.range(from,to)
-
-if(error){
-
-console.log(error)
-
-return
-
-}
-
-
-window.postsData = data || []
-
-/* SAVE CACHE */
-
-localStorage.setItem(
-"postsCache",
-JSON.stringify(window.postsData)
-)
-
-/* RENDER REAL POSTS */
-
-renderPosts(window.postsData)
-
-/* OPEN DIRECT POST */
-
-if(postId){
-
-const selectedPost =
-window.postsData.find(
-post => String(post.id) === String(postId)
-)
-
-if(selectedPost){
-
-openPost(selectedPost)
-
-}
-
-}
-
-}
-
-const params =
-new URLSearchParams(window.location.search)
-
-const postId =
-params.get("id")
-
-function renderPosts(posts){
-
-postsGrid.innerHTML = ""
-
-window.postsData = posts
-
-let html = ""
-
-posts.forEach(post=>{
-
-html += `
-
-<div class="card"
-onclick="openPostById('${post.id}')">
-
-<div class="card-media">
-
-${
-
-post.media_urls?.[0]
-?.toLowerCase()
-.includes(".mp4")
-
-? `
-
-<video
-muted
-playsinline
-webkit-playsinline
-preload="metadata"
-
-onloadedmetadata="
-this.currentTime = 0.1
-"
-
-style="
-width:100%;
-height:130px;
-object-fit:contain;
-display:block;
-background:black;
-pointer-events:none;
-"
->
-
-<source src="${post.media_urls[0]}">
-
-</video>
-
-<div class="video-icon">
-<i class="fas fa-play"></i>
-</div>
-
-`
-
-: post.media_urls?.[0]
-
-? `
-
-<img
-loading="lazy"
-decoding="async"
-
-src="${post.media_urls[0]}"
-
-style="
-width:100%;
-height:130px;
-object-fit:cover;
-display:block;
-background:black;
-">
-
-`
-
-: `
-
-<div style="
-width:100%;
-height:130px;
-background:#e5e7eb;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:40px;
-color:#6b7280;
-">
-👤
-</div>
-
-`
-}
-
-</div>
-
-<div class="card-body">
-
-<div class="tag">
-${escapeHtml(post.title || '')}
-</div>
-
-<div class="post-content">
-${makeLinksClickable(
-escapeHtml(post.content || '')
-)}
-</div>
-
-</div>
-
-</div>
-
-`
-
-})
-
-postsGrid.innerHTML = html
-
-}
-
-window.currentOpenedPost = null
-
-async function openPost(post){
-
-window.currentOpenedPost = post
-
-const mediaContainer =
-document.getElementById("mediaContainer")
-
-const mediaUrl =
-post.media_urls?.[0] || ""
-
-if(mediaUrl.toLowerCase().includes(".mp4")){
-
-mediaContainer.innerHTML = `
-<video
-id="activeVideo"
-class="modal-image"
-src="${mediaUrl}"
-poster="${mediaUrl}#t=0.1"
-controls
-playsinline
-webkit-playsinline
-preload="metadata"
-
-style="
-width:100%;
-height:280px;
-object-fit:contain;
-background:black;
-">
-</video>
-`
-const activeVideo =
-document.getElementById("activeVideo")
-
-activeVideo.addEventListener("loadeddata", () => {
-
-activeVideo.currentTime = 0.1
-
-activeVideo.play()
-
-activeVideo.pause()
-
-})
-
-}else{
-
-mediaContainer.innerHTML = `
-<img
-loading="lazy"
-decoding="async"
-class="modal-image"
-src="${mediaUrl}">
-`
-
-}
-
-const imageBar =
-document.getElementById("imageBar")
-
-document.getElementById("modalTitle")
-.innerText = post.title || ''
-
-document.getElementById("modalTopTitle")
-.innerText = post.title || ''
-
-document.getElementById("postLikes").innerText =
-post.likes || 0
-
-document.getElementById("postViews").innerText =
-post.views || 0
-
-document.getElementById("modalContent")
-.innerHTML = `
-
-<span class="more-content-tag">
-תוכן הפוסט
-</span>
-<div class="more-content-tag2"></div>
-<div>
-${makeLinksClickable(
-escapeHtml(post.content || '')
-)}
-</div>
-
-`
-
-const postTags =
-document.getElementById("postTags")
-
-postTags.innerHTML = ""
-
-if(post.tags?.length){
-
-postTags.innerHTML = `
-
-<div style="
-margin-top:20px;
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-">
-
-${post.tags.map(tag=>`
-
-<div style="
-align-items:center;
-justify-content:center;
-
-padding:8px 16px;
-
-
-border-radius:999px;
-
-font-size:13px;
-font-weight:700;
-
-letter-spacing:.5px;
-
-color:#8b6b3f;
-
-background:
-linear-gradient(
-180deg,
-#fffdf8,
-#f7f1e7
-);
-
-border:
-1px solid rgba(176,141,87,.18);
-
-box-shadow:
-0 4px 12px rgba(176,141,87,.08);
-
-    opacity: 0.8;
-">
-#${escapeHtml(tag)}
-</div>
-
-`).join("")}
-
-</div>
-
-`
-
-}
-
-if(post.links?.length){
-
-document.getElementById("modalContent")
-.innerHTML += `
-
-<div class="post-links">
-
-${post.links.map(link=>`
-
-<a
-href="${safeUrl(link.url)}"
-target="_blank"
-rel="noopener noreferrer"
-class="post-link-card"
->
-
-<div class="post-link-icon">
-🔗
-</div>
-
-<div>
-
-<div class="post-link-title">
-${escapeHtml(link.title || '')}
-</div>
-
-<div class="post-link-url">
-${escapeHtml(link.url || '')}
-</div>
-
-</div>
-
-</a>
-
-`).join("")}
-
-</div>
-
-`
-
-}
-
-imageBar.innerHTML = ""
-
-post.media_urls?.forEach((url,index)=>{
-
-let mediaThumb
-
-/* VIDEO */
-
-if(url.toLowerCase().includes(".mp4")){
-
-mediaThumb =
-document.createElement("video")
-
-mediaThumb.src = url
-
-mediaThumb.muted = true
-
-mediaThumb.playsInline = true
-
-mediaThumb.preload = "metadata"
-
-mediaThumb.onloadedmetadata = ()=>{
-
-mediaThumb.currentTime = 0.1
-
-}
-mediaThumb.style.objectFit = "cover"
-
-mediaThumb.style.background = "black"
-
-}else{
-
-mediaThumb =
-document.createElement("img")
-
-mediaThumb.src = url
-
-}
-
-/* CLASS */
-
-mediaThumb.className = "image-thumb"
-
-const thumbWrapper =
-document.createElement("div")
-
-thumbWrapper.className = "thumb-wrapper"
-
-const thumbText =
-document.createElement("div")
-
-thumbText.className = "thumb-text"
-
-thumbText.innerText =
-index === 0
-? "נבחר"
-: "עוד מדיה"
-
-if(index === 0){
-
-
-
-document
-.querySelectorAll(".image-thumb")
-.forEach(el=>{
-
-el.classList.remove("active")
-
-})
-
-/* TEXT RESET */
-
-document
-.querySelectorAll(".thumb-text")
-.forEach(el=>{
-
-el.innerText = "עוד מדיה"
-el.classList.remove("active")
-
-})
-
-/* CURRENT */
-
-thumbText.innerText = "נבחר"
-thumbText.classList.add("active")
-
-mediaThumb.classList.add("active")
-
-
-}
-
-mediaThumb.onclick = ()=>{
-
-/* VIDEO */
-
-if(url.toLowerCase().includes(".mp4")){
-
-mediaContainer.innerHTML = `
-
-<video
-id="activeVideo"
-class="modal-image"
-src="${url}"
-controls
-playsinline
-webkit-playsinline
-preload="metadata"
-
-style="
-width:100%;
-height:280px;
-object-fit:contain;
-background:black;
-">
-
-</video>
-
-`
-
-const activeVideo =
-document.getElementById("activeVideo")
-
-activeVideo.addEventListener("loadeddata", () => {
-
-activeVideo.currentTime = 0.1
-
-activeVideo.play()
-
-activeVideo.pause()
-
-})
-
-}else{
-
-mediaContainer.innerHTML = `
-
-<img
-class="modal-image"
-src="${url}">
-
-`
-
-}
-
-/* ACTIVE */
-
-document
-.querySelectorAll(".image-thumb")
-.forEach(el=>{
-
-el.classList.remove("active")
-
-})
-
-/* TEXT RESET */
-
-document
-.querySelectorAll(".thumb-text")
-.forEach(el=>{
-
-el.innerText = "עוד מדיה"
-el.classList.remove("active")
-thumbText.classList.add("active")
-
-})
-/* CURRENT */
-
-thumbText.innerText = "נבחר"
-
-mediaThumb.classList.add("active")
-
-}
-
-
-thumbWrapper.appendChild(mediaThumb)
-
-thumbWrapper.appendChild(thumbText)
-
-imageBar.appendChild(thumbWrapper)
-
-})
-postModal.style.transform = ""
-postModal.classList.add("show")
-
-document.body.style.overflow = "hidden"
-
-window.scrollTo(0,0)
+async function loadUser(){
 
 const {
 data:{ user }
 } = await supabase.auth.getUser()
 
-if(user){
+/* לא מחובר */
 
-const viewedKey =
-`viewed_${post.id}_${user.id}`
+if(!user) return
 
-const alreadyViewed =
-localStorage.getItem(viewedKey)
+const name =
 
-if(!alreadyViewed){
+user.user_metadata?.full_name ||
 
-const currentViews =
-post.views || 0
+user.user_metadata?.name ||
 
-const newViews =
-currentViews + 1
+"משתמש"
+
+const avatar =
+
+user.user_metadata?.avatar_url ||
+
+"https://cdn-icons-png.flaticon.com/512/149/149071.png"
+
+/* סיידבר = יציאה */
+
+document.getElementById(
+"userName"
+).innerText = "יציאה"
+
+/* טופ בר = השם */
+
+document.getElementById(
+"userNameTop"
+).innerText = name
+
+/* תמונות */
+
+document.getElementById(
+"userAvatar"
+).innerHTML = `
+
+<img
+src="${avatar}"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:50%;
+"
+>
+
+`
+
+document.getElementById(
+"userAvatarTop"
+).innerHTML = `
+
+<img
+src="${avatar}"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:50%;
+"
+>
+
+`
+
+/* יציאה מהסיידבר */
+
+document.querySelector(
+"#sidebar .user-box"
+).onclick = async ()=>{
+
+await supabase.auth.signOut()
+
+window.location.reload()
+
+}
+
+/* בטופ בר פותחים באנר */
+
+document.querySelector(
+".topbar .user-box"
+).onclick = ()=>{
+
+document
+.getElementById("logoutModal")
+.classList.add("show")
+
+}
+
+}
+
+async function loadPosts(){
+
+  // ---------- שלב 2: טעינה מהשרת ----------
+
+  const { data, error } = await supabase
+  .from('posts')
+  .select('*')
+  .order('created_at',{ascending:false})
+
+  if(error){
+
+    console.log(error)
+
+    return
+
+  }
+
+  // ---------- שלב 3: סינון ----------
+
+  const normalPosts =
+  data.filter(
+    post => post.type === "post"
+  )
+
+
+  // ---------- שלב 5: רינדור ----------
+
+  renderPosts(
+    normalPosts.slice(0,10)
+  )
+
+}
+
+
+const recipes =
+document.querySelector(".recipes")
+
+let isDown = false
+let startX
+let scrollLeft
+
+// חדש
+let isDragging = false
+
+recipes.addEventListener(
+"mousedown",
+(e)=>{
+
+isDown = true
+isDragging = false
+
+recipes.classList.add("dragging")
+
+startX =
+e.pageX - recipes.offsetLeft
+
+scrollLeft =
+recipes.scrollLeft
+
+}
+)
+
+recipes.addEventListener(
+"mouseleave",
+()=>{
+
+isDown = false
+
+recipes.classList.remove("dragging")
+
+setTimeout(()=>{
+isDragging = false
+},50)
+
+}
+)
+
+recipes.addEventListener(
+"mouseup",
+()=>{
+
+isDown = false
+
+recipes.classList.remove("dragging")
+
+setTimeout(()=>{
+isDragging = false
+},50)
+
+}
+)
+
+recipes.addEventListener(
+"mousemove",
+(e)=>{
+
+if(!isDown) return
+
+e.preventDefault()
+
+// אם זז קצת → זה drag
+isDragging = true
+
+const x =
+e.pageX - recipes.offsetLeft
+
+const walk =
+(x - startX) * 2
+
+recipes.scrollLeft =
+scrollLeft - walk
+
+}
+)
+
+
+function renderPosts(posts){
+
+  const recipes = document.querySelector(".recipes")
+
+  recipes.innerHTML = ""
+
+  posts.forEach(post=>{
+
+    recipes.innerHTML += `
+    
+    <div class="external-line1">
+
+      <div class="card"
+      
+      onclick="openPost('${post.id}')">
+
+${
+post.media_urls?.[0]
+?.toLowerCase()
+?.includes(".mp4")
+? `
+<div style="
+position:relative;
+width: 100px;
+height: 100px;
+overflow:hidden;
+border-radius:5px;
+background:black;
+margin: 0 auto;
+">
+
+<video
+src="${post.media_urls[0]}"
+poster="${post.media_urls?.[1] || ''}"
+playsinline
+webkit-playsinline
+preload="metadata"
+onloadedmetadata="
+this.pause();
+this.currentTime = 0.1;
+"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+pointer-events:none;
+"
+></video>
+
+<div style="
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:28px;
+height:28px;
+border-radius:50%;
+background:rgba(0,0,0,.55);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:14px;
+">
+▶
+</div>
+
+</div>
+`
+
+: post.media_urls?.[0]
+
+? `<img src="${post.media_urls[0]}" loading="lazy">`
+
+: `<div class="no-image">
+👤
+</div>`
+}
+        
+        <div class="card-body">
+
+          <h3 class="post-content">
+            ${post.content}
+          </h3>
+
+       <div
+class="like-box"
+onclick="event.stopPropagation(); likePost('${post.id}')"
+>
+
+<i class="fa-regular fa-thumbs-up"></i>
+
+<span id="likes-${post.id}">
+${post.likes || 0}
+</span>
+
+</div>
+
+
+        <span class="tag">
+         ${post.title}
+        </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    `
+
+  })
+
+}
+
+function goHome(){
+
+  window.location.href = "index.html"
+
+}
+
+function goPosts(){
+
+  window.location.href = "posts.html"
+
+}
+
+function goUpload(){
+
+  window.location.href = "upload.html"
+
+}
+
+function goIndex2(){
+
+  window.location.href =
+  "index2.html"
+
+}
+  
+const heroWrap = document.querySelector(".hero-wrap");
+const heroTrack = document.querySelector(".hero-track");
+
+let slides = document.querySelectorAll(".hero-slide");
+
+/* ---------- שכפול ---------- */
+
+const firstClone = slides[0].cloneNode(true);
+const lastClone = slides[slides.length - 1].cloneNode(true);
+
+heroTrack.appendChild(firstClone);
+heroTrack.insertBefore(lastClone, slides[0]);
+
+slides = document.querySelectorAll(".hero-slide");
+
+let current = 1;
+let total = slides.length;
+
+let heroStartX = 0;
+let currentX = 0;
+let heroDragging = false;
+let auto;
+let heroMoved = false;
+
+/* ---------- התחלה ---------- */
+
+updateSlider(false);
+
+/* ---------- */
+
+function updateSlider(withTransition = true){
+
+heroTrack.style.transition =
+withTransition ? ".4s ease" : "none";
+
+const slideWidth = heroWrap.offsetWidth;
+
+heroTrack.style.transform =
+`translateX(-${current * slideWidth}px)`;
+
+}
+
+/* ---------- הבא ---------- */
+
+function nextSlide(){
+
+current++;
+
+updateSlider();
+
+}
+
+/* ---------- הקודם ---------- */
+
+function prevSlide(){
+
+current--;
+
+updateSlider();
+
+}
+
+/* ---------- אינפיניטי ---------- */
+
+heroTrack.addEventListener(
+"transitionend",
+()=>{
+
+/* אם הגענו לשכפול הראשון */
+if(current === total - 1){
+
+heroTrack.style.transition = "none";
+
+current = 1;
+
+heroTrack.style.transform =
+`translateX(-${current * heroWrap.offsetWidth}px)`;
+
+}
+
+/* אם הגענו לשכפול האחרון */
+if(current === 0){
+
+heroTrack.style.transition = "none";
+
+current = total - 2;
+
+heroTrack.style.transform =
+`translateX(-${current * heroWrap.offsetWidth}px)`;
+
+}
+
+}
+);
+
+document.addEventListener("visibilitychange", () => {
+
+if(document.hidden){
+
+stopAuto();
+
+}else{
+
+updateSlider(false);
+startAuto();
+
+}
+
+});
+
+/* ---------- אוטומטי ---------- */
+
+
+function stopAuto(){
+
+clearInterval(auto);
+
+}
+
+function startAuto(){
+
+clearInterval(auto);
+
+auto = setInterval(
+nextSlide,
+5000
+);
+
+}
+
+startAuto();
+
+/* ---------- טאץ׳ ---------- */
+
+heroWrap.addEventListener(
+"touchstart",
+(e)=>{
+
+stopAuto();
+
+heroDragging = true;
+heroMoved = false;
+
+heroStartX = e.touches[0].clientX;
+currentX = heroStartX;
+
+heroTrack.style.transition =
+"none";
+
+},
+{ passive:true }
+);
+
+window.addEventListener("resize", () => {
+
+updateSlider(false);
+
+});
+/* ---------- גרירה ---------- */
+
+heroWrap.addEventListener("touchmove", (e) => {
+
+if(!heroDragging) return;
+
+currentX = e.touches[0].clientX;
+
+let diff = currentX - heroStartX;
+
+heroTrack.style.transition = "none";
+
+/* בסיס לפי רוחב מסך */
+let base = -current * heroWrap.offsetWidth;
+
+/* תזוזה חיה */
+heroTrack.style.transform =
+`translateX(-${base - diff}px)`;
+
+const DRAG_THRESHOLD = 10;
+heroMoved = Math.abs(diff) > DRAG_THRESHOLD;
+
+}, { passive:true });
+
+/* ---------- שחרור ---------- */
+
+heroWrap.addEventListener(
+"touchend",
+()=>{
+
+heroDragging = false;
+
+let diff = heroStartX - currentX;
+
+/* אם זו גרירה אמיתית */
+if(heroMoved){
+
+if(diff > 70){
+  nextSlide(); 
+}
+else if(diff < -70){
+  prevSlide(); 
+}
+else{
+updateSlider();
+}
+
+} else {
+updateSlider();
+}
+
+startAuto();
+
+}
+);
+
+/* ---------- ביטול ---------- */
+
+heroWrap.addEventListener(
+"touchcancel",
+()=>{
+
+heroDragging = false;
+
+updateSlider();
+
+startAuto();
+
+}
+);
+
+/* ---------- התחלה ---------- */
+
+updateSlider(false);
+
+function openPost(id){
+
+// אם היה drag לא פותחים
+if(isDragging) return
+
+window.location.href =
+`posts.html?id=${id}`
+
+}
+
+async function likePost(id){
+
+const {
+data:{ user }
+} = await supabase.auth.getUser()
+
+// אם לא מחובר
+if(!user){
+
+openLoginModal()
+return
+
+}
+
+const likesElement =
+document.getElementById(`likes-${id}`)
+
+if(!likesElement) return
+
+let currentLikes =
+parseInt(likesElement.innerText) || 0
+
+// ניסיון להכניס לייק
+const { error } = await supabase
+.from("post_likes")
+.insert({
+post_id:id,
+user_id:user.id
+})
+
+// אם כבר עשה לייק
+if(error){
+
+// unique violation
+if(error.code === "23505"){
+
+alert("כבר עשית לייק")
+return
+
+}
+
+console.log(error)
+return
+
+}
+
+// הצליח
 
 await supabase
 .from("posts")
 .update({
-views:newViews
+likes: currentLikes + 1
 })
-.eq("id",post.id)
+.eq("id", id)
 
-post.views = newViews
-
-localStorage.setItem(
-viewedKey,
-"1"
-)
-
+likesElement.innerText =
+currentLikes + 1
 }
 
-}
+function showAboutPage(){
 
-}
+document.getElementById("aboutPage").style.display = "block"
 
+document.querySelector(".container").style.display = "none"
 
+document.querySelector(".hero-wrap").style.display = "none"
 
-function closePost(){
+document.querySelector(".actions1").style.display = "none"
 
-postModal.style.transform =
-"translateY(100%)"
-
-const videos =
-document.querySelectorAll("#mediaContainer video")
-
-videos.forEach(video => {
-
-video.pause()
-
-video.currentTime = 0
-
-video.removeAttribute("src")
-
-video.load()
-
-})
-
-setTimeout(()=>{
-
-postModal.classList.remove("show")
-
-document.body.style.overflow = ""
-
-},300)
-
-}
-
-window.openPost = openPost
-window.closePost = closePost
-
-/* NAVIGATION */
-
-function goHome(){
-window.location.href = "index.html"
-}
-
-function goPosts(){
-window.location.href = "posts.html"
-}
-
-function goUpload(){
-window.location.href = "upload.html"
-}
-
-function goToPage(page){
-
-currentPage = page
-
-loadPosts(page)
-
-createPagination()
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-})
-
-
-
-document
-.querySelectorAll(".pagination button")
-.forEach(btn=>{
-
-btn.classList.remove("active")
-
-if(btn.innerText == page){
-
-btn.classList.add("active")
-
-}
-
-})
-
-}
-
-window.goToPage = goToPage
-
-
-function openPostById(id){
-
-const post =
-window.postsData.find(
-p => String(p.id) === String(id)
-)
-
-if(post){
-openPost(post)
-}
+closeMenu()
 
 }
 
 
-function escapeHtml(text){
+function closeAboutPage(){
 
-return text
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;")
+document.getElementById("aboutPage").style.display = "none"
 
-}
+document.querySelector(".container").style.display = "block"
 
-function safeUrl(url){
+document.querySelector(".hero-wrap").style.display = "block"
 
-if(!url) return "#"
-
-try{
-
-const parsed =
-new URL(url)
-
-if(
-parsed.protocol === "http:" ||
-parsed.protocol === "https:"
-){
-
-return parsed.href
-
-}
-
-}catch(e){}
-
-return "#"
+document.querySelector(".actions1").style.display = "grid"
 
 }
 
@@ -2935,230 +2473,174 @@ alert("הלינק הועתק")
 }
 
 }
-let currentPage = 1
-
-const POSTS_PER_PAGE = 8
-
-async function createPagination(){
-
-const { count, error } = await supabase
-.from('posts')
-.select('*', { count: 'exact', head: true })
-.eq('type', 'post')
-.eq('approved', true)
 
 
-if(error){
-console.log(error)
-return
-}
+window.addEventListener("load", () => {
 
-const totalPages =
-Math.ceil(count / POSTS_PER_PAGE)
+  const loader =
+  document.getElementById("siteLoader")
 
-const pagination =
-document.getElementById("pagination")
+  // כניסה ראשונה
+  setTimeout(()=>{
 
-pagination.innerHTML = ""
+    loader.style.opacity = "0"
+    loader.style.transition = "0.5s ease"
 
-for(let i = 1; i <= totalPages; i++){
+    setTimeout(()=>{
 
-pagination.innerHTML += `
-
-<button
-onclick="goToPage(${i})"
-class="${i === currentPage ? 'active' : ''}"
->
-${i}
-</button>
-
-`
-
-}
-
-}
+      loader.remove()
 
 
-function showAboutPage(){
+    },100)
 
-document.getElementById("aboutPage").style.display = "block"
-
-document.querySelector(".container").style.display = "none"
-
-document.querySelector(".page-title").style.display = "none"
-
-document.querySelector(".actions1").style.display = "none"
-
-document.getElementById("pagination").style.display = "none"
-
-closeMenu()
-
-}
-
-function closeAboutPage(){
-
-document.getElementById("aboutPage").style.display = "none"
-
-document.querySelector(".container").style.display = "block"
-
-document.querySelector(".page-title").style.display = "flex"
-
-document.querySelector(".actions1").style.display = "grid"
-
-document.getElementById("pagination").style.display = "flex"
-
-}
-
-const filterMenu =
-document.getElementById("filterMenu")
-
-function toggleFilters(){
-
-filterMenu.classList.toggle("show")
-
-}
-
-async function loadCategory(category){
-
-let query = supabase
-.from("posts")
-.select("*")
-.order("created_at",{ascending:false})
-
-if(category !== "all"){
-
-query =
-query.eq("category",category)
-
-}
-
-const { data,error } =
-await query
-
-if(error){
-
-console.log(error)
-
-return
-
-}
-
-renderPosts(data)
-
-filterMenu.classList.remove("show")
-
-closeMenu()
-
-}
-
-
-async function signInWithGoogle(){
-
-const { error } =
-await supabase.auth.signInWithOAuth({
-
-provider:'google',
-
-options:{
-
-redirectTo:
-window.location.origin + window.location.pathname
-
-}
+  },1000)
 
 })
 
-if(error){
-
-console.log(error)
-
-}
-
-}
-
-
 function openLoginModal(){
 
-const modal =
-document.getElementById("loginModal")
+closeMenu()
 
-modal.classList.add("show")
+document
+.getElementById("loginModal")
+.classList.add("show")
 
 }
 
 function closeLoginModal(){
 
-const modal =
-document.getElementById("loginModal")
-
-modal.classList.remove("show")
-
-}
-
-async function toggleLike(post){
-
-const {
-data:{ user }
-} = await supabase.auth.getUser()
-
-if(!user){
-
-openLoginModal()
-return
+document
+.getElementById("loginModal")
+.classList.remove("show")
 
 }
 
-const likeKey =
-`liked_${post.id}_${user.id}`
 
-const alreadyLiked =
-localStorage.getItem(likeKey)
+function closeLogoutModal(){
 
-if(alreadyLiked){
-return
-}
-
-const newLikes =
-(post.likes || 0) + 1
-
-const { error } = await supabase
-.from("posts")
-.update({
-likes:newLikes
-})
-.eq("id",post.id)
-
-if(error){
-console.log(error)
-return
-}
-
-post.likes = newLikes
-
-document.getElementById("postLikes").innerText =
-newLikes
-
-localStorage.setItem(
-likeKey,
-"1"
-)
+document
+.getElementById("logoutModal")
+.classList.remove("show")
 
 }
 
-window.toggleLike = toggleLike
+async function logoutUser(){
+
+await supabase.auth.signOut()
+
+window.location.reload()
+
+}
+
+window.closeLogoutModal =
+closeLogoutModal
+
+window.logoutUser =
+logoutUser
+
+async function trackPageView() {
+  try {
+    const { error } = await supabase
+      .from("page_views")
+      .insert([{ page: "home" }])
+
+    if (error) {
+      console.log("PAGE VIEW ERROR:", error)
+    }
+  } catch (err) {
+    console.log("CRASH:", err)
+  }
+}
+
+
+
+window.openLoginModal = openLoginModal
 window.closeLoginModal = closeLoginModal
-window.toggleFilters = toggleFilters
-window.loadCategory = loadCategory
+window.signInWithGoogle = signInWithGoogle
 window.showAboutPage = showAboutPage
 window.closeAboutPage = closeAboutPage
-window.shareSite = shareSite
-window.openPostById = openPostById
-window.goHome = goHome
+window.openPost = openPost
+window.likePost = likePost
 window.goPosts = goPosts
+window.goHome = goHome
 window.goUpload = goUpload
+window.shareSite = shareSite
 
-createPagination()
-loadPosts(currentPage)
+
+const secretBtn =
+document.getElementById("secretAdminBtn")
+
+let secretTimer
+
+secretBtn.addEventListener(
+"touchstart",
+()=>{
+
+secretTimer = setTimeout(()=>{
+
+window.location.href =
+"admin.html"
+
+},5000)
+
+}
+)
+
+secretBtn.addEventListener(
+"touchend",
+()=>{
+
+clearTimeout(secretTimer)
+
+}
+)
+
+secretBtn.addEventListener(
+"touchmove",
+()=>{
+
+clearTimeout(secretTimer)
+
+}
+)
+
+// גם למחשב
+secretBtn.addEventListener(
+"mousedown",
+()=>{
+
+secretTimer = setTimeout(()=>{
+
+window.location.href =
+"admin.html"
+
+},5000)
+
+}
+)
+
+secretBtn.addEventListener(
+"mouseup",
+()=>{
+
+clearTimeout(secretTimer)
+
+}
+)
+
+secretBtn.addEventListener(
+"mouseleave",
+()=>{
+
+clearTimeout(secretTimer)
+
+}
+)
+
+trackPageView()
+loadUser()
+loadPosts()
+
 </script>
 
 </body>
