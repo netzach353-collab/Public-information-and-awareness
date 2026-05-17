@@ -2531,6 +2531,21 @@ closeLogoutModal
 window.logoutUser =
 logoutUser
 
+async function trackPageView() {
+  try {
+    const { error } = await supabase
+      .from("page_views")
+      .insert([{ page: "home" }])
+
+    if (error) {
+      console.log("PAGE VIEW ERROR:", error)
+    }
+  } catch (err) {
+    console.log("CRASH:", err)
+  }
+}
+
+
 
 window.openLoginModal = openLoginModal
 window.closeLoginModal = closeLoginModal
@@ -2544,6 +2559,7 @@ window.goHome = goHome
 window.goUpload = goUpload
 window.shareSite = shareSite
 
+trackPageView()
 loadUser()
 loadPosts()
 
