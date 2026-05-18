@@ -1,491 +1,502 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Admin Panel</title>
-
+<title>ניהול פוסטים</title>
 <style>
-body{
-  background:#0f0f0f;
-  color:#fff;
-  font-family:Arial;
-  padding:20px;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  min-height: 100vh;
+  padding: 24px 16px;
+  direction: rtl;
 }
 
-button{
-  padding:10px 16px;
-  margin:5px;
-  cursor:pointer;
-  border-radius:8px;
-  border:none;
+.delete-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
 }
 
-.login{ background:#2563eb; color:white; }
-.logout{ background:#444; color:white; }
-
-.post{
-  border:1px solid #333;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
+.delete-btn:hover {
+  background: #dc2626;
 }
 
-.approve{
-  background:#16a34a;
-  color:white;
-  margin-top:10px;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
-.stats-wrap{
-
-  display:grid;
-width: 50%;
-  grid-template-columns:
-  repeat(4,1fr);
-
-  gap:10px;
-
-  margin-top:15px;
-  margin-bottom:20px;
+.header svg {
+  width: 22px;
+  height: 22px;
+  color: #60a5fa;
 }
 
-.stat-card{
-
-  background:#1e293b;
-
-  border-radius:12px;
-
-  padding:5px;
-
-
-  display:flex;
-
-  justify-content:center;
-  align-items:center;
-
-  box-shadow:0 2px 10px rgba(0,0,0,.25);
+.header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f1f5f9;
 }
 
-.stat-title{
-
-  font-size:12px;
-
-  color:#cbd5e1;
-
-  margin-bottom:6px;
-
-  text-align:center;
+.container {
+  max-width: 540px;
+  margin: 0 auto;
 }
 
-.stat-number{
-
-  font-size:24px;
-
-  font-weight:bold;
-
-  color:white;
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+  color: #64748b;
+  font-size: 15px;
 }
+
+/* POST CARD */
+.post {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 16px;
+  transition: transform 0.2s;
+}
+
+.post:hover {
+  transform: translateY(-2px);
+}
+
+.post-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f8fafc;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.post-content {
+  font-size: 13.5px;
+  color: #94a3b8;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  background: #1e293b;
+  border: 1px solid #334155;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* CAROUSEL */
+.media-gallery {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111827;
+  margin: 10px 0;
+  height: 280px;
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-slide img,
+.carousel-slide video {
+  max-height: 280px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+.carousel-btn:hover { background: rgba(0,0,0,0.88); }
+.carousel-btn.prev { right: 10px; }
+.carousel-btn.next { left: 10px; }
+
+.dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.dot.active {
+  background: #fff;
+  transform: scale(1.35);
+}
+
+/* LINKS */
+.links {
+  margin: 8px 0;
+}
+
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #60a5fa;
+  text-decoration: none;
+  margin-bottom: 4px;
+}
+
+.link-item:hover { text-decoration: underline; }
+
+/* APPROVE BUTTON */
+.approve-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.approve-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.approve-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* fade-out animation */
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(16px); }
+}
+
+.post.removing {
+  animation: fadeOut 0.35s ease forwards;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .media-gallery { height: 220px; }
+  .carousel-slide img, .carousel-slide video { max-height: 220px; }
+}
+
+#loginBtn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+#loginBtn:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+}
+
+#logoutBtn {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+#logoutBtn:hover {
+  background: #1e293b;
+  transform: translateY(-2px);
+}
+
+#logoutBtn, #loginBtn {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+
 </style>
 </head>
-
 <body>
 
-<h2>ניהול פוסטים</h2>
-<a href="index.html">
+<div class="header">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </svg>
+  <h1>ניהול פוסטים</h1>
+<button id="loginBtn" class="login">Login Google</button>
+<button id="logoutBtn" class="logout">Logout</button>
+</div>
 
-<button>
-חזרה לדף הבית
-</button>
-
-</a>
-<button class="login" id="loginBtn">Login Google</button>
-<button class="logout" id="logoutBtn">Logout</button>
-
-<div id="posts"></div>
+<div class="container" id="posts">
+  <div class="empty">טוען פוסטים...</div>
+</div>
 
 <script type="module">
-
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const supabase = createClient(
   'https://pnnfstfabmhjzohkypak.supabase.co',
   'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo',
-  {
-    auth:{
-      persistSession:true,
-      autoRefreshToken:true
-    }
-  }
+  { auth: { persistSession: true, autoRefreshToken: true } }
 )
-const postsDiv = document.getElementById("posts")
 
-/* ---------- STATS ---------- */
+const container = document.getElementById('posts')
 
-async function loadStats(){
 
-  // אם כבר קיים - לא ליצור שוב
-  const existing =
-  document.getElementById("statsBox")
-
-  if(existing){
-    existing.remove()
-  }
-
-  // כלל הכניסות
-const {
-  count
-} = await supabase
-  .from("page_views")
-  .select("*", {
-    count:"exact",
-    head:true
+document.getElementById("loginBtn").onclick = async () => {
+  await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: window.location.href
+    }
   })
-
-console.log(count)
-
-  // שבוע אחרון
-  const lastWeekDate = new Date()
-
-  lastWeekDate.setDate(
-    lastWeekDate.getDate() - 7
-  )
-const {
-  count: weekViews
-} = await supabase
-  .from("page_views")
-  .select("*", {
-    count:"exact",
-    head:true
-  })
-  .gte(
-    "created_at",
-    lastWeekDate.toISOString()
-  )
-
-  const statsDiv =
-  document.createElement("div")
-
-  statsDiv.id = "statsBox"
-
-  statsDiv.innerHTML = `
-
-<div class="stats-wrap">
-
-  <div class="stat-card">
-
-    <div class="stat-title">
-      סה״כ כניסות
-    </div>
-
-    <div class="stat-number">
-      ${count || 0}
-    </div>
-
-  </div>
-
-  <div class="stat-card">
-
-    <div class="stat-title">
-      כניסות השבוע
-    </div>
-
-    <div class="stat-number">
-      ${weekViews || 0}
-    </div>
-
-  </div>
-
-</div>
-
-`
-
-  document.body.insertBefore(
-    statsDiv,
-    postsDiv
-  )
 }
 
-/* ---------- USER ---------- */
 
-async function checkUser(){
+document.getElementById("logoutBtn").onclick = async () => {
+  await supabase.auth.signOut()
+  window.location.reload()
+}
 
-  const { data } =
-  await supabase.auth.getUser()
 
-  const user = data?.user
-
-  if(!user){
-
-    postsDiv.innerHTML =
-    "<p>יש להתחבר כדי לראות פוסטים</p>"
-
+/* ---- AUTH CHECK ---- */
+async function checkUser() {
+  const { data } = await supabase.auth.getUser()
+  if (!data?.user) {
+    container.innerHTML = `<div class="empty">יש להתחבר כדי לראות פוסטים</div>`
     return
   }
-
-  await loadStats()
-
   loadPosts()
 }
 
-/* ---------- POSTS ---------- */
+/* ---- BUILD CAROUSEL HTML ---- */
+function buildCarousel(mediaUrls) {
+  if (!mediaUrls || mediaUrls.length === 0) return ''
 
-async function loadPosts(){
+  const slides = mediaUrls.map(url => {
+    const isVideo = /\.(mp4|mov)$/i.test(url)
+    const media = isVideo
+      ? `<video src="${url}" controls autoplay loop muted></video>`
+      : `<img src="${url}" alt="">`
+    return `<div class="carousel-slide">${media}</div>`
+  }).join('')
 
+  const nav = mediaUrls.length > 1 ? `
+    <button class="carousel-btn prev">‹</button>
+    <button class="carousel-btn next">›</button>
+    <div class="dots">
+      ${mediaUrls.map((_, i) => `<button class="dot ${i === 0 ? 'active' : ''}" data-i="${i}"></button>`).join('')}
+    </div>` : ''
+
+  return `<div class="media-gallery">
+    <div class="carousel-track">${slides}</div>
+    ${nav}
+  </div>`
+}
+
+/* ---- INIT CAROUSEL LOGIC ---- */
+function initCarousel(el) {
+  const track = el.querySelector('.carousel-track')
+  const slides = el.querySelectorAll('.carousel-slide')
+  const dots = el.querySelectorAll('.dot')
+  const prevBtn = el.querySelector('.prev')
+  const nextBtn = el.querySelector('.next')
+  if (!track || slides.length <= 1) return
+
+  let idx = 0
+
+  function go(n) {
+    idx = (n + slides.length) % slides.length
+    track.style.transform = `translateX(${idx * 100}%)`
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx))
+  }
+
+  prevBtn?.addEventListener('click', () => go(idx + 1))
+  nextBtn?.addEventListener('click', () => go(idx - 1))
+  dots.forEach(d => d.addEventListener('click', () => go(+d.dataset.i)))
+
+  let sx = 0
+  track.addEventListener('touchstart', e => sx = e.changedTouches[0].screenX)
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - sx
+    if (dx > 50) go(idx - 1)
+    if (dx < -50) go(idx + 1)
+  })
+}
+
+/* ---- LOAD POSTS ---- */
+async function loadPosts() {
   const { data, error } = await supabase
-    .from("posts")
-    .select("*")
-    .eq("reviewed", false)
-    .order("created_at", {
-      ascending:false
-    })
+    .from('posts')
+    .select('*')
+    .eq('reviewed', false)
+    .order('created_at', { ascending: false })
 
-  if(error){
-
-    postsDiv.innerHTML =
-    "<p>שגיאה בטעינת פוסטים</p>"
-
+  if (error) {
+    container.innerHTML = `<div class="empty" style="color:#f87171">שגיאה בטעינת פוסטים</div>`
     return
   }
 
-  postsDiv.innerHTML = ""
-
-  if(!data.length){
-
-    postsDiv.innerHTML =
-    "<p>אין פוסטים חדשים</p>"
-
+  if (!data || data.length === 0) {
+    container.innerHTML = `<div class="empty">אין פוסטים חדשים לבדיקה ✓</div>`
     return
   }
+
+  container.innerHTML = ''
 
   data.forEach(post => {
+    const el = document.createElement('div')
+    el.className = 'post'
 
-    const div = document.createElement("div")
+    const tagsHTML = post.tags?.length
+      ? `<div class="tags">${post.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>`
+      : ''
 
-    div.className = "post"
+    const links = Array.isArray(post.links) ? post.links : (post.links ? [post.links] : [])
+    const linksHTML = links.length
+      ? `<div class="links">${links.filter(l => l?.url).map(l =>
+          `<a class="link-item" href__="${l.url}" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            ${l.title || l.url}
+          </a>`).join('')}</div>`
+      : ''
 
-    /* ---------- MEDIA ---------- */
-
-    let mediaHTML = ""
-
-    if(post.media_urls?.length){
-
-      post.media_urls.forEach(url => {
-
-        if(
-          url.toLowerCase().includes(".mp4")
-        ){
-
-          mediaHTML += `
-
-            <video
-              src="${url}"
-              controls
-              style="
-                width:100%;
-                margin-top:10px;
-                border-radius:10px;
-              "
-            ></video>
-
-          `
-
-        } else {
-
-          mediaHTML += `
-
-            <img
-              src="${url}"
-              style="
-                width:100%;
-                margin-top:10px;
-                border-radius:10px;
-              "
-            >
-
-          `
-        }
-
-      })
-
-    }
-
-    /* ---------- LINKS ---------- */
-
-    let linksHTML = ""
-
-    if(post.links){
-
-      try{
-
-        const links = Array.isArray(post.links)
-          ? post.links
-          : [post.links]
-
-        links.forEach(link => {
-
-          if(link?.url){
-
-            linksHTML += `
-
-              <a
-                href="${link.url}"
-                target="_blank"
-                style="
-                  display:block;
-                  margin-top:8px;
-                  color:#60a5fa;
-                "
-              >
-                ${link.title || link.url}
-              </a>
-
-            `
-          }
-
-        })
-
-      }catch(err){}
-    }
-
-    /* ---------- TAGS ---------- */
-
-    let tagsHTML = ""
-
-    if(post.tags?.length){
-
-      tagsHTML = post.tags.map(tag => `
-
-        <span style="
-          background:#334155;
-          padding:5px 10px;
-          border-radius:999px;
-          font-size:12px;
-        ">
-          #${tag}
-        </span>
-
-      `).join("")
-    }
-
-    /* ---------- HTML ---------- */
-
-    div.innerHTML = `
-
-      <h2>${post.title || ""}</h2>
-
-      <p>${post.content || ""}</p>
-
-      <div style="
-        margin-top:10px;
-        color:#94a3b8;
-      ">
-        קטגוריה:
-        ${post.category || "ללא"}
-      </div>
-
-      <div style="
-        display:flex;
-        gap:8px;
-        flex-wrap:wrap;
-        margin-top:10px;
-      ">
-        ${tagsHTML}
-      </div>
-
-      ${mediaHTML}
-
-      <div style="margin-top:10px;">
-        ${linksHTML}
-      </div>
-
-      <button class="approve">
+    el.innerHTML = `
+      <div class="post-title">${post.title || 'פוסט ללא כותרת'}</div>
+      ${post.content ? `<div class="post-content">${post.content}</div>` : ''}
+      ${post.category ? `<div class="post-meta">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        ${post.category}
+      </div>` : ''}
+      ${tagsHTML}
+      ${buildCarousel(post.media_urls)}
+      ${linksHTML}
+      <button class="approve-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
         אשר פוסט
       </button>
-
+      <button class="delete-btn">מחק פוסט</button>
     `
 
-    div.querySelector("button")
-    .onclick = async () => {
+    el.querySelector('.delete-btn').onclick = async () => {
+  const confirmDelete = confirm("למחוק את הפוסט לגמרי?");
+  if (!confirmDelete) return;
 
-      await supabase
-        .from("posts")
-        .update({
-          approved:true,
-          reviewed:true
-        })
-        .eq("id", post.id)
+  await supabase
+    .from('posts')
+    .delete()
+    .eq('id', post.id);
 
-      div.remove()
+  el.classList.add('removing');
+  setTimeout(() => el.remove(), 300);
+};
+
+    el.querySelector('.approve-btn').onclick = async (e) => {
+      const btn = e.currentTarget
+      btn.disabled = true
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin .8s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> מאשר...`
+
+      await supabase.from('posts').update({ approved: true, reviewed: true }).eq('id', post.id)
+
+      el.classList.add('removing')
+      setTimeout(() => el.remove(), 360)
     }
 
-    postsDiv.appendChild(div)
+    container.appendChild(el)
+
+    if (post.media_urls?.length > 0) initCarousel(el)
   })
 }
 
-/* ---------- LOGIN ---------- */
-
-document.getElementById(
-"loginBtn"
-).onclick = async () => {
-
-  await supabase.auth.signInWithOAuth({
-
-    provider:"google",
-
-    options:{
-
-      redirectTo: window.location.href,
-
-      queryParams:{
-        access_type:'offline',
-        prompt:'select_account'
-      }
-
-    }
-
-  })
-}
-
-/* ---------- LOGOUT ---------- */
-
-document.getElementById(
-"logoutBtn"
-).onclick = async () => {
-
-  await supabase.auth.signOut()
-
-  window.location.href =
-  window.location.pathname
-
-}
-
-/* ---------- START ---------- */
+/* ---- AUTH EVENTS ---- */
+supabase.auth.onAuthStateChange((event) => {
+  if (event === 'SIGNED_IN') checkUser()
+  if (event === 'SIGNED_OUT') container.innerHTML = `<div class="empty">יש להתחבר כדי לראות פוסטים</div>`
+})
 
 checkUser()
-
-supabase.auth.onAuthStateChange(
-  async (event, session) => {
-
-    console.log(event)
-
-    if(event === "SIGNED_IN"){
-
-      await checkUser()
-
-    }
-
-    if(event === "SIGNED_OUT"){
-
-      postsDiv.innerHTML =
-      "<p>יש להתחבר כדי לראות פוסטים</p>"
-
-    }
-
-  }
-)
-
 </script>
 
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
 </body>
 </html>
