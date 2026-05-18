@@ -855,6 +855,26 @@ transform:scale(1);
 }
 
 }
+
+.page-loader{
+  position:fixed;
+  inset:0;
+  background:white;
+  z-index:999999999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+}
+
+.page-loader.hidden{
+  display:none;
+}
+
+body.loading-block {
+  pointer-events: none;
+}
 </style>
 
 </head>
@@ -1043,7 +1063,7 @@ required
 <button
 type="button"
 class="add-link-btn"
-onclick="addLinkField()"
+id="addLinkBtn"
 >
 + הוסף לינק
 </button>
@@ -1100,7 +1120,17 @@ class="status"
 id="statusBox"
 ></div>
 
+
+<div id="pageLoader" class="page-loader">
+  <div class="spinner"></div>
+  <div>טוען...</div>
+</div>
+
 <script type="module">
+
+  document.body.classList.add("loading-block");
+document.body.style.overflow = "hidden";
+
 
 import { createClient }
 from 'https://esm.sh/@supabase/supabase-js'
@@ -1111,11 +1141,14 @@ const supabaseUrl =
 const supabaseKey =
 'sb_publishable_35mU1ZemsGDIzZUJ-bWXuw_bLvT2VRo'
 
-const supabase =
-createClient(
+const supabase = createClient(
 supabaseUrl,
 supabaseKey
 )
+
+let selectedTags = [];
+let selectedFiles = [];
+let links = [];
 
 const form =
 document.getElementById("postForm")
@@ -1159,8 +1192,11 @@ titleCounter.innerText =
 })
 
 
+const addLinkBtn = document.getElementById("addLinkBtn");
 
-let selectedFiles = []
+if (addLinkBtn) {
+  addLinkBtn.addEventListener("click", addLinkField);
+}
 
 function showStatus(text,type){
 
@@ -1366,7 +1402,7 @@ mediaInput.value = ""
 })
 
 
-let links = []
+
 
 function addLinkField(){
 
@@ -1826,7 +1862,6 @@ document.getElementById("postTags")
 const selectedTagsPreview =
 document.getElementById("selectedTagsPreview")
 
-let selectedTags = []
 
 postTags.addEventListener(
 "change",
@@ -1895,6 +1930,24 @@ selectedTagsPreview.appendChild(div)
 })
 
 }
+
+const pageLoader = document.getElementById("pageLoader");
+
+function hidePageLoader(){
+  pageLoader.classList.add("hidden");
+  document.body.style.overflow = "auto";
+}
+
+window.addEventListener("load", () => {
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      pageLoader.classList.add("hidden");
+      document.body.classList.remove("loading-block");
+      document.body.style.overflow = "auto";
+    }, 300);
+  });
+});
+
 </script>
 
 </body>
