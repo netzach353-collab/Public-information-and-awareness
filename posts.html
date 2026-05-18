@@ -2562,7 +2562,6 @@ activeVideo.currentTime = 0.1
 
 activeVideo.play()
 
-activeVideo.pause()
 
 })
 
@@ -2838,8 +2837,6 @@ activeVideo.currentTime = 0.1
 
 activeVideo.play()
 
-activeVideo.pause()
-
 })
 
 }else{
@@ -2954,7 +2951,6 @@ document.querySelectorAll("#mediaContainer video")
 
 videos.forEach(video => {
 
-video.pause()
 
 video.currentTime = 0
 
@@ -3235,16 +3231,18 @@ provider:'google',
 options:{
 
 redirectTo:
-window.location.origin + window.location.pathname
+window.location.origin + window.location.pathname,
+
+queryParams:{
+prompt:'select_account'
+}
 
 }
 
 })
 
 if(error){
-
 console.log(error)
-
 }
 
 }
@@ -3276,10 +3274,11 @@ data:{ user }
 
 if(!user){
 
-openLoginModal()
+await signInWithGoogle()
 return
 
 }
+
 
 const likeKey =
 `liked_${post.id}_${user.id}`
