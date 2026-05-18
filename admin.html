@@ -291,7 +291,28 @@ body {
   transition: all 0.2s ease;
 }
 
+.cssr-more {
+  background: rgba(46, 46, 185, 0.488);
+  border: 1px solid #334155;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
 
+.cssr-more:hover {
+  background: rgba(96, 165, 250, 0.08);
+  border-color: #60a5fa;
+  transform: translateY(-1px);
+}
+
+.cssr-more:active {
+  transform: translateY(0px);
+  opacity: 0.9;
+}
 </style>
 </head>
 <body>
@@ -303,6 +324,9 @@ body {
   <h1>ניהול פוסטים</h1>
 <button id="loginBtn" class="login">Login Google</button>
 <button id="logoutBtn" class="logout">Logout</button>
+<button onclick="window.location.href='index.html'"  class="cssr-more">
+  חזרה לדף הראשי
+</button>
 </div>
 
 <div class="container" id="posts">
@@ -325,7 +349,10 @@ document.getElementById("loginBtn").onclick = async () => {
   await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: window.location.href
+      redirectTo: window.location.href,
+      queryParams: {
+        prompt: "select_account"
+      }
     }
   })
 }
