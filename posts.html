@@ -1011,15 +1011,17 @@ height:170px;
   position: fixed;
   inset: 0;
   z-index: 1000;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(120, 100, 70, 0.35);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+
+  background: rgba(120, 100, 70, 0.42);
+
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
+
+  transition: opacity .25s ease;
 }
 
 #postModal.show {
@@ -1038,19 +1040,17 @@ height:170px;
   max-height: 92vh;
   overflow-y: auto;
   overflow-x: hidden;
+
   background: linear-gradient(160deg, #fffdf9 0%, #fdf8f0 60%, #faf4e8 100%);
   border-radius: 28px;
   border: 1px solid rgba(176, 141, 87, 0.15);
+
   box-shadow:
     0 2px 0 rgba(255,255,255,0.8) inset,
-    0 32px 80px -12px rgba(120, 90, 40, 0.22),
-    0 8px 32px -8px rgba(176, 141, 87, 0.14);
-  transform: translateY(28px) scale(0.97);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
+    0 20px 45px rgba(120, 90, 40, 0.16);
 
-#postModal.show .modal-card {
-  transform: translateY(0) scale(1);
+  transform: none;
+  transition: opacity .25s ease;
 }
 
 /* Scrollbar */
@@ -1064,33 +1064,25 @@ height:170px;
 /* ============================================
    TOP BAR  (#modalTopTitle + close button)
    ============================================ */
-
 .modal-top-bar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  background: rgba(255, 252, 248, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(176, 141, 87, 0.1);
-  border-radius: 28px 28px 0 0;
-}
-.modal-top-bar{
   position: sticky;
   top: 0;
   right: 0;
   left: 0;
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   width: 100%;
-}
-.modal-card{
-  overflow-x: hidden;
-}
-.modal-top-bar{
   box-sizing: border-box;
+
+  padding: 15px 20px;
+
+  background: #fffcf8;
+  border-bottom: 1px solid rgba(176, 141, 87, 0.1);
+  border-radius: 28px 28px 0 0;
 }
 
 #modalTopTitle {
@@ -2671,40 +2663,37 @@ viewedKey,
 }
 
 
-
 function closePost(){
-    
+
 isDragging = false
 startY = 0
 currentY = 0
 
-modalCard.style.transition = "transform .3s ease"
+modalCard.style.transition = "transform .25s ease, opacity .25s ease"
 modalCard.style.transform = "translateY(120%)"
+modalCard.style.opacity = "0"
 
 const videos =
 document.querySelectorAll("#mediaContainer video")
 
 videos.forEach(video => {
-
-
+video.pause()
 video.currentTime = 0
-
 video.removeAttribute("src")
-
 video.load()
-
 })
 
 setTimeout(()=>{
 
 postModal.classList.remove("show")
 
-modalCard.style.transform = ""
 modalCard.style.transition = ""
+modalCard.style.transform = ""
+modalCard.style.opacity = ""
 
 document.body.style.overflow = ""
 
-},300)
+},250)
 
 }
 
