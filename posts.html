@@ -1065,7 +1065,7 @@ height:170px;
    TOP BAR  (#modalTopTitle + close button)
    ============================================ */
 .modal-top-bar{
-  position: fixed;
+position: sticky !important;  top:0;
   z-index: 50;
 
   display:flex;
@@ -1391,7 +1391,7 @@ height:170px;
     border-radius: 0;
   }
 
-  .modal-top-bar { border-radius: 0; }
+  .modal-top-bar {  border-radius: 0; }
 
   #modalTitle { font-size: 18px; }
 
