@@ -1440,6 +1440,33 @@ color:#2563eb;
   font-size: 16px;
   font-weight: bolder;
 }
+
+@media (max-width: 480px) {
+  #postModal {
+    display: block;
+  }
+
+  .modal-card {
+    position: fixed;
+    top: env(safe-area-inset-top, 0px);
+    right: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    max-width: none;
+    max-height: none;
+
+    border-radius: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .modal-top-bar {
+    position: relative;
+    border-radius: 0;
+  }
+}
 </style>
 </head>
 
