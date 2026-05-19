@@ -211,33 +211,160 @@ object-fit:cover;
 }
 
 .hero-text{
-position:absolute;
-inset:0;
-background:rgba(0,0,0,.45);
-color:white;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
+  position:absolute;
+  inset:0;
+
+  background:
+  linear-gradient(
+    to top,
+    rgba(3,6,18,.88) 0%,
+    rgba(3,6,18,.45) 45%,
+    rgba(3,6,18,.10) 100%
+  );
+
+  color:white;
+
+  display:flex;
+  flex-direction:column;
+
+  /* מרכז גם לגובה */
+  justify-content:center;
+
+  /* מרכז לרוחב */
+  align-items:center;
+
+  text-align:center;
+  direction:rtl;
+
+  padding:32px 24px;
+
+  overflow:hidden;
 }
 
+/* glow */
+.hero-text::after{
+  content:"";
+
+  position:absolute;
+  left:50%;
+  top:50%;
+
+  transform:
+  translate(-50%,-50%);
+
+  width:320px;
+  height:320px;
+
+  background:
+  radial-gradient(
+    circle,
+    rgba(59,130,246,.18),
+    transparent 72%
+  );
+
+  pointer-events:none;
+}
+
+/* TOP TEXT */
 .hero-text span{
-background:#bd3434;
-padding:6px 12px;
-border-radius:999px;
-margin-bottom:10px;
-font-size:13px;
+
+  position:relative;
+  z-index:2;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:8px;
+
+  padding:8px 16px;
+
+  margin-bottom:16px;
+
+  border-radius:16px;
+
+  background:
+  rgba(255, 4, 4, 0.384);
+
+  border:
+  1px solid rgba(255,255,255,.12);
+
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+
+  font-size:12px;
+  font-weight:700;
+
+  color:#f8fafc;
+
+  box-shadow:
+  0 10px 28px rgba(0,0,0,.28);
+
+  letter-spacing:.3px;
+}
+
+
+/* TITLE */
+.hero-text h2{
+
+  position:relative;
+  z-index:2;
+
+  font-size:34px;
+  font-weight:900;
+
+  line-height:1.15;
+
+  margin-bottom:12px;
+
+  letter-spacing:-1.2px;
+
+  color:white;
+
+  text-shadow:
+  0 5px 22px rgba(0,0,0,.6);
+}
+
+/* SUBTITLE */
+.hero-text p{
+
+  position:relative;
+  z-index:2;
+
+  font-size:15px;
+
+  line-height:1.8;
+
+  color:
+  rgba(255,255,255,.84);
+
+  max-width:420px;
+
+  text-shadow:
+  0 2px 12px rgba(0,0,0,.45);
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+.hero-text{
+padding:24px 18px;
 }
 
 .hero-text h2{
-font-size:28px;
-margin-bottom:10px;
+font-size:26px;
 }
 
 .hero-text p{
-font-size:15px;
+font-size:13.5px;
+max-width:100%;
+}
+
+.hero-text span{
+font-size:11px;
+padding:7px 13px;
+}
+
 }
 
 
@@ -1273,6 +1400,26 @@ font-size: 12px !important;
 .mini-like-box:active{
   transform:scale(.92);
 }
+
+.hero-link-slide{
+flex:0 0 100%;
+height:100%;
+display:block;
+text-decoration:none;
+color:inherit;
+position:relative;
+}
+
+.hero-link-slide .hero-slide{
+height:100%;
+}
+
+.hero-slide video{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
 </style>
 </head>
 
@@ -1451,58 +1598,8 @@ class="bottom-item youtube">
 
   <div class="hero-wrap">
 
-  <div class="hero-track" id="heroTrack">
-
-        <div class="hero-slide">
-<img src="rabbi.jpg" loading="lazy">
-     <div class="hero-text" >
-        <span>אהבת חינם</span>
-        <h2 >בית תמחוי  חלוקת אוכל לנזקקים</h2>
-        <p>כל רעב ממנו יכל וכל צמה ממנו ישתה</p>
-
-        <br>
-        <p>עומד לזכות הרב יוסף שובלי<br>ותלמידו</p>
-      </div>
-    </div>
-
-<div class="hero-slide">
-
-
-    <img
-    class="rabbi48"
-    src="rabbi48.jpg">
-
-    <div class="blur-half"></div>
-
-    <div class="hero-text">
-
-      <span>שיעורי תורה</span>
-
-      <h2 id="title1">
-      חיזוק לבבות והפצת שם השם ברבים
-      </h2>
-
-      <p id="type1">
-      אהבת השם הרב יוסף שובלי
-      </p>
-
-    </div>
-
-</div>
-
-
-    <div class="hero-slide">
-       <img
-    class="rabbi48"
-    src="The Tikun Hamidot Yeshiva.jpeg">
-      <div class="hero-text">
-        <span>ישיבה לחיזוק הרבים תיקון המידות</span>
-        <h2 id="title2">זיכוי הרבים</h2>
-        <p id="type2">שתעמוד לזכות הרב יוסף שובלי ותלמידו</p>
-      </div>
-    </div>
-
-  </div>
+  <div class="hero-track"
+  id="heroTrack"></div>
 
 </div>
 <span class="text-for-cards1">פוסטים חדשים</span>
@@ -2162,248 +2259,292 @@ function goIndex2(){
 
 }
   
-const heroWrap = document.querySelector(".hero-wrap");
-const heroTrack = document.querySelector(".hero-track");
+const heroWrap =
+document.querySelector(".hero-wrap")
 
-let slides = document.querySelectorAll(".hero-slide");
+const heroTrack =
+document.getElementById("heroTrack")
 
-/* ---------- שכפול ---------- */
+let heroSlides = []
+let current = 1
+let total = 0
+let auto
+let heroStartX = 0
+let currentX = 0
+let heroDragging = false
+let heroMoved = false
 
-const firstClone = slides[0].cloneNode(true);
-const lastClone = slides[slides.length - 1].cloneNode(true);
+async function loadHeroSlider(){
 
-heroTrack.appendChild(firstClone);
-heroTrack.insertBefore(lastClone, slides[0]);
+const { data, error } =
+await supabase
+.from("hero_slider")
+.select("*")
+.order("created_at", { ascending:false })
 
-slides = document.querySelectorAll(".hero-slide");
+if(error){
+console.log(error)
+return
+}
 
-let current = 1;
-let total = slides.length;
+if(!data || data.length === 0){
 
-let heroStartX = 0;
-let currentX = 0;
-let heroDragging = false;
-let auto;
-let heroMoved = false;
+heroWrap.style.display = "none"
 
-/* ---------- התחלה ---------- */
+return
 
-updateSlider(false);
+}
 
-/* ---------- */
+heroTrack.innerHTML = data.map(item => {
+
+const safeLink =
+item.link ? item.link.trim() : ""
+
+const slide = `
+<div class="hero-slide">
+
+${
+item.media_type === "video"
+
+? `
+
+<video
+src="${item.image_url}"
+autoplay
+muted
+loop
+playsinline
+preload="metadata"
+controlslist="nodownload"
+></video>
+
+`
+
+: `
+
+<img
+src="${item.image_url}"
+loading="lazy"
+>
+
+`
+}
+
+<div class="hero-text">
+
+  <span>${item.badge}</span>
+
+  <h2>${item.title}</h2>
+
+  <p>${item.subtitle}</p>
+
+</div>
+
+</div>
+`
+
+if(safeLink){
+return `
+<a
+href="${safeLink}"
+target="_blank"
+class="hero-link-slide"
+>
+${slide}
+</a>
+`
+}
+
+return slide
+
+}).join("")
+
+initHeroSlider()
+
+}
+
+function initHeroSlider(){
+
+clearInterval(auto)
+
+let items =
+heroTrack.querySelectorAll(".hero-slide, .hero-link-slide")
+
+if(items.length === 0) return
+
+if(items.length === 1){
+current = 0
+heroTrack.style.transform = "translateX(0)"
+return
+}
+
+const firstClone =
+items[0].cloneNode(true)
+
+const lastClone =
+items[items.length - 1].cloneNode(true)
+
+heroTrack.appendChild(firstClone)
+heroTrack.insertBefore(lastClone, items[0])
+
+heroSlides =
+heroTrack.querySelectorAll(".hero-slide, .hero-link-slide")
+
+current = 1
+total = heroSlides.length
+
+updateSlider(false)
+startAuto()
+
+}
 
 function updateSlider(withTransition = true){
 
 heroTrack.style.transition =
-withTransition ? ".4s ease" : "none";
+withTransition ? ".4s ease" : "none"
 
-const slideWidth = heroWrap.offsetWidth;
+const slideWidth =
+heroWrap.offsetWidth
 
 heroTrack.style.transform =
-`translateX(-${current * slideWidth}px)`;
+`translateX(-${current * slideWidth}px)`
 
 }
-
-/* ---------- הבא ---------- */
 
 function nextSlide(){
-
-current++;
-
-updateSlider();
-
+current++
+updateSlider()
 }
-
-/* ---------- הקודם ---------- */
 
 function prevSlide(){
-
-current--;
-
-updateSlider();
-
+current--
+updateSlider()
 }
 
-/* ---------- אינפיניטי ---------- */
+heroTrack.addEventListener("transitionend",()=>{
 
-heroTrack.addEventListener(
-"transitionend",
-()=>{
+if(total <= 1) return
 
-/* אם הגענו לשכפול הראשון */
 if(current === total - 1){
 
-heroTrack.style.transition = "none";
-
-current = 1;
+heroTrack.style.transition = "none"
+current = 1
 
 heroTrack.style.transform =
-`translateX(-${current * heroWrap.offsetWidth}px)`;
+`translateX(-${current * heroWrap.offsetWidth}px)`
 
 }
 
-/* אם הגענו לשכפול האחרון */
 if(current === 0){
 
-heroTrack.style.transition = "none";
-
-current = total - 2;
+heroTrack.style.transition = "none"
+current = total - 2
 
 heroTrack.style.transform =
-`translateX(-${current * heroWrap.offsetWidth}px)`;
+`translateX(-${current * heroWrap.offsetWidth}px)`
 
 }
 
-}
-);
-
-document.addEventListener("visibilitychange", () => {
-
-if(document.hidden){
-
-stopAuto();
-
-}else{
-
-updateSlider(false);
-startAuto();
-
-}
-
-});
-
-/* ---------- אוטומטי ---------- */
-
+})
 
 function stopAuto(){
-
-clearInterval(auto);
-
+clearInterval(auto)
 }
 
 function startAuto(){
 
-clearInterval(auto);
+clearInterval(auto)
 
-auto = setInterval(
-nextSlide,
-5000
-);
+if(total <= 2) return
+
+auto = setInterval(nextSlide,5000)
 
 }
 
-startAuto();
+heroWrap.addEventListener("touchstart",(e)=>{
 
-/* ---------- טאץ׳ ---------- */
+stopAuto()
 
-heroWrap.addEventListener(
-"touchstart",
-(e)=>{
+heroDragging = true
+heroMoved = false
 
-stopAuto();
+heroStartX = e.touches[0].clientX
+currentX = heroStartX
 
-heroDragging = true;
-heroMoved = false;
+heroTrack.style.transition = "none"
 
-heroStartX = e.touches[0].clientX;
-currentX = heroStartX;
+},{ passive:true })
 
-heroTrack.style.transition =
-"none";
+heroWrap.addEventListener("touchmove",(e)=>{
 
-},
-{ passive:true }
-);
+if(!heroDragging) return
 
-window.addEventListener("resize", () => {
+currentX = e.touches[0].clientX
 
-updateSlider(false);
+const diff =
+currentX - heroStartX
 
-});
-/* ---------- גרירה ---------- */
+const base =
+-current * heroWrap.offsetWidth
 
-heroWrap.addEventListener("touchmove", (e) => {
-
-if(!heroDragging) return;
-
-currentX = e.touches[0].clientX;
-
-let diff = currentX - heroStartX;
-
-heroTrack.style.transition = "none";
-
-/* בסיס לפי רוחב מסך */
-let base = -current * heroWrap.offsetWidth;
-
-/* תזוזה חיה */
 heroTrack.style.transform =
-`translateX(-${base - diff}px)`;
+`translateX(${base + diff}px)`
 
-const DRAG_THRESHOLD = 10;
-heroMoved = Math.abs(diff) > DRAG_THRESHOLD;
+heroMoved =
+Math.abs(diff) > 10
 
-}, { passive:true });
+},{ passive:true })
 
-/* ---------- שחרור ---------- */
+heroWrap.addEventListener("touchend",()=>{
 
-heroWrap.addEventListener(
-"touchend",
-()=>{
+heroDragging = false
 
-heroDragging = false;
+const diff =
+heroStartX - currentX
 
-let diff = heroStartX - currentX;
-
-/* אם זו גרירה אמיתית */
 if(heroMoved){
 
 if(diff > 70){
-  nextSlide(); 
+nextSlide()
 }
 else if(diff < -70){
-  prevSlide(); 
+prevSlide()
 }
 else{
-updateSlider();
+updateSlider()
 }
 
-} else {
-updateSlider();
+}else{
+updateSlider()
 }
 
-startAuto();
+startAuto()
 
+})
+
+heroWrap.addEventListener("touchcancel",()=>{
+
+heroDragging = false
+updateSlider()
+startAuto()
+
+})
+
+window.addEventListener("resize",()=>{
+updateSlider(false)
+})
+
+document.addEventListener("visibilitychange",()=>{
+
+if(document.hidden){
+stopAuto()
+}else{
+updateSlider(false)
+startAuto()
 }
-);
 
-/* ---------- ביטול ---------- */
+})
 
-heroWrap.addEventListener(
-"touchcancel",
-()=>{
-
-heroDragging = false;
-
-updateSlider();
-
-startAuto();
-
-}
-);
-
-/* ---------- התחלה ---------- */
-
-updateSlider(false);
-
-function openPost(id){
-
-// אם היה drag לא פותחים
-if(isDragging) return
-
-window.location.href =
-`posts.html?id=${id}`
-
-}
 
 async function likePost(id){
 
@@ -2526,6 +2667,14 @@ alert("הלינק הועתק")
 
 }
 
+function openPost(id){
+
+if(isDragging) return
+
+window.location.href =
+`posts.html?id=${id}`
+
+}
 
 window.addEventListener("load", () => {
 
@@ -2603,77 +2752,36 @@ window.goHome = goHome
 window.goUpload = goUpload
 window.shareSite = shareSite
 
-
 const secretBtn =
 document.getElementById("secretAdminBtn")
 
-let secretTimer
+let secretTimer = null
 
-secretBtn.addEventListener(
-"touchstart",
-()=>{
+function startSecretPress(e){
+
+e.preventDefault()
 
 secretTimer = setTimeout(()=>{
 
-window.location.href =
-"admin.html"
+window.location.href = "admin.html"
 
 },5000)
 
 }
-)
 
-secretBtn.addEventListener(
-"touchend",
-()=>{
+function cancelSecretPress(){
 
 clearTimeout(secretTimer)
+secretTimer = null
 
 }
-)
 
-secretBtn.addEventListener(
-"touchmove",
-()=>{
+secretBtn.addEventListener("pointerdown", startSecretPress)
+secretBtn.addEventListener("pointerup", cancelSecretPress)
+secretBtn.addEventListener("pointerleave", cancelSecretPress)
+secretBtn.addEventListener("pointercancel", cancelSecretPress)
 
-clearTimeout(secretTimer)
-
-}
-)
-
-// גם למחשב
-secretBtn.addEventListener(
-"mousedown",
-()=>{
-
-secretTimer = setTimeout(()=>{
-
-window.location.href =
-"admin.html"
-
-},5000)
-
-}
-)
-
-secretBtn.addEventListener(
-"mouseup",
-()=>{
-
-clearTimeout(secretTimer)
-
-}
-)
-
-secretBtn.addEventListener(
-"mouseleave",
-()=>{
-
-clearTimeout(secretTimer)
-
-}
-)
-
+loadHeroSlider()
 loadUser()
 loadPosts()
 
